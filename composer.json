@@ -1,0 +1,16 @@
+{
+  "name": "jeely/jeely",
+  "description": "A personal module for developing the Telegram bot in PHP",
+  "minimum-stability": "stable",
+  "require": {
+    "symfony/var-dumper": "^6.1",
+    "lazyjsonmapper/lazyjsonmapper": "^2.0",
+    "guzzlehttp/guzzle": "^7.5",
+    "php-di/php-di": "^6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jeely\\": "src/Jeely/"
+    }
+  }
+}
