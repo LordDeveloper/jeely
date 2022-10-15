@@ -39,15 +39,15 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $bio Optional. Bio of the user.
  * @property ChatInviteLink $invite_link Optional. Chat invite link that was used by the user to send the join request
  *
- * @see https://core.telegram.org/bots/api#chatjoinrequest 
+ * @see https://core.telegram.org/bots/api#chatjoinrequest
  */
 class ChatJoinRequest extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'chat' => 'Chat',
-		'from' => 'User',
-		'date' => 'int',
-		'bio' => 'string',
-		'invite_link' => 'ChatInviteLink',
-	];
+        'chat' => 'Chat',
+        'from' => 'User',
+        'date' => 'int',
+        'bio' => 'string',
+        'invite_link' => 'ChatInviteLink',
+    ];
 }

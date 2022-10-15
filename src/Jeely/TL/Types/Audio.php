@@ -59,19 +59,19 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
  * @property PhotoSize $thumb Optional. Thumbnail of the album cover to which the music file belongs
  *
- * @see https://core.telegram.org/bots/api#audio 
+ * @see https://core.telegram.org/bots/api#audio
  */
 class Audio extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'duration' => 'int',
-		'performer' => 'string',
-		'title' => 'string',
-		'file_name' => 'string',
-		'mime_type' => 'string',
-		'file_size' => 'int',
-		'thumb' => 'PhotoSize',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'duration' => 'int',
+        'performer' => 'string',
+        'title' => 'string',
+        'file_name' => 'string',
+        'mime_type' => 'string',
+        'file_size' => 'int',
+        'thumb' => 'PhotoSize',
+    ];
 }

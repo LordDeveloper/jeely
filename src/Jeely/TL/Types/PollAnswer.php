@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property User $user The user, who changed the answer to the poll
  * @property int[] $option_ids 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
  *
- * @see https://core.telegram.org/bots/api#pollanswer 
+ * @see https://core.telegram.org/bots/api#pollanswer
  */
 class PollAnswer extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'poll_id' => 'string',
-		'user' => 'User',
-		'option_ids' => 'int[]',
-	];
+        'poll_id' => 'string',
+        'user' => 'User',
+        'option_ids' => 'int[]',
+    ];
 }

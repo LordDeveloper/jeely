@@ -9,34 +9,35 @@ namespace Jeely\TL\Methods;
  *
  * @property int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
  * @property int $user_id Unique identifier of the target user
- * 
+ *
  * @see https://api.telegram.org/bots/api#declinechatjoinrequest
  */
-class DeclineChatJoinRequest  extends MethodDefinition implements MethodDefinitionInterface
+class DeclineChatJoinRequest extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
- 	*/
-	public int|string $chat_id;
+    /**
+     * @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     */
+    public int|string $chat_id;
 
-	/**
- 	* @var int $user_id Unique identifier of the target user
- 	*/
-	public int $user_id;
+    /**
+     * @var int $user_id Unique identifier of the target user
+     */
+    public int $user_id;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

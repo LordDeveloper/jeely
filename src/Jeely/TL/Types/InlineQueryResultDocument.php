@@ -84,24 +84,24 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $thumb_width Optional. Thumbnail width
  * @property int $thumb_height Optional. Thumbnail height
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresultdocument 
+ * @see https://core.telegram.org/bots/api#inlinequeryresultdocument
  */
 class InlineQueryResultDocument extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'id' => 'string',
-		'title' => 'string',
-		'caption' => 'string',
-		'parse_mode' => 'string',
-		'caption_entities' => 'MessageEntity[]',
-		'document_url' => 'string',
-		'mime_type' => 'string',
-		'description' => 'string',
-		'reply_markup' => 'InlineKeyboardMarkup',
-		'input_message_content' => 'InputMessageContent',
-		'thumb_url' => 'string',
-		'thumb_width' => 'int',
-		'thumb_height' => 'int',
-	];
+        'type' => 'string',
+        'id' => 'string',
+        'title' => 'string',
+        'caption' => 'string',
+        'parse_mode' => 'string',
+        'caption_entities' => 'MessageEntity[]',
+        'document_url' => 'string',
+        'mime_type' => 'string',
+        'description' => 'string',
+        'reply_markup' => 'InlineKeyboardMarkup',
+        'input_message_content' => 'InputMessageContent',
+        'thumb_url' => 'string',
+        'thumb_width' => 'int',
+        'thumb_height' => 'int',
+    ];
 }

@@ -10,39 +10,40 @@ namespace Jeely\TL\Methods;
  * @property int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
  * @property int $message_id Identifier of a message to pin
  * @property bool $disable_notification Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
- * 
+ *
  * @see https://api.telegram.org/bots/api#pinchatmessage
  */
-class PinChatMessage  extends MethodDefinition implements MethodDefinitionInterface
+class PinChatMessage extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
- 	*/
-	public int|string $chat_id;
+    /**
+     * @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     */
+    public int|string $chat_id;
 
-	/**
- 	* @var int $message_id Identifier of a message to pin
- 	*/
-	public int $message_id;
+    /**
+     * @var int $message_id Identifier of a message to pin
+     */
+    public int $message_id;
 
-	/**
- 	* @var ?bool $disable_notification Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
- 	*/
-	public ?bool $disable_notification = null;
+    /**
+     * @var ?bool $disable_notification Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
+     */
+    public ?bool $disable_notification = null;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

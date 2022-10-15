@@ -12,12 +12,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @mixin  InputTextMessageContent
  * @mixin  InputVenueMessageContent
  *
- * @see https://core.telegram.org/bots/api#inputmessagecontent 
+ * @see https://core.telegram.org/bots/api#inputmessagecontent
  */
 class InputMessageContent extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
         InputTextMessageContent::class,
         InputVenueMessageContent::class,
-	];
+    ];
 }

@@ -15,7 +15,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @mixin InputMediaPhoto
  * @mixin InputMediaVideo
  *
- * @see https://core.telegram.org/bots/api#inputmedia 
+ * @see https://core.telegram.org/bots/api#inputmedia
  */
 class InputMedia extends LazyJsonMapper
 {
@@ -25,5 +25,5 @@ class InputMedia extends LazyJsonMapper
         InputMediaDocument::class,
         InputMediaPhoto::class,
         InputMediaVideo::class,
-	];
+    ];
 }

@@ -16,59 +16,60 @@ use Jeely\TL\Types\MaskPosition;
  * @property InputFile $webm_sticker WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements
  * @property string $emojis One or more emoji corresponding to the sticker
  * @property MaskPosition $mask_position A JSON-serialized object for position where the mask should be placed on faces
- * 
+ *
  * @see https://api.telegram.org/bots/api#addstickertoset
  */
-class AddStickerToSet  extends MethodDefinition implements MethodDefinitionInterface
+class AddStickerToSet extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var int $user_id User identifier of sticker set owner
- 	*/
-	public int $user_id;
+    /**
+     * @var int $user_id User identifier of sticker set owner
+     */
+    public int $user_id;
 
-	/**
- 	* @var string $name Sticker set name
- 	*/
-	public string $name;
+    /**
+     * @var string $name Sticker set name
+     */
+    public string $name;
 
-	/**
- 	* @var string $emojis One or more emoji corresponding to the sticker
- 	*/
-	public string $emojis;
+    /**
+     * @var string $emojis One or more emoji corresponding to the sticker
+     */
+    public string $emojis;
 
-	/**
- 	* @var mixed $mask_position A JSON-serialized object for position where the mask should be placed on faces
- 	*/
-	public mixed $mask_position = null;
+    /**
+     * @var mixed $mask_position A JSON-serialized object for position where the mask should be placed on faces
+     */
+    public mixed $mask_position = null;
 
-	/**
- 	* @var mixed $webm_sticker WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements
- 	*/
-	public mixed $webm_sticker = null;
+    /**
+     * @var mixed $webm_sticker WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements
+     */
+    public mixed $webm_sticker = null;
 
-	/**
- 	* @var mixed $tgs_sticker TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements
- 	*/
-	public mixed $tgs_sticker = null;
+    /**
+     * @var mixed $tgs_sticker TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements
+     */
+    public mixed $tgs_sticker = null;
 
-	/**
- 	* @var string|null $png_sticker PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »
- 	*/
-	public string|null $png_sticker = null;
+    /**
+     * @var string|null $png_sticker PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »
+     */
+    public string|null $png_sticker = null;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

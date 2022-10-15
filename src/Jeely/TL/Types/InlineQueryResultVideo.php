@@ -89,25 +89,25 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
  * @property InputMessageContent $input_message_content Optional. Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresultvideo 
+ * @see https://core.telegram.org/bots/api#inlinequeryresultvideo
  */
 class InlineQueryResultVideo extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'id' => 'string',
-		'video_url' => 'string',
-		'mime_type' => 'string',
-		'thumb_url' => 'string',
-		'title' => 'string',
-		'caption' => 'string',
-		'parse_mode' => 'string',
-		'caption_entities' => 'MessageEntity[]',
-		'video_width' => 'int',
-		'video_height' => 'int',
-		'video_duration' => 'int',
-		'description' => 'string',
-		'reply_markup' => 'InlineKeyboardMarkup',
-		'input_message_content' => 'InputMessageContent',
-	];
+        'type' => 'string',
+        'id' => 'string',
+        'video_url' => 'string',
+        'mime_type' => 'string',
+        'thumb_url' => 'string',
+        'title' => 'string',
+        'caption' => 'string',
+        'parse_mode' => 'string',
+        'caption_entities' => 'MessageEntity[]',
+        'video_width' => 'int',
+        'video_height' => 'int',
+        'video_duration' => 'int',
+        'description' => 'string',
+        'reply_markup' => 'InlineKeyboardMarkup',
+        'input_message_content' => 'InputMessageContent',
+    ];
 }

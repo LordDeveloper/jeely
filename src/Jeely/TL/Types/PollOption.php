@@ -24,12 +24,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $text Option text, 1-100 characters
  * @property int $voter_count Number of users that voted for this option
  *
- * @see https://core.telegram.org/bots/api#polloption 
+ * @see https://core.telegram.org/bots/api#polloption
  */
 class PollOption extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'text' => 'string',
-		'voter_count' => 'int',
-	];
+        'text' => 'string',
+        'voter_count' => 'int',
+    ];
 }

@@ -69,21 +69,21 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property bool $can_read_all_group_messages Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
  * @property bool $supports_inline_queries Optional. True, if the bot supports inline queries. Returned only in getMe.
  *
- * @see https://core.telegram.org/bots/api#user 
+ * @see https://core.telegram.org/bots/api#user
  */
 class User extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'id' => 'int',
-		'is_bot' => 'bool',
-		'first_name' => 'string',
-		'last_name' => 'string',
-		'username' => 'string',
-		'language_code' => 'string',
-		'is_premium' => 'bool',
-		'added_to_attachment_menu' => 'bool',
-		'can_join_groups' => 'bool',
-		'can_read_all_group_messages' => 'bool',
-		'supports_inline_queries' => 'bool',
-	];
+        'id' => 'int',
+        'is_bot' => 'bool',
+        'first_name' => 'string',
+        'last_name' => 'string',
+        'username' => 'string',
+        'language_code' => 'string',
+        'is_premium' => 'bool',
+        'added_to_attachment_menu' => 'bool',
+        'can_join_groups' => 'bool',
+        'can_read_all_group_messages' => 'bool',
+        'supports_inline_queries' => 'bool',
+    ];
 }

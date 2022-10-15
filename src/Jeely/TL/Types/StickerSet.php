@@ -49,17 +49,17 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property Sticker[] $stickers List of all set stickers
  * @property PhotoSize $thumb Optional. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
  *
- * @see https://core.telegram.org/bots/api#stickerset 
+ * @see https://core.telegram.org/bots/api#stickerset
  */
 class StickerSet extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'name' => 'string',
-		'title' => 'string',
-		'sticker_type' => 'string',
-		'is_animated' => 'bool',
-		'is_video' => 'bool',
-		'stickers' => 'Sticker[]',
-		'thumb' => 'PhotoSize',
-	];
+        'name' => 'string',
+        'title' => 'string',
+        'sticker_type' => 'string',
+        'is_animated' => 'bool',
+        'is_video' => 'bool',
+        'stickers' => 'Sticker[]',
+        'thumb' => 'PhotoSize',
+    ];
 }

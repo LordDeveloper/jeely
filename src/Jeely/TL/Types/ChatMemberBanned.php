@@ -11,7 +11,8 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @method string getStatus() The member's status in the chat, always “kicked”
  * @method User getUser() Information about the user
- * @method int getUntilDate() Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever
+ * @method int getUntilDate() Date when restrictions will be lifted for this user;
+unix time. If 0, then the user is banned forever
  *
  * @method bool isStatus()
  * @method bool isUser()
@@ -29,13 +30,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property User $user Information about the user
  * @property int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever
  *
- * @see https://core.telegram.org/bots/api#chatmemberbanned 
+ * @see https://core.telegram.org/bots/api#chatmemberbanned
  */
 class ChatMemberBanned extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'status' => 'string',
-		'user' => 'User',
-		'until_date' => 'int',
-	];
+        'status' => 'string',
+        'user' => 'User',
+        'until_date' => 'int',
+    ];
 }

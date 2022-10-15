@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property MessageEntity[] $entities Optional. List of special entities that appear in message text, which can be specified instead of parse_mode
  * @property bool $disable_web_page_preview Optional. Disables link previews for links in the sent message
  *
- * @see https://core.telegram.org/bots/api#inputtextmessagecontent 
+ * @see https://core.telegram.org/bots/api#inputtextmessagecontent
  */
 class InputTextMessageContent extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'message_text' => 'string',
-		'parse_mode' => 'string',
-		'entities' => 'MessageEntity[]',
-		'disable_web_page_preview' => 'bool',
-	];
+        'message_text' => 'string',
+        'parse_mode' => 'string',
+        'entities' => 'MessageEntity[]',
+        'disable_web_page_preview' => 'bool',
+    ];
 }

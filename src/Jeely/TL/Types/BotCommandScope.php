@@ -25,5 +25,5 @@ class BotCommandScope extends LazyJsonMapper
         BotCommandScopeAllPrivateChats::class,
         BotCommandScopeChat::class,
         BotCommandScopeDefault::class,
-	];
+    ];
 }

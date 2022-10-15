@@ -12,44 +12,45 @@ use Jeely\TL\Types\ChatPermissions;
  * @property int $user_id Unique identifier of the target user
  * @property ChatPermissions $permissions A JSON-serialized object for new user permissions
  * @property int $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
- * 
+ *
  * @see https://api.telegram.org/bots/api#restrictchatmember
  */
-class RestrictChatMember  extends MethodDefinition implements MethodDefinitionInterface
+class RestrictChatMember extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
- 	*/
-	public int|string $chat_id;
+    /**
+     * @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     */
+    public int|string $chat_id;
 
-	/**
- 	* @var int $user_id Unique identifier of the target user
- 	*/
-	public int $user_id;
+    /**
+     * @var int $user_id Unique identifier of the target user
+     */
+    public int $user_id;
 
-	/**
- 	* @var mixed $permissions A JSON-serialized object for new user permissions
- 	*/
-	public mixed $permissions;
+    /**
+     * @var mixed $permissions A JSON-serialized object for new user permissions
+     */
+    public mixed $permissions;
 
-	/**
- 	* @var int $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
- 	*/
-	public int $until_date = 0;
+    /**
+     * @var int $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
+     */
+    public int $until_date = 0;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

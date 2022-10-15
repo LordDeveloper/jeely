@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property string $type Type of the button, must be default
  *
- * @see https://core.telegram.org/bots/api#menubuttondefault 
+ * @see https://core.telegram.org/bots/api#menubuttondefault
  */
 class MenuButtonDefault extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-	];
+        'type' => 'string',
+    ];
 }

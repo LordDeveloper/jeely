@@ -11,9 +11,12 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @method float getLongitude() Longitude as defined by sender
  * @method float getLatitude() Latitude as defined by sender
- * @method float getHorizontalAccuracy() Optional. The radius of uncertainty for the location, measured in meters; 0-1500
- * @method int getLivePeriod() Optional. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
- * @method int getHeading() Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.
+ * @method float getHorizontalAccuracy() Optional. The radius of uncertainty for the location, measured in meters;
+0-1500
+ * @method int getLivePeriod() Optional. Time relative to the message sending date, during which the location can be updated;
+in seconds. For active live locations only.
+ * @method int getHeading() Optional. The direction in which user is moving, in degrees;
+1-360. For active live locations only.
  * @method int getProximityAlertRadius() Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
  *
  * @method bool isLongitude()
@@ -44,16 +47,16 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $heading Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.
  * @property int $proximity_alert_radius Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
  *
- * @see https://core.telegram.org/bots/api#location 
+ * @see https://core.telegram.org/bots/api#location
  */
 class Location extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'longitude' => 'float',
-		'latitude' => 'float',
-		'horizontal_accuracy' => 'float',
-		'live_period' => 'int',
-		'heading' => 'int',
-		'proximity_alert_radius' => 'int',
-	];
+        'longitude' => 'float',
+        'latitude' => 'float',
+        'horizontal_accuracy' => 'float',
+        'live_period' => 'int',
+        'heading' => 'int',
+        'proximity_alert_radius' => 'int',
+    ];
 }

@@ -39,15 +39,15 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property KeyboardButtonPollType $request_poll Optional. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
  * @property WebAppInfo $web_app Optional. If specified, the described Web App will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
  *
- * @see https://core.telegram.org/bots/api#keyboardbutton 
+ * @see https://core.telegram.org/bots/api#keyboardbutton
  */
 class KeyboardButton extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'text' => 'string',
-		'request_contact' => 'bool',
-		'request_location' => 'bool',
-		'request_poll' => 'KeyboardButtonPollType',
-		'web_app' => 'WebAppInfo',
-	];
+        'text' => 'string',
+        'request_contact' => 'bool',
+        'request_location' => 'bool',
+        'request_poll' => 'KeyboardButtonPollType',
+        'web_app' => 'WebAppInfo',
+    ];
 }

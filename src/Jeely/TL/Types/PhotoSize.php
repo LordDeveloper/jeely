@@ -39,15 +39,15 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $height Photo height
  * @property int $file_size Optional. File size in bytes
  *
- * @see https://core.telegram.org/bots/api#photosize 
+ * @see https://core.telegram.org/bots/api#photosize
  */
 class PhotoSize extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'width' => 'int',
-		'height' => 'int',
-		'file_size' => 'int',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'width' => 'int',
+        'height' => 'int',
+        'file_size' => 'int',
+    ];
 }

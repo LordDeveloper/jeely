@@ -24,12 +24,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property EncryptedPassportElement[] $data Array with information about documents and other Telegram Passport elements that was shared with the bot
  * @property EncryptedCredentials $credentials Encrypted credentials required to decrypt the data
  *
- * @see https://core.telegram.org/bots/api#passportdata 
+ * @see https://core.telegram.org/bots/api#passportdata
  */
 class PassportData extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'data' => 'EncryptedPassportElement[]',
-		'credentials' => 'EncryptedCredentials',
-	];
+        'data' => 'EncryptedPassportElement[]',
+        'credentials' => 'EncryptedCredentials',
+    ];
 }

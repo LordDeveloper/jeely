@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property int $duration Video chat duration in seconds
  *
- * @see https://core.telegram.org/bots/api#videochatended 
+ * @see https://core.telegram.org/bots/api#videochatended
  */
 class VideoChatEnded extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'duration' => 'int',
-	];
+        'duration' => 'int',
+    ];
 }

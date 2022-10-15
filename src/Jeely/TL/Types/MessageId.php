@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property int $message_id Unique message identifier
  *
- * @see https://core.telegram.org/bots/api#messageid 
+ * @see https://core.telegram.org/bots/api#messageid
  */
 class MessageId extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'message_id' => 'int',
-	];
+        'message_id' => 'int',
+    ];
 }

@@ -84,24 +84,24 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $custom_emoji_id Optional. For custom emoji stickers, unique identifier of the custom emoji
  * @property int $file_size Optional. File size in bytes
  *
- * @see https://core.telegram.org/bots/api#sticker 
+ * @see https://core.telegram.org/bots/api#sticker
  */
 class Sticker extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'type' => 'string',
-		'width' => 'int',
-		'height' => 'int',
-		'is_animated' => 'bool',
-		'is_video' => 'bool',
-		'thumb' => 'PhotoSize',
-		'emoji' => 'string',
-		'set_name' => 'string',
-		'premium_animation' => 'File',
-		'mask_position' => 'MaskPosition',
-		'custom_emoji_id' => 'string',
-		'file_size' => 'int',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'type' => 'string',
+        'width' => 'int',
+        'height' => 'int',
+        'is_animated' => 'bool',
+        'is_video' => 'bool',
+        'thumb' => 'PhotoSize',
+        'emoji' => 'string',
+        'set_name' => 'string',
+        'premium_animation' => 'File',
+        'mask_position' => 'MaskPosition',
+        'custom_emoji_id' => 'string',
+        'file_size' => 'int',
+    ];
 }

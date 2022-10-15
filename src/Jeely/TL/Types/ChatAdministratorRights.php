@@ -17,9 +17,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method bool getCanPromoteMembers() True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)
  * @method bool getCanChangeInfo() True, if the user is allowed to change the chat title, photo and other settings
  * @method bool getCanInviteUsers() True, if the user is allowed to invite new users to the chat
- * @method bool getCanPostMessages() Optional. True, if the administrator can post in the channel; channels only
- * @method bool getCanEditMessages() Optional. True, if the administrator can edit messages of other users and can pin messages; channels only
- * @method bool getCanPinMessages() Optional. True, if the user is allowed to pin messages; groups and supergroups only
+ * @method bool getCanPostMessages() Optional. True, if the administrator can post in the channel;
+channels only
+ * @method bool getCanEditMessages() Optional. True, if the administrator can edit messages of other users and can pin messages;
+channels only
+ * @method bool getCanPinMessages() Optional. True, if the user is allowed to pin messages;
+groups and supergroups only
  *
  * @method bool isIsAnonymous()
  * @method bool isCanManageChat()
@@ -69,21 +72,21 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property bool $can_edit_messages Optional. True, if the administrator can edit messages of other users and can pin messages; channels only
  * @property bool $can_pin_messages Optional. True, if the user is allowed to pin messages; groups and supergroups only
  *
- * @see https://core.telegram.org/bots/api#chatadministratorrights 
+ * @see https://core.telegram.org/bots/api#chatadministratorrights
  */
 class ChatAdministratorRights extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'is_anonymous' => 'bool',
-		'can_manage_chat' => 'bool',
-		'can_delete_messages' => 'bool',
-		'can_manage_video_chats' => 'bool',
-		'can_restrict_members' => 'bool',
-		'can_promote_members' => 'bool',
-		'can_change_info' => 'bool',
-		'can_invite_users' => 'bool',
-		'can_post_messages' => 'bool',
-		'can_edit_messages' => 'bool',
-		'can_pin_messages' => 'bool',
-	];
+        'is_anonymous' => 'bool',
+        'can_manage_chat' => 'bool',
+        'can_delete_messages' => 'bool',
+        'can_manage_video_chats' => 'bool',
+        'can_restrict_members' => 'bool',
+        'can_promote_members' => 'bool',
+        'can_change_info' => 'bool',
+        'can_invite_users' => 'bool',
+        'can_post_messages' => 'bool',
+        'can_edit_messages' => 'bool',
+        'can_pin_messages' => 'bool',
+    ];
 }

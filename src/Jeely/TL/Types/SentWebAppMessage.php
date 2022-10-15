@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property string $inline_message_id Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message.
  *
- * @see https://core.telegram.org/bots/api#sentwebappmessage 
+ * @see https://core.telegram.org/bots/api#sentwebappmessage
  */
 class SentWebAppMessage extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'inline_message_id' => 'string',
-	];
+        'inline_message_id' => 'string',
+    ];
 }

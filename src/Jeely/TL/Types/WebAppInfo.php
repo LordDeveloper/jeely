@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property string $url An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web Apps
  *
- * @see https://core.telegram.org/bots/api#webappinfo 
+ * @see https://core.telegram.org/bots/api#webappinfo
  */
 class WebAppInfo extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'url' => 'string',
-	];
+        'url' => 'string',
+    ];
 }

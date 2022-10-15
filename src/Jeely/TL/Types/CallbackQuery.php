@@ -49,17 +49,17 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $data Optional. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.
  * @property string $game_short_name Optional. Short name of a Game to be returned, serves as the unique identifier for the game
  *
- * @see https://core.telegram.org/bots/api#callbackquery 
+ * @see https://core.telegram.org/bots/api#callbackquery
  */
 class CallbackQuery extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'id' => 'string',
-		'from' => 'User',
-		'message' => 'Message',
-		'inline_message_id' => 'string',
-		'chat_instance' => 'string',
-		'data' => 'string',
-		'game_short_name' => 'string',
-	];
+        'id' => 'string',
+        'from' => 'User',
+        'message' => 'Message',
+        'inline_message_id' => 'string',
+        'chat_instance' => 'string',
+        'data' => 'string',
+        'game_short_name' => 'string',
+    ];
 }

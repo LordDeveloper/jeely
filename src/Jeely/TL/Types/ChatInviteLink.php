@@ -16,7 +16,8 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method bool getIsRevoked() True, if the link is revoked
  * @method string getName() Optional. Invite link name
  * @method int getExpireDate() Optional. Point in time (Unix timestamp) when the link will expire or has been expired
- * @method int getMemberLimit() Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+ * @method int getMemberLimit() Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link;
+1-99999
  * @method int getPendingJoinRequestCount() Optional. Number of pending join requests created using this link
  *
  * @method bool isInviteLink()
@@ -59,19 +60,19 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $member_limit Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
  * @property int $pending_join_request_count Optional. Number of pending join requests created using this link
  *
- * @see https://core.telegram.org/bots/api#chatinvitelink 
+ * @see https://core.telegram.org/bots/api#chatinvitelink
  */
 class ChatInviteLink extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'invite_link' => 'string',
-		'creator' => 'User',
-		'creates_join_request' => 'bool',
-		'is_primary' => 'bool',
-		'is_revoked' => 'bool',
-		'name' => 'string',
-		'expire_date' => 'int',
-		'member_limit' => 'int',
-		'pending_join_request_count' => 'int',
-	];
+        'invite_link' => 'string',
+        'creator' => 'User',
+        'creates_join_request' => 'bool',
+        'is_primary' => 'bool',
+        'is_revoked' => 'bool',
+        'name' => 'string',
+        'expire_date' => 'int',
+        'member_limit' => 'int',
+        'pending_join_request_count' => 'int',
+    ];
 }

@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property string $type Scope type, must be all_group_chats
  *
- * @see https://core.telegram.org/bots/api#botcommandscopeallgroupchats 
+ * @see https://core.telegram.org/bots/api#botcommandscopeallgroupchats
  */
 class BotCommandScopeAllGroupChats extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-	];
+        'type' => 'string',
+    ];
 }

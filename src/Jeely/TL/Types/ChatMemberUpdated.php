@@ -14,7 +14,8 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method int getDate() Date the change was done in Unix time
  * @method ChatMember getOldChatMember() Previous information about the chat member
  * @method ChatMember getNewChatMember() New information about the chat member
- * @method ChatInviteLink getInviteLink() Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.
+ * @method ChatInviteLink getInviteLink() Optional. Chat invite link, which was used by the user to join the chat;
+for joining by invite link events only.
  *
  * @method bool isChat()
  * @method bool isFrom()
@@ -44,16 +45,16 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property ChatMember $new_chat_member New information about the chat member
  * @property ChatInviteLink $invite_link Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.
  *
- * @see https://core.telegram.org/bots/api#chatmemberupdated 
+ * @see https://core.telegram.org/bots/api#chatmemberupdated
  */
 class ChatMemberUpdated extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'chat' => 'Chat',
-		'from' => 'User',
-		'date' => 'int',
-		'old_chat_member' => 'ChatMember',
-		'new_chat_member' => 'ChatMember',
-		'invite_link' => 'ChatInviteLink',
-	];
+        'chat' => 'Chat',
+        'from' => 'User',
+        'date' => 'int',
+        'old_chat_member' => 'ChatMember',
+        'new_chat_member' => 'ChatMember',
+        'invite_link' => 'ChatInviteLink',
+    ];
 }

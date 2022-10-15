@@ -20,7 +20,8 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method bool getCanSendPolls() True, if the user is allowed to send polls
  * @method bool getCanSendOtherMessages() True, if the user is allowed to send animations, games, stickers and use inline bots
  * @method bool getCanAddWebPagePreviews() True, if the user is allowed to add web page previews to their messages
- * @method int getUntilDate() Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever
+ * @method int getUntilDate() Date when restrictions will be lifted for this user;
+unix time. If 0, then the user is restricted forever
  *
  * @method bool isStatus()
  * @method bool isUser()
@@ -74,22 +75,22 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property bool $can_add_web_page_previews True, if the user is allowed to add web page previews to their messages
  * @property int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever
  *
- * @see https://core.telegram.org/bots/api#chatmemberrestricted 
+ * @see https://core.telegram.org/bots/api#chatmemberrestricted
  */
 class ChatMemberRestricted extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'status' => 'string',
-		'user' => 'User',
-		'is_member' => 'bool',
-		'can_change_info' => 'bool',
-		'can_invite_users' => 'bool',
-		'can_pin_messages' => 'bool',
-		'can_send_messages' => 'bool',
-		'can_send_media_messages' => 'bool',
-		'can_send_polls' => 'bool',
-		'can_send_other_messages' => 'bool',
-		'can_add_web_page_previews' => 'bool',
-		'until_date' => 'int',
-	];
+        'status' => 'string',
+        'user' => 'User',
+        'is_member' => 'bool',
+        'can_change_info' => 'bool',
+        'can_invite_users' => 'bool',
+        'can_pin_messages' => 'bool',
+        'can_send_messages' => 'bool',
+        'can_send_media_messages' => 'bool',
+        'can_send_polls' => 'bool',
+        'can_send_other_messages' => 'bool',
+        'can_add_web_page_previews' => 'bool',
+        'until_date' => 'int',
+    ];
 }

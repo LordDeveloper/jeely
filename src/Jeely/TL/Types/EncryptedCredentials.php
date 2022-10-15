@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $hash Base64-encoded data hash for data authentication
  * @property string $secret Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
  *
- * @see https://core.telegram.org/bots/api#encryptedcredentials 
+ * @see https://core.telegram.org/bots/api#encryptedcredentials
  */
 class EncryptedCredentials extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'data' => 'string',
-		'hash' => 'string',
-		'secret' => 'string',
-	];
+        'data' => 'string',
+        'hash' => 'string',
+        'secret' => 'string',
+    ];
 }

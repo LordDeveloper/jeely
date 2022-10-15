@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $email Optional. User email
  * @property ShippingAddress $shipping_address Optional. User shipping address
  *
- * @see https://core.telegram.org/bots/api#orderinfo 
+ * @see https://core.telegram.org/bots/api#orderinfo
  */
 class OrderInfo extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'name' => 'string',
-		'phone_number' => 'string',
-		'email' => 'string',
-		'shipping_address' => 'ShippingAddress',
-	];
+        'name' => 'string',
+        'phone_number' => 'string',
+        'email' => 'string',
+        'shipping_address' => 'ShippingAddress',
+    ];
 }

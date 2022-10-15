@@ -17,7 +17,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @mixin ChatMemberRestricted
  * @mixin ChatMemberUpdated
  *
- * @see https://core.telegram.org/bots/api#chatmember 
+ * @see https://core.telegram.org/bots/api#chatmember
  */
 class ChatMember extends LazyJsonMapper
 {
@@ -29,5 +29,5 @@ class ChatMember extends LazyJsonMapper
         ChatMemberOwner::class,
         ChatMemberRestricted::class,
         ChatMemberUpdated::class,
-	];
+    ];
 }

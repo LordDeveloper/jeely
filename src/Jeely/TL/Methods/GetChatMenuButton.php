@@ -9,29 +9,30 @@ use Jeely\TL\Types\MenuButton;
  * @description Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
  *
  * @property int $chat_id Unique identifier for the target private chat. If not specified, default bot's menu button will be returned
- * 
+ *
  * @see https://api.telegram.org/bots/api#getchatmenubutton
  */
-class GetChatMenuButton  extends MethodDefinition implements MethodDefinitionInterface
+class GetChatMenuButton extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'MenuButton';
+    public string $castsTo = 'MenuButton';
 
-	/**
- 	* @var int $chat_id Unique identifier for the target private chat. If not specified, default bot's menu button will be returned
- 	*/
-	public int $chat_id = 0;
+    /**
+     * @var int $chat_id Unique identifier for the target private chat. If not specified, default bot's menu button will be returned
+     */
+    public int $chat_id = 0;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return MenuButton
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return MenuButton
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

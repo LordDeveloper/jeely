@@ -24,12 +24,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $total_count Total number of profile pictures the target user has
  * @property PhotoSize[][] $photos Requested profile pictures (in up to 4 sizes each)
  *
- * @see https://core.telegram.org/bots/api#userprofilephotos 
+ * @see https://core.telegram.org/bots/api#userprofilephotos
  */
 class UserProfilePhotos extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'total_count' => 'int',
-		'photos' => 'PhotoSize[][]',
-	];
+        'total_count' => 'int',
+        'photos' => 'PhotoSize[][]',
+    ];
 }

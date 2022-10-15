@@ -13,44 +13,45 @@ use Jeely\TL\Types\ShippingOption;
  * @property bool $ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
  * @property ShippingOption[] $shipping_options Required if ok is True. A JSON-serialized array of available shipping options.
  * @property string $error_message Required if ok is False. Error message in human readable form that explains why it is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable'). Telegram will display this message to the user.
- * 
+ *
  * @see https://api.telegram.org/bots/api#answershippingquery
  */
-class AnswerShippingQuery  extends MethodDefinition implements MethodDefinitionInterface
+class AnswerShippingQuery extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var string $shipping_query_id Unique identifier for the query to be answered
- 	*/
-	public string $shipping_query_id;
+    /**
+     * @var string $shipping_query_id Unique identifier for the query to be answered
+     */
+    public string $shipping_query_id;
 
-	/**
- 	* @var bool $ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
- 	*/
-	public bool $ok;
+    /**
+     * @var bool $ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     */
+    public bool $ok;
 
-	/**
- 	* @var string $error_message Required if ok is False. Error message in human readable form that explains why it is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable'). Telegram will display this message to the user.
- 	*/
-	public string $error_message = '';
+    /**
+     * @var string $error_message Required if ok is False. Error message in human readable form that explains why it is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable'). Telegram will display this message to the user.
+     */
+    public string $error_message = '';
 
-	/**
- 	* @var ShippingOption[] $shipping_options Required if ok is True. A JSON-serialized array of available shipping options.
- 	*/
-	public array $shipping_options = [];
+    /**
+     * @var ShippingOption[] $shipping_options Required if ok is True. A JSON-serialized array of available shipping options.
+     */
+    public array $shipping_options = [];
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

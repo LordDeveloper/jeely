@@ -99,25 +99,25 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property ChatMemberUpdated $chat_member Optional. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
  * @property ChatJoinRequest $chat_join_request Optional. A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.
  *
- * @see https://core.telegram.org/bots/api#update 
+ * @see https://core.telegram.org/bots/api#update
  */
 class Update extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'update_id' => 'int',
-		'message' => 'Types\Message',
-		'edited_message' => 'Types\Message',
-		'channel_post' => 'Types\Message',
-		'edited_channel_post' => 'Types\Message',
-		'inline_query' => 'Types\InlineQuery',
-		'chosen_inline_result' => 'Types\ChosenInlineResult',
-		'callback_query' => 'Types\CallbackQuery',
-		'shipping_query' => 'Types\ShippingQuery',
-		'pre_checkout_query' => 'Types\PreCheckoutQuery',
-		'poll' => 'Types\Poll',
-		'poll_answer' => 'Types\PollAnswer',
-		'my_chat_member' => 'Types\ChatMemberUpdated',
-		'chat_member' => 'Types\ChatMemberUpdated',
-		'chat_join_request' => 'Types\ChatJoinRequest',
-	];
+        'update_id' => 'int',
+        'message' => 'Types\Message',
+        'edited_message' => 'Types\Message',
+        'channel_post' => 'Types\Message',
+        'edited_channel_post' => 'Types\Message',
+        'inline_query' => 'Types\InlineQuery',
+        'chosen_inline_result' => 'Types\ChosenInlineResult',
+        'callback_query' => 'Types\CallbackQuery',
+        'shipping_query' => 'Types\ShippingQuery',
+        'pre_checkout_query' => 'Types\PreCheckoutQuery',
+        'poll' => 'Types\Poll',
+        'poll_answer' => 'Types\PollAnswer',
+        'my_chat_member' => 'Types\ChatMemberUpdated',
+        'chat_member' => 'Types\ChatMemberUpdated',
+        'chat_join_request' => 'Types\ChatJoinRequest',
+    ];
 }

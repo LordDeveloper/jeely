@@ -10,39 +10,40 @@ namespace Jeely\TL\Methods;
  * @property int|string $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
  * @property int $user_id Unique identifier of the target user
  * @property bool $only_if_banned Do nothing if the user is not banned
- * 
+ *
  * @see https://api.telegram.org/bots/api#unbanchatmember
  */
-class UnbanChatMember  extends MethodDefinition implements MethodDefinitionInterface
+class UnbanChatMember extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var int|string $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
- 	*/
-	public int|string $chat_id;
+    /**
+     * @var int|string $chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
+     */
+    public int|string $chat_id;
 
-	/**
- 	* @var int $user_id Unique identifier of the target user
- 	*/
-	public int $user_id;
+    /**
+     * @var int $user_id Unique identifier of the target user
+     */
+    public int $user_id;
 
-	/**
- 	* @var ?bool $only_if_banned Do nothing if the user is not banned
- 	*/
-	public ?bool $only_if_banned = null;
+    /**
+     * @var ?bool $only_if_banned Do nothing if the user is not banned
+     */
+    public ?bool $only_if_banned = null;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

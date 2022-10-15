@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $game_short_name Short name of the game
  * @property InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresultgame 
+ * @see https://core.telegram.org/bots/api#inlinequeryresultgame
  */
 class InlineQueryResultGame extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'id' => 'string',
-		'game_short_name' => 'string',
-		'reply_markup' => 'InlineKeyboardMarkup',
-	];
+        'type' => 'string',
+        'id' => 'string',
+        'game_short_name' => 'string',
+        'reply_markup' => 'InlineKeyboardMarkup',
+    ];
 }

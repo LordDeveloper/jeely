@@ -89,25 +89,25 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $thumb_width Optional. Thumbnail width
  * @property int $thumb_height Optional. Thumbnail height
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresultvenue 
+ * @see https://core.telegram.org/bots/api#inlinequeryresultvenue
  */
 class InlineQueryResultVenue extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'id' => 'string',
-		'latitude' => 'float',
-		'longitude' => 'float',
-		'title' => 'string',
-		'address' => 'string',
-		'foursquare_id' => 'string',
-		'foursquare_type' => 'string',
-		'google_place_id' => 'string',
-		'google_place_type' => 'string',
-		'reply_markup' => 'InlineKeyboardMarkup',
-		'input_message_content' => 'InputMessageContent',
-		'thumb_url' => 'string',
-		'thumb_width' => 'int',
-		'thumb_height' => 'int',
-	];
+        'type' => 'string',
+        'id' => 'string',
+        'latitude' => 'float',
+        'longitude' => 'float',
+        'title' => 'string',
+        'address' => 'string',
+        'foursquare_id' => 'string',
+        'foursquare_type' => 'string',
+        'google_place_id' => 'string',
+        'google_place_type' => 'string',
+        'reply_markup' => 'InlineKeyboardMarkup',
+        'input_message_content' => 'InputMessageContent',
+        'thumb_url' => 'string',
+        'thumb_width' => 'int',
+        'thumb_height' => 'int',
+    ];
 }

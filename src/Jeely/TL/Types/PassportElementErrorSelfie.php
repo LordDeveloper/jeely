@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $file_hash Base64-encoded hash of the file with the selfie
  * @property string $message Error message
  *
- * @see https://core.telegram.org/bots/api#passportelementerrorselfie 
+ * @see https://core.telegram.org/bots/api#passportelementerrorselfie
  */
 class PassportElementErrorSelfie extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'source' => 'string',
-		'type' => 'string',
-		'file_hash' => 'string',
-		'message' => 'string',
-	];
+        'source' => 'string',
+        'type' => 'string',
+        'file_hash' => 'string',
+        'message' => 'string',
+    ];
 }

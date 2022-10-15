@@ -49,17 +49,17 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $google_place_id Optional. Google Places identifier of the venue
  * @property string $google_place_type Optional. Google Places type of the venue. (See supported types.)
  *
- * @see https://core.telegram.org/bots/api#venue 
+ * @see https://core.telegram.org/bots/api#venue
  */
 class Venue extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'location' => 'Location',
-		'title' => 'string',
-		'address' => 'string',
-		'foursquare_id' => 'string',
-		'foursquare_type' => 'string',
-		'google_place_id' => 'string',
-		'google_place_type' => 'string',
-	];
+        'location' => 'Location',
+        'title' => 'string',
+        'address' => 'string',
+        'foursquare_id' => 'string',
+        'foursquare_type' => 'string',
+        'google_place_id' => 'string',
+        'google_place_type' => 'string',
+    ];
 }

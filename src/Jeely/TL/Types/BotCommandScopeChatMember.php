@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
  * @property int $user_id Unique identifier of the target user
  *
- * @see https://core.telegram.org/bots/api#botcommandscopechatmember 
+ * @see https://core.telegram.org/bots/api#botcommandscopechatmember
  */
 class BotCommandScopeChatMember extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'chat_id' => 'int',
-		'user_id' => 'int',
-	];
+        'type' => 'string',
+        'chat_id' => 'int',
+        'user_id' => 'int',
+    ];
 }

@@ -14,54 +14,55 @@ use Jeely\TL\Types\ChatInviteLink;
  * @property int $expire_date Point in time (Unix timestamp) when the link will expire
  * @property int $member_limit The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
  * @property bool $creates_join_request True, if users joining the chat via the link need to be approved by chat administrators. If True, member_limit can't be specified
- * 
+ *
  * @see https://api.telegram.org/bots/api#editchatinvitelink
  */
-class EditChatInviteLink  extends MethodDefinition implements MethodDefinitionInterface
+class EditChatInviteLink extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'ChatInviteLink';
+    public string $castsTo = 'ChatInviteLink';
 
-	/**
- 	* @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
- 	*/
-	public int|string $chat_id;
+    /**
+     * @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     */
+    public int|string $chat_id;
 
-	/**
- 	* @var string $invite_link The invite link to edit
- 	*/
-	public string $invite_link;
+    /**
+     * @var string $invite_link The invite link to edit
+     */
+    public string $invite_link;
 
-	/**
- 	* @var ?bool $creates_join_request True, if users joining the chat via the link need to be approved by chat administrators. If True, member_limit can't be specified
- 	*/
-	public ?bool $creates_join_request = null;
+    /**
+     * @var ?bool $creates_join_request True, if users joining the chat via the link need to be approved by chat administrators. If True, member_limit can't be specified
+     */
+    public ?bool $creates_join_request = null;
 
-	/**
- 	* @var int $member_limit The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
- 	*/
-	public int $member_limit = 0;
+    /**
+     * @var int $member_limit The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+     */
+    public int $member_limit = 0;
 
-	/**
- 	* @var int $expire_date Point in time (Unix timestamp) when the link will expire
- 	*/
-	public int $expire_date = 0;
+    /**
+     * @var int $expire_date Point in time (Unix timestamp) when the link will expire
+     */
+    public int $expire_date = 0;
 
-	/**
- 	* @var string $name Invite link name; 0-32 characters
- 	*/
-	public string $name = '';
+    /**
+     * @var string $name Invite link name; 0-32 characters
+     */
+    public string $name = '';
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return ChatInviteLink
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return ChatInviteLink
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

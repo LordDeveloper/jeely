@@ -30,7 +30,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @mixin InlineQueryResultVideo
  * @mixin InlineQueryResultVoice
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresult 
+ * @see https://core.telegram.org/bots/api#inlinequeryresult
  */
 class InlineQueryResult extends LazyJsonMapper
 {
@@ -42,7 +42,7 @@ class InlineQueryResult extends LazyJsonMapper
         InlineQueryResultCachedGif::class,
         InlineQueryResultCachedMpeg4Gif::class,
         InlineQueryResultCachedPhoto::class,
-        InlineQueryResultCachedSticker::class.
+        InlineQueryResultCachedSticker::class .
         InlineQueryResultCachedVideo::class,
         InlineQueryResultCachedVoice::class,
         InlineQueryResultContact::class,
@@ -55,5 +55,5 @@ class InlineQueryResult extends LazyJsonMapper
         InlineQueryResultVenue::class,
         InlineQueryResultVideo::class,
         InlineQueryResultVoice::class,
-	];
+    ];
 }

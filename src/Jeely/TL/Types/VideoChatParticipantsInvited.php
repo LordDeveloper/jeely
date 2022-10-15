@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property User[] $users New members that were invited to the video chat
  *
- * @see https://core.telegram.org/bots/api#videochatparticipantsinvited 
+ * @see https://core.telegram.org/bots/api#videochatparticipantsinvited
  */
 class VideoChatParticipantsInvited extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'users' => 'User[]',
-	];
+        'users' => 'User[]',
+    ];
 }

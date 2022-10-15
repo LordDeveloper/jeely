@@ -44,16 +44,16 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $mime_type Optional. MIME type of the file as defined by sender
  * @property int $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
  *
- * @see https://core.telegram.org/bots/api#document 
+ * @see https://core.telegram.org/bots/api#document
  */
 class Document extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'thumb' => 'PhotoSize',
-		'file_name' => 'string',
-		'mime_type' => 'string',
-		'file_size' => 'int',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'thumb' => 'PhotoSize',
+        'file_name' => 'string',
+        'mime_type' => 'string',
+        'file_size' => 'int',
+    ];
 }

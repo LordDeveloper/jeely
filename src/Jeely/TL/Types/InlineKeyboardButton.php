@@ -59,19 +59,19 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property CallbackGame $callback_game Optional. Description of the game that will be launched when the user presses the button.NOTE: This type of button must always be the first button in the first row.
  * @property bool $pay Optional. Specify True, to send a Pay button.NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages.
  *
- * @see https://core.telegram.org/bots/api#inlinekeyboardbutton 
+ * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
  */
 class InlineKeyboardButton extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'text' => 'string',
-		'url' => 'string',
-		'callback_data' => 'string',
-		'web_app' => 'WebAppInfo',
-		'login_url' => 'LoginUrl',
-		'switch_inline_query' => 'string',
-		'switch_inline_query_current_chat' => 'string',
-		'callback_game' => 'CallbackGame',
-		'pay' => 'bool',
-	];
+        'text' => 'string',
+        'url' => 'string',
+        'callback_data' => 'string',
+        'web_app' => 'WebAppInfo',
+        'login_url' => 'LoginUrl',
+        'switch_inline_query' => 'string',
+        'switch_inline_query_current_chat' => 'string',
+        'callback_game' => 'CallbackGame',
+        'pay' => 'bool',
+    ];
 }

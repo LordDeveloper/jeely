@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $invoice_payload Bot specified invoice payload
  * @property ShippingAddress $shipping_address User specified shipping address
  *
- * @see https://core.telegram.org/bots/api#shippingquery 
+ * @see https://core.telegram.org/bots/api#shippingquery
  */
 class ShippingQuery extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'id' => 'string',
-		'from' => 'User',
-		'invoice_payload' => 'string',
-		'shipping_address' => 'ShippingAddress',
-	];
+        'id' => 'string',
+        'from' => 'User',
+        'invoice_payload' => 'string',
+        'shipping_address' => 'ShippingAddress',
+    ];
 }

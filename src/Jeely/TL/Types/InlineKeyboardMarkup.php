@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property InlineKeyboardButton[][] $inline_keyboard Array of button rows, each represented by an Array of InlineKeyboardButton objects
  *
- * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup 
+ * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
  */
 class InlineKeyboardMarkup extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'inline_keyboard' => 'InlineKeyboardButton[][]',
-	];
+        'inline_keyboard' => 'InlineKeyboardButton[][]',
+    ];
 }

@@ -24,12 +24,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $data The data. Be aware that a bad client can send arbitrary data in this field.
  * @property string $button_text Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.
  *
- * @see https://core.telegram.org/bots/api#webappdata 
+ * @see https://core.telegram.org/bots/api#webappdata
  */
 class WebAppData extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'data' => 'string',
-		'button_text' => 'string',
-	];
+        'data' => 'string',
+        'button_text' => 'string',
+    ];
 }

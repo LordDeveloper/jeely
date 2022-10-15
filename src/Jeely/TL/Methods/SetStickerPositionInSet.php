@@ -9,34 +9,35 @@ namespace Jeely\TL\Methods;
  *
  * @property string $sticker File identifier of the sticker
  * @property int $position New sticker position in the set, zero-based
- * 
+ *
  * @see https://api.telegram.org/bots/api#setstickerpositioninset
  */
-class SetStickerPositionInSet  extends MethodDefinition implements MethodDefinitionInterface
+class SetStickerPositionInSet extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var string $sticker File identifier of the sticker
- 	*/
-	public string $sticker;
+    /**
+     * @var string $sticker File identifier of the sticker
+     */
+    public string $sticker;
 
-	/**
- 	* @var int $position New sticker position in the set, zero-based
- 	*/
-	public int $position;
+    /**
+     * @var int $position New sticker position in the set, zero-based
+     */
+    public int $position;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

@@ -59,19 +59,19 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $max_connections Optional. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
  * @property string[] $allowed_updates Optional. A list of update types the bot is subscribed to. Defaults to all update types except chat_member
  *
- * @see https://core.telegram.org/bots/api#webhookinfo 
+ * @see https://core.telegram.org/bots/api#webhookinfo
  */
 class WebhookInfo extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'url' => 'string',
-		'has_custom_certificate' => 'bool',
-		'pending_update_count' => 'int',
-		'ip_address' => 'string',
-		'last_error_date' => 'int',
-		'last_error_message' => 'string',
-		'last_synchronization_error_date' => 'int',
-		'max_connections' => 'int',
-		'allowed_updates' => 'string[]',
-	];
+        'url' => 'string',
+        'has_custom_certificate' => 'bool',
+        'pending_update_count' => 'int',
+        'ip_address' => 'string',
+        'last_error_date' => 'int',
+        'last_error_message' => 'string',
+        'last_synchronization_error_date' => 'int',
+        'max_connections' => 'int',
+        'allowed_updates' => 'string[]',
+    ];
 }

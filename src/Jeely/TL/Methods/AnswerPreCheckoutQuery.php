@@ -10,39 +10,40 @@ namespace Jeely\TL\Methods;
  * @property string $pre_checkout_query_id Unique identifier for the query to be answered
  * @property bool $ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
  * @property string $error_message Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
- * 
+ *
  * @see https://api.telegram.org/bots/api#answerprecheckoutquery
  */
-class AnswerPreCheckoutQuery  extends MethodDefinition implements MethodDefinitionInterface
+class AnswerPreCheckoutQuery extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var string $pre_checkout_query_id Unique identifier for the query to be answered
- 	*/
-	public string $pre_checkout_query_id;
+    /**
+     * @var string $pre_checkout_query_id Unique identifier for the query to be answered
+     */
+    public string $pre_checkout_query_id;
 
-	/**
- 	* @var bool $ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
- 	*/
-	public bool $ok;
+    /**
+     * @var bool $ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
+     */
+    public bool $ok;
 
-	/**
- 	* @var string $error_message Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
- 	*/
-	public string $error_message = '';
+    /**
+     * @var string $error_message Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
+     */
+    public string $error_message = '';
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

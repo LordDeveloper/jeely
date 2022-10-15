@@ -13,7 +13,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @mixin MenuButtonDefault
  * @mixin MenuButtonWebApp
  *
- * @see https://core.telegram.org/bots/api#menubutton 
+ * @see https://core.telegram.org/bots/api#menubutton
  */
 class MenuButton extends LazyJsonMapper
 {
@@ -21,5 +21,5 @@ class MenuButton extends LazyJsonMapper
         MenuButtonCommands::class,
         MenuButtonDefault::class,
         MenuButtonWebApp::class,
-	];
+    ];
 }

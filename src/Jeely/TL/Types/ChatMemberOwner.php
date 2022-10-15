@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property bool $is_anonymous True, if the user's presence in the chat is hidden
  * @property string $custom_title Optional. Custom title for this user
  *
- * @see https://core.telegram.org/bots/api#chatmemberowner 
+ * @see https://core.telegram.org/bots/api#chatmemberowner
  */
 class ChatMemberOwner extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'status' => 'string',
-		'user' => 'User',
-		'is_anonymous' => 'bool',
-		'custom_title' => 'string',
-	];
+        'status' => 'string',
+        'user' => 'User',
+        'is_anonymous' => 'bool',
+        'custom_title' => 'string',
+    ];
 }

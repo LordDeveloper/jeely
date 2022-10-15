@@ -44,16 +44,16 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property MessageEntity[] $text_entities Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
  * @property Animation $animation Optional. Animation that will be displayed in the game message in chats. Upload via BotFather
  *
- * @see https://core.telegram.org/bots/api#game 
+ * @see https://core.telegram.org/bots/api#game
  */
 class Game extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'title' => 'string',
-		'description' => 'string',
-		'photo' => 'PhotoSize[]',
-		'text' => 'string',
-		'text_entities' => 'MessageEntity[]',
-		'animation' => 'Animation',
-	];
+        'title' => 'string',
+        'description' => 'string',
+        'photo' => 'PhotoSize[]',
+        'text' => 'string',
+        'text_entities' => 'MessageEntity[]',
+        'animation' => 'Animation',
+    ];
 }

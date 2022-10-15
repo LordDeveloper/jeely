@@ -6,7 +6,6 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Cookie\CookieJarInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
-use JetBrains\PhpStorm\Pure;
 
 class Browser extends HttpClient
 {
@@ -31,18 +30,18 @@ class Browser extends HttpClient
         ));
     }
 
+    public function withHeaders(array $headers): Browser
+    {
+        return clone $this->withConfig([
+            RequestOptions::HEADERS => $headers,
+        ]);
+    }
+
     public function withConfig(array $config): Browser
     {
         $self = clone $this;
         $self->config += $config;
         return $self;
-    }
-
-    public function withHeaders(array $headers): Browser
-    {
-        return clone $this->withConfig(compact(
-            'headers'
-        ));
     }
 
     public function allowRedirects(bool $allowRedirects = true): Browser

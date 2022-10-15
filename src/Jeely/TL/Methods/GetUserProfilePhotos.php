@@ -11,39 +11,40 @@ use Jeely\TL\Types\UserProfilePhotos;
  * @property int $user_id Unique identifier of the target user
  * @property int $offset Sequential number of the first photo to be returned. By default, all photos are returned.
  * @property int $limit Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
- * 
+ *
  * @see https://api.telegram.org/bots/api#getuserprofilephotos
  */
-class GetUserProfilePhotos  extends MethodDefinition implements MethodDefinitionInterface
+class GetUserProfilePhotos extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'UserProfilePhotos';
+    public string $castsTo = 'UserProfilePhotos';
 
-	/**
- 	* @var int $user_id Unique identifier of the target user
- 	*/
-	public int $user_id;
+    /**
+     * @var int $user_id Unique identifier of the target user
+     */
+    public int $user_id;
 
-	/**
- 	* @var int $limit Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
- 	*/
-	public int $limit = 100;
+    /**
+     * @var int $limit Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+     */
+    public int $limit = 100;
 
-	/**
- 	* @var int $offset Sequential number of the first photo to be returned. By default, all photos are returned.
- 	*/
-	public int $offset = 0;
+    /**
+     * @var int $offset Sequential number of the first photo to be returned. By default, all photos are returned.
+     */
+    public int $offset = 0;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return UserProfilePhotos
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return UserProfilePhotos
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

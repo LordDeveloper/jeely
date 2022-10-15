@@ -3,12 +3,9 @@
 namespace Jeely\TL\Methods;
 
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\PromiseInterface;
 use Jeely\Container;
 use Jeely\Telegram;
 use LazyJsonMapper\LazyJsonMapper;
-use Psr\Http\Message\ResponseInterface;
 
 class MethodDefinition
 {
@@ -17,23 +14,6 @@ class MethodDefinition
     public function isOk(): bool
     {
         return $this->ok;
-    }
-
-    private function toArray(): array
-    {
-        return array_merge(
-            $this->vars, get_object_vars($this)
-        );
-    }
-
-    private function getName(): string
-    {
-        return lcfirst(basename(str_replace('\\', '/', get_class($this))));
-    }
-
-    private function castsTo(): string
-    {
-        return $this->castsTo;
     }
 
     protected function call()
@@ -46,7 +26,7 @@ class MethodDefinition
             }
 
             $convert = function ($response) use ($castsTo) {
-                if (is_array($response) && class_exists($_cast = '\\Jeely\\TL\\Types\\'. $castsTo)) {
+                if (is_array($response) && class_exists($_cast = '\\Jeely\\TL\\Types\\' . $castsTo)) {
                     return new $_cast($response);
                 } elseif ($response instanceof LazyJsonMapper) {
                     return $response;
@@ -59,5 +39,22 @@ class MethodDefinition
 
             return $isList ? array_map($convert, $response) : $convert($response);
         })->wait();
+    }
+
+    private function getName(): string
+    {
+        return lcfirst(basename(str_replace('\\', '/', get_class($this))));
+    }
+
+    private function toArray(): array
+    {
+        return array_merge(
+            $this->vars, get_object_vars($this)
+        );
+    }
+
+    private function castsTo(): string
+    {
+        return $this->castsTo;
     }
 }

@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $file_size File size in bytes
  * @property int $file_date Unix time when the file was uploaded
  *
- * @see https://core.telegram.org/bots/api#passportfile 
+ * @see https://core.telegram.org/bots/api#passportfile
  */
 class PassportFile extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'file_size' => 'int',
-		'file_date' => 'int',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'file_size' => 'int',
+        'file_date' => 'int',
+    ];
 }

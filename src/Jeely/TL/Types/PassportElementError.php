@@ -19,7 +19,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @mixin PassportElementErrorTranslationFiles
  * @mixin PassportElementErrorUnspecified
  *
- * @see https://core.telegram.org/bots/api#passportelementerror 
+ * @see https://core.telegram.org/bots/api#passportelementerror
  */
 class PassportElementError extends LazyJsonMapper
 {
@@ -33,5 +33,5 @@ class PassportElementError extends LazyJsonMapper
         PassportElementErrorTranslationFile::class,
         PassportElementErrorTranslationFiles::class,
         PassportElementErrorUnspecified::class,
-	];
+    ];
 }

@@ -44,16 +44,16 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $street_line2 Second line for the address
  * @property string $post_code Address post code
  *
- * @see https://core.telegram.org/bots/api#shippingaddress 
+ * @see https://core.telegram.org/bots/api#shippingaddress
  */
 class ShippingAddress extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'country_code' => 'string',
-		'state' => 'string',
-		'city' => 'string',
-		'street_line1' => 'string',
-		'street_line2' => 'string',
-		'post_code' => 'string',
-	];
+        'country_code' => 'string',
+        'state' => 'string',
+        'city' => 'string',
+        'street_line1' => 'string',
+        'street_line2' => 'string',
+        'post_code' => 'string',
+    ];
 }

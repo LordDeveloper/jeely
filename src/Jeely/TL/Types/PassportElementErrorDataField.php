@@ -39,15 +39,15 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $data_hash Base64-encoded data hash
  * @property string $message Error message
  *
- * @see https://core.telegram.org/bots/api#passportelementerrordatafield 
+ * @see https://core.telegram.org/bots/api#passportelementerrordatafield
  */
 class PassportElementErrorDataField extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'source' => 'string',
-		'type' => 'string',
-		'field_name' => 'string',
-		'data_hash' => 'string',
-		'message' => 'string',
-	];
+        'source' => 'string',
+        'type' => 'string',
+        'field_name' => 'string',
+        'data_hash' => 'string',
+        'message' => 'string',
+    ];
 }

@@ -12,7 +12,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method string getId() Unique query identifier
  * @method User getFrom() User who sent the query
  * @method string getCurrency() Three-letter ISO 4217 currency code
- * @method int getTotalAmount() Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+ * @method int getTotalAmount() Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
  * @method string getInvoicePayload() Bot specified invoice payload
  * @method string getShippingOptionId() Optional. Identifier of the shipping option chosen by the user
  * @method OrderInfo getOrderInfo() Optional. Order information provided by the user
@@ -49,17 +49,17 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $shipping_option_id Optional. Identifier of the shipping option chosen by the user
  * @property OrderInfo $order_info Optional. Order information provided by the user
  *
- * @see https://core.telegram.org/bots/api#precheckoutquery 
+ * @see https://core.telegram.org/bots/api#precheckoutquery
  */
 class PreCheckoutQuery extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'id' => 'string',
-		'from' => 'User',
-		'currency' => 'string',
-		'total_amount' => 'int',
-		'invoice_payload' => 'string',
-		'shipping_option_id' => 'string',
-		'order_info' => 'OrderInfo',
-	];
+        'id' => 'string',
+        'from' => 'User',
+        'currency' => 'string',
+        'total_amount' => 'int',
+        'invoice_payload' => 'string',
+        'shipping_option_id' => 'string',
+        'order_info' => 'OrderInfo',
+    ];
 }

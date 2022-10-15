@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property string $type Scope type, must be default
  *
- * @see https://core.telegram.org/bots/api#botcommandscopedefault 
+ * @see https://core.telegram.org/bots/api#botcommandscopedefault
  */
 class BotCommandScopeDefault extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-	];
+        'type' => 'string',
+    ];
 }

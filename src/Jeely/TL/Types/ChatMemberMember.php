@@ -24,12 +24,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $status The member's status in the chat, always “member”
  * @property User $user Information about the user
  *
- * @see https://core.telegram.org/bots/api#chatmembermember 
+ * @see https://core.telegram.org/bots/api#chatmembermember
  */
 class ChatMemberMember extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'status' => 'string',
-		'user' => 'User',
-	];
+        'status' => 'string',
+        'user' => 'User',
+    ];
 }

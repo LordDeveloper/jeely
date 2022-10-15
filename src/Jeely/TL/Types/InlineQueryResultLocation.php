@@ -14,7 +14,8 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method float getLatitude() Location latitude in degrees
  * @method float getLongitude() Location longitude in degrees
  * @method string getTitle() Location title
- * @method float getHorizontalAccuracy() Optional. The radius of uncertainty for the location, measured in meters; 0-1500
+ * @method float getHorizontalAccuracy() Optional. The radius of uncertainty for the location, measured in meters;
+0-1500
  * @method int getLivePeriod() Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
  * @method int getHeading() Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
  * @method int getProximityAlertRadius() Optional. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
@@ -84,24 +85,24 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $thumb_width Optional. Thumbnail width
  * @property int $thumb_height Optional. Thumbnail height
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresultlocation 
+ * @see https://core.telegram.org/bots/api#inlinequeryresultlocation
  */
 class InlineQueryResultLocation extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'id' => 'string',
-		'latitude' => 'float',
-		'longitude' => 'float',
-		'title' => 'string',
-		'horizontal_accuracy' => 'float',
-		'live_period' => 'int',
-		'heading' => 'int',
-		'proximity_alert_radius' => 'int',
-		'reply_markup' => 'InlineKeyboardMarkup',
-		'input_message_content' => 'InputMessageContent',
-		'thumb_url' => 'string',
-		'thumb_width' => 'int',
-		'thumb_height' => 'int',
-	];
+        'type' => 'string',
+        'id' => 'string',
+        'latitude' => 'float',
+        'longitude' => 'float',
+        'title' => 'string',
+        'horizontal_accuracy' => 'float',
+        'live_period' => 'int',
+        'heading' => 'int',
+        'proximity_alert_radius' => 'int',
+        'reply_markup' => 'InlineKeyboardMarkup',
+        'input_message_content' => 'InputMessageContent',
+        'thumb_url' => 'string',
+        'thumb_width' => 'int',
+        'thumb_height' => 'int',
+    ];
 }

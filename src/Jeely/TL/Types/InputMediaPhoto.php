@@ -39,15 +39,15 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $parse_mode Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
  * @property MessageEntity[] $caption_entities Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
  *
- * @see https://core.telegram.org/bots/api#inputmediaphoto 
+ * @see https://core.telegram.org/bots/api#inputmediaphoto
  */
 class InputMediaPhoto extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'media' => 'string',
-		'caption' => 'string',
-		'parse_mode' => 'string',
-		'caption_entities' => 'MessageEntity[]',
-	];
+        'type' => 'string',
+        'media' => 'string',
+        'caption' => 'string',
+        'parse_mode' => 'string',
+        'caption_entities' => 'MessageEntity[]',
+    ];
 }

@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $title Option title
  * @property LabeledPrice[] $prices List of price portions
  *
- * @see https://core.telegram.org/bots/api#shippingoption 
+ * @see https://core.telegram.org/bots/api#shippingoption
  */
 class ShippingOption extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'id' => 'string',
-		'title' => 'string',
-		'prices' => 'LabeledPrice[]',
-	];
+        'id' => 'string',
+        'title' => 'string',
+        'prices' => 'LabeledPrice[]',
+    ];
 }

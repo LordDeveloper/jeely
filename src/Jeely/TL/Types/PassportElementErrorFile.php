@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $file_hash Base64-encoded file hash
  * @property string $message Error message
  *
- * @see https://core.telegram.org/bots/api#passportelementerrorfile 
+ * @see https://core.telegram.org/bots/api#passportelementerrorfile
  */
 class PassportElementErrorFile extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'source' => 'string',
-		'type' => 'string',
-		'file_hash' => 'string',
-		'message' => 'string',
-	];
+        'source' => 'string',
+        'type' => 'string',
+        'file_hash' => 'string',
+        'message' => 'string',
+    ];
 }

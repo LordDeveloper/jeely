@@ -24,12 +24,12 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $emoji Emoji on which the dice throw animation is based
  * @property int $value ____simple_html_dom__voku__html_wrapper____>Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
  *
- * @see https://core.telegram.org/bots/api#dice 
+ * @see https://core.telegram.org/bots/api#dice
  */
 class Dice extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'emoji' => 'string',
-		'value' => 'int',
-	];
+        'emoji' => 'string',
+        'value' => 'int',
+    ];
 }

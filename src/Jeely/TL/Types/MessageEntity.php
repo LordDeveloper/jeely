@@ -49,17 +49,17 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $language Optional. For “pre” only, the programming language of the entity text
  * @property string $custom_emoji_id Optional. For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker
  *
- * @see https://core.telegram.org/bots/api#messageentity 
+ * @see https://core.telegram.org/bots/api#messageentity
  */
 class MessageEntity extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'offset' => 'int',
-		'length' => 'int',
-		'url' => 'string',
-		'user' => 'User',
-		'language' => 'string',
-		'custom_emoji_id' => 'string',
-	];
+        'type' => 'string',
+        'offset' => 'int',
+        'length' => 'int',
+        'url' => 'string',
+        'user' => 'User',
+        'language' => 'string',
+        'custom_emoji_id' => 'string',
+    ];
 }

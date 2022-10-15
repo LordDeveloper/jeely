@@ -19,11 +19,11 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @property string $type Type of the button, must be commands
  *
- * @see https://core.telegram.org/bots/api#menubuttoncommands 
+ * @see https://core.telegram.org/bots/api#menubuttoncommands
  */
 class MenuButtonCommands extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-	];
+        'type' => 'string',
+    ];
 }

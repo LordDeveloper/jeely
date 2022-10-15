@@ -54,18 +54,18 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property InlineKeyboardMarkup $reply_markup Optional. Inline keyboard attached to the message
  * @property InputMessageContent $input_message_content Optional. Content of the message to be sent instead of the audio
  *
- * @see https://core.telegram.org/bots/api#inlinequeryresultcachedaudio 
+ * @see https://core.telegram.org/bots/api#inlinequeryresultcachedaudio
  */
 class InlineQueryResultCachedAudio extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'id' => 'string',
-		'audio_file_id' => 'string',
-		'caption' => 'string',
-		'parse_mode' => 'string',
-		'caption_entities' => 'MessageEntity[]',
-		'reply_markup' => 'InlineKeyboardMarkup',
-		'input_message_content' => 'InputMessageContent',
-	];
+        'type' => 'string',
+        'id' => 'string',
+        'audio_file_id' => 'string',
+        'caption' => 'string',
+        'parse_mode' => 'string',
+        'caption_entities' => 'MessageEntity[]',
+        'reply_markup' => 'InlineKeyboardMarkup',
+        'input_message_content' => 'InputMessageContent',
+    ];
 }

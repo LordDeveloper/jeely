@@ -79,23 +79,23 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $open_period Optional. Amount of time in seconds the poll will be active after creation
  * @property int $close_date Optional. Point in time (Unix timestamp) when the poll will be automatically closed
  *
- * @see https://core.telegram.org/bots/api#poll 
+ * @see https://core.telegram.org/bots/api#poll
  */
 class Poll extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'id' => 'string',
-		'question' => 'string',
-		'options' => 'PollOption[]',
-		'total_voter_count' => 'int',
-		'is_closed' => 'bool',
-		'is_anonymous' => 'bool',
-		'type' => 'string',
-		'allows_multiple_answers' => 'bool',
-		'correct_option_id' => 'int',
-		'explanation' => 'string',
-		'explanation_entities' => 'MessageEntity[]',
-		'open_period' => 'int',
-		'close_date' => 'int',
-	];
+        'id' => 'string',
+        'question' => 'string',
+        'options' => 'PollOption[]',
+        'total_voter_count' => 'int',
+        'is_closed' => 'bool',
+        'is_anonymous' => 'bool',
+        'type' => 'string',
+        'allows_multiple_answers' => 'bool',
+        'correct_option_id' => 'int',
+        'explanation' => 'string',
+        'explanation_entities' => 'MessageEntity[]',
+        'open_period' => 'int',
+        'close_date' => 'int',
+    ];
 }

@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $text Text on the button
  * @property WebAppInfo $web_app Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery.
  *
- * @see https://core.telegram.org/bots/api#menubuttonwebapp 
+ * @see https://core.telegram.org/bots/api#menubuttonwebapp
  */
 class MenuButtonWebApp extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'type' => 'string',
-		'text' => 'string',
-		'web_app' => 'WebAppInfo',
-	];
+        'type' => 'string',
+        'text' => 'string',
+        'web_app' => 'WebAppInfo',
+    ];
 }

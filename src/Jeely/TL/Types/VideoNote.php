@@ -44,16 +44,16 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property PhotoSize $thumb Optional. Video thumbnail
  * @property int $file_size Optional. File size in bytes
  *
- * @see https://core.telegram.org/bots/api#videonote 
+ * @see https://core.telegram.org/bots/api#videonote
  */
 class VideoNote extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'length' => 'int',
-		'duration' => 'int',
-		'thumb' => 'PhotoSize',
-		'file_size' => 'int',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'length' => 'int',
+        'duration' => 'int',
+        'thumb' => 'PhotoSize',
+        'file_size' => 'int',
+    ];
 }

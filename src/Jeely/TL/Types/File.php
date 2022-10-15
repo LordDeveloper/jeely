@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
  * @property string $file_path Optional. File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file.
  *
- * @see https://core.telegram.org/bots/api#file 
+ * @see https://core.telegram.org/bots/api#file
  */
 class File extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'file_id' => 'string',
-		'file_unique_id' => 'string',
-		'file_size' => 'int',
-		'file_path' => 'string',
-	];
+        'file_id' => 'string',
+        'file_unique_id' => 'string',
+        'file_size' => 'int',
+        'file_path' => 'string',
+    ];
 }

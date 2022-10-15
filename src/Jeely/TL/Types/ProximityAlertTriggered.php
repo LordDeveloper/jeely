@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property User $watcher User that set the alert
  * @property int $distance The distance between the users
  *
- * @see https://core.telegram.org/bots/api#proximityalerttriggered 
+ * @see https://core.telegram.org/bots/api#proximityalerttriggered
  */
 class ProximityAlertTriggered extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'traveler' => 'User',
-		'watcher' => 'User',
-		'distance' => 'int',
-	];
+        'traveler' => 'User',
+        'watcher' => 'User',
+        'distance' => 'int',
+    ];
 }

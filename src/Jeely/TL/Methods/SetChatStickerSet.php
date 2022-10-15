@@ -9,34 +9,35 @@ namespace Jeely\TL\Methods;
  *
  * @property int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
  * @property string $sticker_set_name Name of the sticker set to be set as the group sticker set
- * 
+ *
  * @see https://api.telegram.org/bots/api#setchatstickerset
  */
-class SetChatStickerSet  extends MethodDefinition implements MethodDefinitionInterface
+class SetChatStickerSet extends MethodDefinition implements MethodDefinitionInterface
 {
-	public string $castsTo = 'bool';
+    public string $castsTo = 'bool';
 
-	/**
- 	* @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
- 	*/
-	public int|string $chat_id;
+    /**
+     * @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     */
+    public int|string $chat_id;
 
-	/**
- 	* @var string $sticker_set_name Name of the sticker set to be set as the group sticker set
- 	*/
-	public string $sticker_set_name;
+    /**
+     * @var string $sticker_set_name Name of the sticker set to be set as the group sticker set
+     */
+    public string $sticker_set_name;
 
-	/**
-	 * @var array $vars The value that are taken in the constructor method as method parameters.
-	 */
-	public function __construct(public array $vars = [])
-	{}
+    /**
+     * @var array $vars The value that are taken in the constructor method as method parameters.
+     */
+    public function __construct(public array $vars = [])
+    {
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function __invoke()
-	{
-		return $this->call();
-	}
+    /**
+     * @return bool
+     */
+    public function __invoke()
+    {
+        return $this->call();
+    }
 }

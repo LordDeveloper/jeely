@@ -29,13 +29,13 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property User $user User
  * @property int $score Score
  *
- * @see https://core.telegram.org/bots/api#gamehighscore 
+ * @see https://core.telegram.org/bots/api#gamehighscore
  */
 class GameHighScore extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'position' => 'int',
-		'user' => 'User',
-		'score' => 'int',
-	];
+        'position' => 'int',
+        'user' => 'User',
+        'score' => 'int',
+    ];
 }

@@ -34,14 +34,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property string $last_name Optional. Contact's last name
  * @property string $vcard Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
  *
- * @see https://core.telegram.org/bots/api#inputcontactmessagecontent 
+ * @see https://core.telegram.org/bots/api#inputcontactmessagecontent
  */
 class InputContactMessageContent extends LazyJsonMapper
 {
     const JSON_PROPERTY_MAP = [
-		'phone_number' => 'string',
-		'first_name' => 'string',
-		'last_name' => 'string',
-		'vcard' => 'string',
-	];
+        'phone_number' => 'string',
+        'first_name' => 'string',
+        'last_name' => 'string',
+        'vcard' => 'string',
+    ];
 }
