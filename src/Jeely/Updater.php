@@ -20,7 +20,7 @@ class Updater
     {
         if ($update = json_decode(file_get_contents('php://input'), true)) {
             return $callback($this->container->make(Update::class, [
-                'objectData' => new Update($update),
+                'objectData' => $update,
             ]));
         }
     }
