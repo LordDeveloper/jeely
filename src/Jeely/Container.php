@@ -4,6 +4,9 @@ namespace Jeely;
 
 use Psr\Container\ContainerInterface;
 
+/**
+ * @mixin \DI\Container
+ */
 final class Container
 {
     private static ContainerInterface $container;

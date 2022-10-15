@@ -2,7 +2,6 @@
 
 namespace Jeely;
 
-use DI\Container;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Utils;
 use Jeely\TL\Methods\MethodDefinitionInterface;
