@@ -5,6 +5,8 @@ namespace Jeely;
 use DI\Container;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Utils;
+use Jeely\TL\Methods\MethodDefinition;
+use Jeely\TL\Methods\MethodDefinitionInterface;
 use Jeely\TL\Types\BotCommand;
 use Jeely\TL\Types\Chat;
 use Jeely\TL\Types\ChatAdministratorRights;
@@ -198,19 +200,18 @@ class Telegram
         );
     }
 
+    /**
+     * @param MethodDefinitionInterface $method
+     * @psalm-return
+     */
+    public static function invoke(MethodDefinitionInterface $method)
+    {
+        return $method();
+    }
+
     public function __call($name, array $arguments = [])
     {
-        $name = str_replace('_', '', ucwords($name, '_'));
-        $name = '\\Jeely\\TL\Methods\\'. $name;
-
-        if (class_exists($name)) {
-            if (isset($arguments[0])) {
-                $arguments = array_merge(array_shift($arguments), $arguments);
-            }
-            $context = new $name($arguments);
-
-            return $context();
-        }
+        return self::__callStatic($name, $arguments);
     }
 
     public static function __callStatic($name, array $arguments = [])
@@ -222,9 +223,8 @@ class Telegram
             if (isset($arguments[0])) {
                 $arguments = array_merge(array_shift($arguments), $arguments);
             }
-            $context = new $name($arguments);
 
-            return $context();
+            return self::invoke(new $name($arguments));
         }
     }
 }
