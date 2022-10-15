@@ -18,9 +18,11 @@ class Updater
 
     public function waitWebhook(callable $callback)
     {
-        return $callback($this->container->make(Update::class, [
-            'objectData' => json_decode(file_get_contents('php://input'), true),
-        ]));
+        if ($update = new Update(json_decode(file_get_contents('php://input'), true))) {
+            return $callback($this->container->make(Update::class, [
+                'objectData' => $update,
+            ]));
+        }
     }
 
     public function waitPolling(callable $callback, array $options = [])
