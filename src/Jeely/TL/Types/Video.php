@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -61,7 +61,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#video
  */
-class Video extends LazyJsonMapper
+class Video extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'file_id' => 'string',

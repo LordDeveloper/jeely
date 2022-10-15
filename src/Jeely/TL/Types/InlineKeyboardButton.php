@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -61,7 +61,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
  */
-class InlineKeyboardButton extends LazyJsonMapper
+class InlineKeyboardButton extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'text' => 'string',

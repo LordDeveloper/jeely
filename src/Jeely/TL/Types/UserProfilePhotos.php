@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -26,7 +26,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#userprofilephotos
  */
-class UserProfilePhotos extends LazyJsonMapper
+class UserProfilePhotos extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'total_count' => 'int',

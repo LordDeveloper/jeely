@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -21,7 +21,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method bool getCanSendOtherMessages() True, if the user is allowed to send animations, games, stickers and use inline bots
  * @method bool getCanAddWebPagePreviews() True, if the user is allowed to add web page previews to their messages
  * @method int getUntilDate() Date when restrictions will be lifted for this user;
-unix time. If 0, then the user is restricted forever
+ * unix time. If 0, then the user is restricted forever
  *
  * @method bool isStatus()
  * @method bool isUser()
@@ -77,7 +77,7 @@ unix time. If 0, then the user is restricted forever
  *
  * @see https://core.telegram.org/bots/api#chatmemberrestricted
  */
-class ChatMemberRestricted extends LazyJsonMapper
+class ChatMemberRestricted extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'status' => 'string',

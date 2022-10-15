@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -36,7 +36,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#maskposition
  */
-class MaskPosition extends LazyJsonMapper
+class MaskPosition extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'point' => 'string',

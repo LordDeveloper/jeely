@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -14,7 +14,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#inputmessagecontent
  */
-class InputMessageContent extends LazyJsonMapper
+class InputMessageContent extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         InputTextMessageContent::class,

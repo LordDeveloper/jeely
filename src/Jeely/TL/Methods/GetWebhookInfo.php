@@ -13,13 +13,14 @@ use Jeely\TL\Types\WebhookInfo;
  */
 class GetWebhookInfo extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'WebhookInfo';
+    protected string $castsTo = 'WebhookInfo';
 
     /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

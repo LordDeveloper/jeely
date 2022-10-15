@@ -14,18 +14,14 @@ use Jeely\TL\Types\File;
  */
 class GetFile extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'File';
+    protected string $castsTo = 'File';
 
     /**
-     * @var string $file_id File identifier to get information about
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public string $file_id;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

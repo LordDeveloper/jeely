@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -17,7 +17,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method string getName() Optional. Invite link name
  * @method int getExpireDate() Optional. Point in time (Unix timestamp) when the link will expire or has been expired
  * @method int getMemberLimit() Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link;
-1-99999
+ * 1-99999
  * @method int getPendingJoinRequestCount() Optional. Number of pending join requests created using this link
  *
  * @method bool isInviteLink()
@@ -62,7 +62,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#chatinvitelink
  */
-class ChatInviteLink extends LazyJsonMapper
+class ChatInviteLink extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'invite_link' => 'string',

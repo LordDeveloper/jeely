@@ -15,28 +15,14 @@ namespace Jeely\TL\Methods;
  */
 class PinChatMessage extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int|string $chat_id;
-
-    /**
-     * @var int $message_id Identifier of a message to pin
-     */
-    public int $message_id;
-
-    /**
-     * @var ?bool $disable_notification Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
-     */
-    public ?bool $disable_notification = null;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

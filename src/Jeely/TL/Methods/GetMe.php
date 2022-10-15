@@ -13,13 +13,14 @@ use Jeely\TL\Types\User;
  */
 class GetMe extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'User';
+    protected string $castsTo = 'User';
 
     /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

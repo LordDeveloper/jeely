@@ -15,23 +15,14 @@ use Jeely\TL\Types\ChatInviteLink;
  */
 class RevokeChatInviteLink extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'ChatInviteLink';
+    protected string $castsTo = 'ChatInviteLink';
 
     /**
-     * @var int|string $chat_id Unique identifier of the target chat or username of the target channel (in the format @channelusername)
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int|string $chat_id;
-
-    /**
-     * @var string $invite_link The invite link to revoke
-     */
-    public string $invite_link;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

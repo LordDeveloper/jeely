@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -17,7 +17,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#botcommandscope
  */
-class BotCommandScope extends LazyJsonMapper
+class BotCommandScope extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         BotCommandScopeAllChatAdministrators::class,

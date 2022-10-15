@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -15,7 +15,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method ChatMember getOldChatMember() Previous information about the chat member
  * @method ChatMember getNewChatMember() New information about the chat member
  * @method ChatInviteLink getInviteLink() Optional. Chat invite link, which was used by the user to join the chat;
-for joining by invite link events only.
+ * for joining by invite link events only.
  *
  * @method bool isChat()
  * @method bool isFrom()
@@ -47,7 +47,7 @@ for joining by invite link events only.
  *
  * @see https://core.telegram.org/bots/api#chatmemberupdated
  */
-class ChatMemberUpdated extends LazyJsonMapper
+class ChatMemberUpdated extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'chat' => 'Chat',

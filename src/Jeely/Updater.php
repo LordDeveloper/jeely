@@ -16,8 +16,23 @@ class Updater
         $this->container->set(Browser::class, new Browser($browserConfig));
     }
 
-    public function waitForUpdates($callback)
+    public function waitWebhook(callable $callback)
     {
-        return $callback($this->container->get(Update::class));
+        return $callback($this->container->make(Update::class, [
+            'objectData' => json_decode(file_get_contents('php://input'), true),
+        ]));
+    }
+
+    public function waitPolling(callable $callback, array $options = [])
+    {
+        while (true) {
+            $updates = $this->container->get(Telegram::class)->getUpdates($options);
+
+            foreach ($updates as $update) {
+                $this->container->call($callback, [
+                    'update' => $update,
+                ]);
+            }
+        }
     }
 }

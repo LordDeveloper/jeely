@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -10,7 +10,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @description This object represents a service message about a change in auto-delete timer settings.
  *
  * @method int getMessageAutoDeleteTime() New auto-delete time for messages in the chat;
-in seconds
+ * in seconds
  *
  * @method bool isMessageAutoDeleteTime()
  *
@@ -22,7 +22,7 @@ in seconds
  *
  * @see https://core.telegram.org/bots/api#messageautodeletetimerchanged
  */
-class MessageAutoDeleteTimerChanged extends LazyJsonMapper
+class MessageAutoDeleteTimerChanged extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'message_auto_delete_time' => 'int',

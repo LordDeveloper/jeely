@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -41,7 +41,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#contact
  */
-class Contact extends LazyJsonMapper
+class Contact extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'phone_number' => 'string',

@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -37,7 +37,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#loginurl
  */
-class LoginUrl extends LazyJsonMapper
+class LoginUrl extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'url' => 'string',

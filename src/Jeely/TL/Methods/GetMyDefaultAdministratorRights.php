@@ -14,18 +14,14 @@ use Jeely\TL\Types\ChatAdministratorRights;
  */
 class GetMyDefaultAdministratorRights extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'ChatAdministratorRights';
+    protected string $castsTo = 'ChatAdministratorRights';
 
     /**
-     * @var ?bool $for_channels Pass True to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public ?bool $for_channels = null;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

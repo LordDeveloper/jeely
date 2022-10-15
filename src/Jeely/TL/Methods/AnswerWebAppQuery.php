@@ -16,23 +16,14 @@ use Jeely\TL\Types\SentWebAppMessage;
  */
 class AnswerWebAppQuery extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'SentWebAppMessage';
+    protected string $castsTo = 'SentWebAppMessage';
 
     /**
-     * @var string $web_app_query_id Unique identifier for the query to be answered
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public string $web_app_query_id;
-
-    /**
-     * @var mixed $result A JSON-serialized object describing the message to be sent
-     */
-    public mixed $result;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

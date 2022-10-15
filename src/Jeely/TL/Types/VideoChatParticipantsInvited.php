@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -21,7 +21,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#videochatparticipantsinvited
  */
-class VideoChatParticipantsInvited extends LazyJsonMapper
+class VideoChatParticipantsInvited extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'users' => 'User[]',

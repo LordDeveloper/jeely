@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -56,7 +56,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#chatpermissions
  */
-class ChatPermissions extends LazyJsonMapper
+class ChatPermissions extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'can_send_messages' => 'bool',

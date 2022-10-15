@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -10,9 +10,9 @@ use LazyJsonMapper\LazyJsonMapper;
  * @description This object represents a bot command.
  *
  * @method string getCommand() Text of the command;
-1-32 characters. Can contain only lowercase English letters, digits and underscores.
+ * 1-32 characters. Can contain only lowercase English letters, digits and underscores.
  * @method string getDescription() Description of the command;
-1-256 characters.
+ * 1-256 characters.
  *
  * @method bool isCommand()
  * @method bool isDescription()
@@ -28,7 +28,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#botcommand
  */
-class BotCommand extends LazyJsonMapper
+class BotCommand extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'command' => 'string',

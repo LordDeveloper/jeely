@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -21,7 +21,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#sentwebappmessage
  */
-class SentWebAppMessage extends LazyJsonMapper
+class SentWebAppMessage extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'inline_message_id' => 'string',

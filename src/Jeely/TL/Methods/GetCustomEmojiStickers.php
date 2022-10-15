@@ -14,18 +14,14 @@ use Jeely\TL\Types\Sticker;
  */
 class GetCustomEmojiStickers extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'Sticker[]';
+    protected string $castsTo = 'Sticker[]';
 
     /**
-     * @var string[] $custom_emoji_ids List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public array $custom_emoji_ids;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

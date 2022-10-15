@@ -14,18 +14,14 @@ use Jeely\TL\Types\ChatMember;
  */
 class GetChatAdministrators extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'ChatMember[]';
+    protected string $castsTo = 'ChatMember[]';
 
     /**
-     * @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int|string $chat_id;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

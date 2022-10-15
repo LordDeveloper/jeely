@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -21,11 +21,11 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method bool getCanChangeInfo() True, if the user is allowed to change the chat title, photo and other settings
  * @method bool getCanInviteUsers() True, if the user is allowed to invite new users to the chat
  * @method bool getCanPostMessages() Optional. True, if the administrator can post in the channel;
-channels only
+ * channels only
  * @method bool getCanEditMessages() Optional. True, if the administrator can edit messages of other users and can pin messages;
-channels only
+ * channels only
  * @method bool getCanPinMessages() Optional. True, if the user is allowed to pin messages;
-groups and supergroups only
+ * groups and supergroups only
  * @method string getCustomTitle() Optional. Custom title for this user
  *
  * @method bool isStatus()
@@ -94,7 +94,7 @@ groups and supergroups only
  *
  * @see https://core.telegram.org/bots/api#chatmemberadministrator
  */
-class ChatMemberAdministrator extends LazyJsonMapper
+class ChatMemberAdministrator extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'status' => 'string',

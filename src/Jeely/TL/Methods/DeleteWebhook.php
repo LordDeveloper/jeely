@@ -13,18 +13,14 @@ namespace Jeely\TL\Methods;
  */
 class DeleteWebhook extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var ?bool $drop_pending_updates Pass True to drop all pending updates
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public ?bool $drop_pending_updates = null;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Jeely\TL\Methods;
 
 use Jeely\TL\Types\BotCommand;
-use Jeely\TL\Types\BotCommandScope;
 
 /**
  * @class GetMyCommands
@@ -16,23 +15,14 @@ use Jeely\TL\Types\BotCommandScope;
  */
 class GetMyCommands extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'BotCommand[]';
+    protected string $castsTo = 'BotCommand[]';
 
     /**
-     * @var string $language_code A two-letter ISO 639-1 language code or an empty string
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public string $language_code = '';
-
-    /**
-     * @var mixed $scope A JSON-serialized object, describing scope of users. Defaults to BotCommandScopeDefault.
-     */
-    public mixed $scope = 'botcommandscopedefault';
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

@@ -13,18 +13,14 @@ namespace Jeely\TL\Methods;
  */
 class DeleteStickerFromSet extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var string $sticker File identifier of the sticker
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public string $sticker;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Jeely\TL;
 
+use Jeely\LazyUpdates;
 use Jeely\TL\Types\CallbackQuery;
 use Jeely\TL\Types\ChatJoinRequest;
 use Jeely\TL\Types\ChatMemberUpdated;
@@ -12,7 +13,6 @@ use Jeely\TL\Types\Poll;
 use Jeely\TL\Types\PollAnswer;
 use Jeely\TL\Types\PreCheckoutQuery;
 use Jeely\TL\Types\ShippingQuery;
-use LazyJsonMapper\LazyJsonMapper;
 
 
 /**
@@ -101,7 +101,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#update
  */
-class Update extends LazyJsonMapper
+class Update extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'update_id' => 'int',

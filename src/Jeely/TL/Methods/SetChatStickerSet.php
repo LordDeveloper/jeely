@@ -14,23 +14,14 @@ namespace Jeely\TL\Methods;
  */
 class SetChatStickerSet extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int|string $chat_id;
-
-    /**
-     * @var string $sticker_set_name Name of the sticker set to be set as the group sticker set
-     */
-    public string $sticker_set_name;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

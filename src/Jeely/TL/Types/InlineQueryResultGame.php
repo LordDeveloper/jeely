@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -36,7 +36,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#inlinequeryresultgame
  */
-class InlineQueryResultGame extends LazyJsonMapper
+class InlineQueryResultGame extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'type' => 'string',

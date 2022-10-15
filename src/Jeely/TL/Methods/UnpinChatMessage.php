@@ -14,23 +14,14 @@ namespace Jeely\TL\Methods;
  */
 class UnpinChatMessage extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int|string $chat_id;
-
-    /**
-     * @var int $message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
-     */
-    public int $message_id = 0;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

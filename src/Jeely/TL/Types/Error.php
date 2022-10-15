@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 /**
  * @class Error
@@ -33,7 +33,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @property int $error_code
  * @property ResponseParameters $parameters
  */
-class Error extends LazyJsonMapper
+class Error extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'ok' => 'bool',

@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -26,14 +26,14 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method Message getPinnedMessage() Optional. The most recent pinned message (by sending date). Returned only in getChat.
  * @method ChatPermissions getPermissions() Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat.
  * @method int getSlowModeDelay() Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user;
-in seconds. Returned only in getChat.
+ * in seconds. Returned only in getChat.
  * @method int getMessageAutoDeleteTime() Optional. The time after which all messages sent to the chat will be automatically deleted;
-in seconds. Returned only in getChat.
+ * in seconds. Returned only in getChat.
  * @method bool getHasProtectedContent() Optional. True, if messages from the chat can't be forwarded to other chats. Returned only in getChat.
  * @method string getStickerSetName() Optional. For supergroups, name of group sticker set. Returned only in getChat.
  * @method bool getCanSetStickerSet() Optional. True, if the bot can change the group sticker set. Returned only in getChat.
  * @method int getLinkedChatId() Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa;
-for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat.
+ * for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat.
  * @method ChatLocation getLocation() Optional. For supergroups, the location to which the supergroup is connected. Returned only in getChat.
  *
  * @method bool isId()
@@ -134,7 +134,7 @@ for supergroups and channel chats. This identifier may be greater than 32 bits a
  *
  * @see https://core.telegram.org/bots/api#chat
  */
-class Chat extends LazyJsonMapper
+class Chat extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'id' => 'int',

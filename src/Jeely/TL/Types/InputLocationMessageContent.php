@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -12,7 +12,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method float getLatitude() Latitude of the location in degrees
  * @method float getLongitude() Longitude of the location in degrees
  * @method float getHorizontalAccuracy() Optional. The radius of uncertainty for the location, measured in meters;
-0-1500
+ * 0-1500
  * @method int getLivePeriod() Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
  * @method int getHeading() Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
  * @method int getProximityAlertRadius() Optional. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
@@ -47,7 +47,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#inputlocationmessagecontent
  */
-class InputLocationMessageContent extends LazyJsonMapper
+class InputLocationMessageContent extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'latitude' => 'float',

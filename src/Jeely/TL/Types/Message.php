@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -11,7 +11,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @method int getMessageId() Unique message identifier inside this chat
  * @method User getFrom() Optional. Sender of the message;
-empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+ * empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
  * @method Chat getSenderChat() Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
  * @method int getDate() Date the message was sent in Unix time
  * @method Chat getChat() Conversation the message belongs to
@@ -312,7 +312,7 @@ empty for messages sent to channels. For backward compatibility, the field conta
  *
  * @see https://core.telegram.org/bots/api#message
  */
-class Message extends LazyJsonMapper
+class Message extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'message_id' => 'int',
@@ -375,4 +375,8 @@ class Message extends LazyJsonMapper
         'web_app_data' => 'WebAppData',
         'reply_markup' => 'InlineKeyboardMarkup',
     ];
+
+    public function reply($text)
+    {
+    }
 }

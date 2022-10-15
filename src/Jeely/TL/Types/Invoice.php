@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -41,7 +41,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#invoice
  */
-class Invoice extends LazyJsonMapper
+class Invoice extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'title' => 'string',

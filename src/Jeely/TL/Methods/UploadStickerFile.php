@@ -16,23 +16,14 @@ use Jeely\TL\Types\InputFile;
  */
 class UploadStickerFile extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'File';
+    protected string $castsTo = 'File';
 
     /**
-     * @var int $user_id User identifier of sticker file owner
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int $user_id;
-
-    /**
-     * @var mixed $png_sticker PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More information on Sending Files »
-     */
-    public mixed $png_sticker;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

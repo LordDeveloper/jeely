@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -51,7 +51,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#precheckoutquery
  */
-class PreCheckoutQuery extends LazyJsonMapper
+class PreCheckoutQuery extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'id' => 'string',

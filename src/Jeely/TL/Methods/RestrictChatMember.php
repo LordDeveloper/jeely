@@ -17,33 +17,14 @@ use Jeely\TL\Types\ChatPermissions;
  */
 class RestrictChatMember extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public int|string $chat_id;
-
-    /**
-     * @var int $user_id Unique identifier of the target user
-     */
-    public int $user_id;
-
-    /**
-     * @var mixed $permissions A JSON-serialized object for new user permissions
-     */
-    public mixed $permissions;
-
-    /**
-     * @var int $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
-     */
-    public int $until_date = 0;
-
-    /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
-     */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

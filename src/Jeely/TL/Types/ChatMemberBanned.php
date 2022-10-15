@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -12,7 +12,7 @@ use LazyJsonMapper\LazyJsonMapper;
  * @method string getStatus() The member's status in the chat, always “kicked”
  * @method User getUser() Information about the user
  * @method int getUntilDate() Date when restrictions will be lifted for this user;
-unix time. If 0, then the user is banned forever
+ * unix time. If 0, then the user is banned forever
  *
  * @method bool isStatus()
  * @method bool isUser()
@@ -32,7 +32,7 @@ unix time. If 0, then the user is banned forever
  *
  * @see https://core.telegram.org/bots/api#chatmemberbanned
  */
-class ChatMemberBanned extends LazyJsonMapper
+class ChatMemberBanned extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'status' => 'string',

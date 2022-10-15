@@ -12,13 +12,14 @@ namespace Jeely\TL\Methods;
  */
 class Close extends MethodDefinition implements MethodDefinitionInterface
 {
-    public string $castsTo = 'bool';
+    protected string $castsTo = 'bool';
 
     /**
-     * @var array $vars The value that are taken in the constructor method as method parameters.
+     * @var array $params The value that are taken in the constructor method as method parameters.
      */
-    public function __construct(public array $vars = [])
+    public function __construct(...$params)
     {
+        $this->params = $params;
     }
 
     /**

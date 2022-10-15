@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -11,7 +11,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @method Location getLocation() The location to which the supergroup is connected. Can't be a live location.
  * @method string getAddress() Location address;
-1-64 characters, as defined by the chat owner
+ * 1-64 characters, as defined by the chat owner
  *
  * @method bool isLocation()
  * @method bool isAddress()
@@ -27,7 +27,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#chatlocation
  */
-class ChatLocation extends LazyJsonMapper
+class ChatLocation extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'location' => 'Location',

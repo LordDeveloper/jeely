@@ -4,16 +4,29 @@ namespace Jeely\TL\Methods;
 
 
 use Jeely\Container;
+use Jeely\LazyUpdates;
 use Jeely\Telegram;
-use LazyJsonMapper\LazyJsonMapper;
 
 class MethodDefinition
 {
     public bool $ok = true;
 
+    protected array $params = [];
+
+    protected string $castsTo = 'string';
+
     public function isOk(): bool
     {
         return $this->ok;
+    }
+
+    public function __set($name, $value)
+    {
+        if (is_null($name)) {
+            $this->params[] = $value;
+        } else {
+            $this->params[$name] = $value;
+        }
     }
 
     protected function call()
@@ -21,15 +34,15 @@ class MethodDefinition
         return Container::get(Telegram::class)->fetchAsync(
             $this->getName(), $this->toArray()
         )->then(function ($response) {
-            if ($isList = str_ends_with($castsTo = $this->castsTo(), '[]')) {
+            if ($response instanceof LazyUpdates) {
+                return $response;
+            } elseif ($isList = str_ends_with($castsTo = $this->castsTo(), '[]')) {
                 $castsTo = rtrim($castsTo, '[]');
             }
 
             $convert = function ($response) use ($castsTo) {
                 if (is_array($response) && class_exists($_cast = '\\Jeely\\TL\\Types\\' . $castsTo)) {
                     return new $_cast($response);
-                } elseif ($response instanceof LazyJsonMapper) {
-                    return $response;
                 }
 
                 settype($response, $castsTo);
@@ -48,8 +61,14 @@ class MethodDefinition
 
     private function toArray(): array
     {
+        if (isset($this->params[0])) {
+            $this->params = array_merge(
+                array_shift($this->params), $this->params
+            );
+        }
+
         return array_merge(
-            $this->vars, get_object_vars($this)
+            $this->params, get_object_vars($this)
         );
     }
 

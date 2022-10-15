@@ -2,7 +2,7 @@
 
 namespace Jeely\TL\Types;
 
-use LazyJsonMapper\LazyJsonMapper;
+use Jeely\LazyUpdates;
 
 
 /**
@@ -21,7 +21,7 @@ use LazyJsonMapper\LazyJsonMapper;
  *
  * @see https://core.telegram.org/bots/api#botcommandscopedefault
  */
-class BotCommandScopeDefault extends LazyJsonMapper
+class BotCommandScopeDefault extends LazyUpdates
 {
     const JSON_PROPERTY_MAP = [
         'type' => 'string',
