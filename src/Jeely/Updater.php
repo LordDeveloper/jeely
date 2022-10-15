@@ -18,9 +18,9 @@ class Updater
 
     public function waitWebhook(callable $callback)
     {
-        if ($update = new Update(json_decode(file_get_contents('php://input'), true))) {
+        if ($update = json_decode(file_get_contents('php://input'), true)) {
             return $callback($this->container->make(Update::class, [
-                'objectData' => $update,
+                'objectData' => new Update($update),
             ]));
         }
     }
