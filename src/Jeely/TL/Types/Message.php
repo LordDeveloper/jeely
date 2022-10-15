@@ -376,7 +376,12 @@ class Message extends LazyUpdates
         'reply_markup' => 'InlineKeyboardMarkup',
     ];
 
-    public function reply($text)
+    public function reply($text, ... $args): Error|Message
     {
+        return self::$api->sendMessage(... array_merge($args, [
+            'chat_id' => $this->chat->id,
+            'text' => $text,
+            'reply_to_message_id' => $this->message_id,
+        ]));
     }
 }
