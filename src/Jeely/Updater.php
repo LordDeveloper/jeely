@@ -12,6 +12,7 @@ class Updater
     public function __construct(string $token, array $browserConfig = [])
     {
         $this->container = new Container();
+        $this->container->set(\DI\Container::class, $this->container);
         $this->container->set('token', value($token));
         $this->container->set(Browser::class, new Browser($browserConfig));
     }
