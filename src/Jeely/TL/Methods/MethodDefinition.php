@@ -9,16 +9,9 @@ use Jeely\Telegram;
 
 class MethodDefinition
 {
-    public bool $ok = true;
-
     protected array $params = [];
 
     protected string $castsTo = 'string';
-
-    public function isOk(): bool
-    {
-        return $this->ok;
-    }
 
     public function __set($name, $value)
     {
@@ -67,9 +60,7 @@ class MethodDefinition
             );
         }
 
-        return array_merge(
-            $this->params, get_object_vars($this)
-        );
+        return $this->params;
     }
 
     private function castsTo(): string

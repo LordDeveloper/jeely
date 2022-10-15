@@ -14,4 +14,9 @@ class LazyUpdates extends LazyJsonMapper
 
         parent::_init();
     }
+
+    public function isOk(): bool
+    {
+        return true;
+    }
 }

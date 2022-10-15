@@ -143,6 +143,8 @@ class Telegram
 
     public function fetchAsync($uri, array $fields = []): PromiseInterface
     {
+        // Make sure the multipart form data is not empty
+        $fields['timestamp'] = time();
         $files = [];
         $multipart = [];
 
@@ -169,9 +171,9 @@ class Telegram
             $multipart[] = [
                 'name' => $fieldName,
                 'contents' => (
-                is_array($content) ? json_encode($content) : (
-                is_object($content) && method_exists($content, '__toString') ? (string)$content : $content
-                )
+                    is_array($content) ? json_encode($content) : (
+                        is_object($content) && method_exists($content, '__toString') ? (string)$content : $content
+                    )
                 ),
             ];
         }

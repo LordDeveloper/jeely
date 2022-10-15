@@ -34,6 +34,8 @@ class Updater
                 $this->container->call($callback, [
                     'update' => $update,
                 ]);
+
+                $options['offset'] = $update->update_id + 1;
             }
         }
     }
