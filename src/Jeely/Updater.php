@@ -27,8 +27,12 @@ class Updater
 
     public function waitPolling(callable $callback, array $options = [])
     {
+        $telegram = $this->container->get(Telegram::class);
+        // Delete webhooks before hearing updates
+        $telegram->deleteWebhook();
+
         while (true) {
-            $updates = $this->container->get(Telegram::class)->getUpdates($options);
+            $updates = $telegram->getUpdates($options);
 
             foreach ($updates as $update) {
                 $this->container->call($callback, [
