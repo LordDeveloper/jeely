@@ -13,6 +13,8 @@ use Jeely\TL\Types\ChatMember;
 use Jeely\TL\Types\Error;
 use Jeely\TL\Types\File;
 use Jeely\TL\Types\GameHighScore;
+use Jeely\TL\Types\InlineKeyboardButton;
+use Jeely\TL\Types\KeyboardButtonInterface;
 use Jeely\TL\Types\MenuButton;
 use Jeely\TL\Types\Message;
 use Jeely\TL\Types\MessageId;
@@ -141,14 +143,50 @@ class Telegram
         ]);
     }
 
+    private function parseLogicContents(mixed $contents)
+    {
+        if (is_array($contents)) {
+            array_walk_recursive($contents, function (&$value) {
+                $value = Tools\Utils::isStringable($value) ? (
+                    Tools\Utils::isJson((string) $value) ? json_decode((string) $value) : $value
+                ) : $value;
+            });
+
+            return json_encode($contents);
+        } elseif (Tools\Utils::isStringable($contents)) {
+            return (string) $contents;
+        }
+
+        return $contents;
+    }
+
     public function fetchAsync($uri, array $fields = []): PromiseInterface
     {
         // Make sure the multipart form data is not empty
         $fields['timestamp'] = time();
         $files = [];
         $multipart = [];
+        $isInlineKeyboard = null;
+        $isResizedKeyboard = false;
+        $isOnetimeKeyboard = false;
+        $isSelective = false;
 
-        array_walk_recursive($fields, function (&$value, $attribute) use (&$files) {
+        array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
+            if ($value instanceof KeyboardButtonInterface) {
+                if (is_null($isInlineKeyboard)) {
+                    if ($value instanceof InlineKeyboardButton) {
+                        $isInlineKeyboard = true;
+                    } else {
+                        $isInlineKeyboard = false;
+                    }
+                } if (! empty($value['resize'])) {
+                    $isResizedKeyboard = true;
+                } if (! empty($value['one_time'])) {
+                    $isOnetimeKeyboard = true;
+                } if (! empty($value['selective'])) {
+                    $isSelective = true;
+                }
+            }
             if (
                 is_string($value) && is_file($value) &&
                 filesize($value) > 0 && in_array(strtolower($attribute), $this->couldBeUpload)
@@ -158,6 +196,40 @@ class Telegram
                 $value = 'attach://' . $name;
             }
         });
+
+        if (isset($fields['reply_markup'])) {
+            if (! is_null($isInlineKeyboard)) {
+                $replyMarkup = $fields['reply_markup'];
+                $type = $isInlineKeyboard ? 'inline_keyboard' : 'keyboard';
+
+                if (isset($replyMarkup[$type])) {
+                    $replyMarkup = $replyMarkup[$type];
+                }
+
+                if ($replyMarkup instanceof KeyboardButtonInterface) {
+                    $fields['reply_markup'] = [
+                        $type => [
+                            [$replyMarkup]
+                        ]
+                    ];
+                } elseif (
+                    isset($replyMarkup[0]) &&
+                    $replyMarkup[0] instanceof KeyboardButtonInterface
+                ) {
+                    $fields['reply_markup'][$type] = [
+                        $replyMarkup
+                    ];
+                } elseif (is_array($replyMarkup) && (
+                        ! isset($replyMarkup['keyboard']) || ! isset($replyMarkup['inline_keyboard'])
+                    )) {
+                    $fields['reply_markup'][$type] = $replyMarkup;
+                }
+
+                $fields['reply_markup']['resize_keyboard'] = $isResizedKeyboard;
+                $fields['reply_markup']['one_time_keyboard'] = $isOnetimeKeyboard;
+                $fields['reply_markup']['is_selective'] = $isSelective;
+            }
+        }
 
         foreach ($files as $fileName => $path) {
             $multipart[] = [
@@ -170,11 +242,7 @@ class Telegram
         foreach ($fields as $fieldName => $content) {
             $multipart[] = [
                 'name' => $fieldName,
-                'contents' => (
-                    is_array($content) ? json_encode($content) : (
-                        is_object($content) && method_exists($content, '__toString') ? (string)$content : $content
-                    )
-                ),
+                'contents' => $this->parseLogicContents($content),
             ];
         }
 

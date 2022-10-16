@@ -61,7 +61,7 @@ use Jeely\LazyUpdates;
  *
  * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
  */
-class InlineKeyboardButton extends LazyUpdates
+class InlineKeyboardButton extends LazyUpdates implements KeyboardButtonInterface
 {
     const JSON_PROPERTY_MAP = [
         'text' => 'string',
