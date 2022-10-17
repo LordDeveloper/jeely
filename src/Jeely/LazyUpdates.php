@@ -28,9 +28,9 @@ class LazyUpdates extends LazyJsonMapper implements \ArrayAccess
         return $this;
     }
 
-    public function isOk(): bool
+    public function success(): bool
     {
-        return true;
+        return $this->ok ?? true;
     }
 
     public function offsetExists(mixed $offset): bool
