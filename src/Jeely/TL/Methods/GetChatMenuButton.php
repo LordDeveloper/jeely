@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\MenuButton;
 
 /**
@@ -10,6 +11,7 @@ use Jeely\TL\Types\MenuButton;
  *
  * @property int $chat_id Unique identifier for the target private chat. If not specified, default bot's menu button will be returned
  *
+ *
  * @see https://api.telegram.org/bots/api#getchatmenubutton
  */
 class GetChatMenuButton extends MethodDefinition implements MethodDefinitionInterface
@@ -17,7 +19,7 @@ class GetChatMenuButton extends MethodDefinition implements MethodDefinitionInte
     protected string $castsTo = 'MenuButton';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -27,8 +29,8 @@ class GetChatMenuButton extends MethodDefinition implements MethodDefinitionInte
     /**
      * @return MenuButton
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

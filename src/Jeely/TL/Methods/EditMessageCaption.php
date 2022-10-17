@@ -2,8 +2,10 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineKeyboardMarkup;
 use Jeely\TL\Types\Message;
+use Jeely\TL\Types\MessageEntity;
 
 /**
  * @class EditMessageCaption
@@ -17,6 +19,7 @@ use Jeely\TL\Types\Message;
  * @property MessageEntity[] $caption_entities A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
  * @property InlineKeyboardMarkup $reply_markup A JSON-serialized object for an inline keyboard.
  *
+ *
  * @see https://api.telegram.org/bots/api#editmessagecaption
  */
 class EditMessageCaption extends MethodDefinition implements MethodDefinitionInterface
@@ -24,7 +27,7 @@ class EditMessageCaption extends MethodDefinition implements MethodDefinitionInt
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -34,8 +37,8 @@ class EditMessageCaption extends MethodDefinition implements MethodDefinitionInt
     /**
      * @return Message|bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

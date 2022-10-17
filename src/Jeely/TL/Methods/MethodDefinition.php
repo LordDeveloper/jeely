@@ -2,8 +2,6 @@
 
 namespace Jeely\TL\Methods;
 
-
-use Jeely\Container;
 use Jeely\LazyUpdates;
 use Jeely\Telegram;
 
@@ -22,20 +20,19 @@ class MethodDefinition
         }
     }
 
-    protected function call()
+    protected function call(Telegram $telegram)
     {
-        return Container::get(Telegram::class)->fetchAsync(
-            $this->getName(), $this->toArray()
-        )->then(function ($response) {
+        return $telegram->fetchAsync($this->getName(), $this->toArray())->then(function ($response) use ($telegram) {
             if ($response instanceof LazyUpdates) {
                 return $response;
             } elseif ($isList = str_ends_with($castsTo = $this->castsTo(), '[]')) {
                 $castsTo = rtrim($castsTo, '[]');
             }
 
-            $convert = function ($response) use ($castsTo) {
+            $convert = function ($response) use ($telegram, $castsTo) {
                 if (is_array($response) && class_exists($_cast = '\\Jeely\\TL\\Types\\' . $castsTo)) {
-                    return new $_cast($response);
+                    $casted = new $_cast($response);
+                    return $casted->setTelegramRecursive($telegram);
                 }
 
                 settype($response, $castsTo);

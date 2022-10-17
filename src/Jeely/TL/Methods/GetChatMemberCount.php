@@ -3,11 +3,14 @@
 namespace Jeely\TL\Methods;
 
 
+use Jeely\Telegram;
+
 /**
  * @class GetChatMemberCount
  * @description Use this method to get the number of members in a chat. Returns Int on success.
  *
  * @property int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+ *
  *
  * @see https://api.telegram.org/bots/api#getchatmembercount
  */
@@ -16,7 +19,7 @@ class GetChatMemberCount extends MethodDefinition implements MethodDefinitionInt
     protected string $castsTo = 'int';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -26,8 +29,8 @@ class GetChatMemberCount extends MethodDefinition implements MethodDefinitionInt
     /**
      * @return int
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

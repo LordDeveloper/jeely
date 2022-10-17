@@ -2,32 +2,35 @@
 
 namespace Jeely;
 
+use Closure;
 use Jeely\TL\Update;
-use function DI\value;
 
+/**
+ * @psalm-return
+ */
 class Updater
 {
-    private Container $container;
+    private Telegram $telegram;
 
     public function __construct(string $token, array $browserConfig = [])
     {
-        $this->container = new Container();
-        $this->container->set('token', value($token));
-        $this->container->set(Browser::class, new Browser($browserConfig));
+        $this->telegram = new Telegram($token, $browserConfig);
     }
 
     public function waitWebhook(callable $callback)
     {
         if ($update = json_decode(file_get_contents('php://input'), true)) {
-            return $callback($this->container->make(Update::class, [
-                'objectData' => $update,
-            ]));
+            $update = new Update($update);
+
+            $callback($update->setTelegramRecursive($this->telegram));
         }
+
+        gc_collect_cycles();
     }
 
     public function waitPolling(callable $callback, array $options = [])
     {
-        $telegram = $this->container->get(Telegram::class);
+        $telegram = $this->telegram;
         // Delete webhooks before hearing updates
         $telegram->deleteWebhook();
 
@@ -35,12 +38,16 @@ class Updater
             $updates = $telegram->getUpdates($options);
 
             foreach ($updates as $update) {
-                $this->container->call($callback, [
-                    'update' => $update,
-                ]);
+                if ($callback instanceof Closure) {
+                    $callback->bindTo($telegram);
+                }
+
+                $callback($update);
 
                 $options['offset'] = $update->update_id + 1;
             }
+
+            gc_collect_cycles();
         }
     }
 }

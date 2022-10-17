@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InputFile;
 
 /**
@@ -17,6 +18,7 @@ use Jeely\TL\Types\InputFile;
  * @property bool $drop_pending_updates Pass True to drop all pending updates
  * @property string $secret_token A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed. The header is useful to ensure that the request comes from a webhook set by you.
  *
+ *
  * @see https://api.telegram.org/bots/api#setwebhook
  */
 class SetWebhook extends MethodDefinition implements MethodDefinitionInterface
@@ -24,7 +26,7 @@ class SetWebhook extends MethodDefinition implements MethodDefinitionInterface
     protected string $castsTo = 'bool';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -34,8 +36,8 @@ class SetWebhook extends MethodDefinition implements MethodDefinitionInterface
     /**
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\ChatInviteLink;
 
 /**
@@ -11,6 +12,7 @@ use Jeely\TL\Types\ChatInviteLink;
  * @property int|string $chat_id Unique identifier of the target chat or username of the target channel (in the format @channelusername)
  * @property string $invite_link The invite link to revoke
  *
+ *
  * @see https://api.telegram.org/bots/api#revokechatinvitelink
  */
 class RevokeChatInviteLink extends MethodDefinition implements MethodDefinitionInterface
@@ -18,7 +20,7 @@ class RevokeChatInviteLink extends MethodDefinition implements MethodDefinitionI
     protected string $castsTo = 'ChatInviteLink';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -28,8 +30,8 @@ class RevokeChatInviteLink extends MethodDefinition implements MethodDefinitionI
     /**
      * @return ChatInviteLink
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

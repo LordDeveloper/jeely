@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\ChatAdministratorRights;
 
 /**
@@ -10,6 +11,7 @@ use Jeely\TL\Types\ChatAdministratorRights;
  *
  * @property bool $for_channels Pass True to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
  *
+ *
  * @see https://api.telegram.org/bots/api#getmydefaultadministratorrights
  */
 class GetMyDefaultAdministratorRights extends MethodDefinition implements MethodDefinitionInterface
@@ -17,7 +19,7 @@ class GetMyDefaultAdministratorRights extends MethodDefinition implements Method
     protected string $castsTo = 'ChatAdministratorRights';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -27,8 +29,8 @@ class GetMyDefaultAdministratorRights extends MethodDefinition implements Method
     /**
      * @return ChatAdministratorRights
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

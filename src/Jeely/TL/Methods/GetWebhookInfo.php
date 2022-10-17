@@ -2,11 +2,13 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\WebhookInfo;
 
 /**
  * @class GetWebhookInfo
  * @description Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
+ *
  *
  *
  * @see https://api.telegram.org/bots/api#getwebhookinfo
@@ -16,7 +18,7 @@ class GetWebhookInfo extends MethodDefinition implements MethodDefinitionInterfa
     protected string $castsTo = 'WebhookInfo';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -26,8 +28,8 @@ class GetWebhookInfo extends MethodDefinition implements MethodDefinitionInterfa
     /**
      * @return WebhookInfo
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

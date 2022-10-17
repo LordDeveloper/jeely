@@ -6,13 +6,26 @@ use LazyJsonMapper\LazyJsonMapper;
 
 class LazyUpdates extends LazyJsonMapper implements \ArrayAccess
 {
-    protected static Telegram $api;
+    protected ?Telegram $telegram = null;
 
-    public function _init()
+    public function setTelegram(Telegram $telegram): LazyUpdates
     {
-        self::$api = Container::get(Telegram::class);
+        $this->telegram = $telegram;
 
-        parent::_init();
+        return $this;
+    }
+
+    public function setTelegramRecursive(Telegram $telegram): LazyUpdates
+    {
+        $this->setTelegram($telegram);
+
+        foreach ($this as $item) {
+            if ($item instanceof LazyUpdates) {
+                $item->setTelegramRecursive(clone $telegram);
+            }
+        }
+
+        return $this;
     }
 
     public function isOk(): bool

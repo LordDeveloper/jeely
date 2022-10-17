@@ -136,11 +136,11 @@ class Telegram
         'animation', 'audio', 'document', 'photo', 'sticker', 'video', 'video_note', 'voice',
     ];
 
-    public function __construct(Browser $browser, Container $container)
+    public function __construct(string $token, array $browserConfig = [])
     {
-        $this->browser = $browser->withConfig([
-            'base_uri' => sprintf($this->baseUri, $container->get('token')),
-        ]);
+        $this->browser = Browser::factory([
+            'base_uri' => sprintf($this->baseUri, $token),
+        ])->withConfig($browserConfig);
     }
 
     private function parseLogicContents(mixed $contents)
@@ -271,11 +271,6 @@ class Telegram
 
     public function __call($name, array $arguments = [])
     {
-        return self::__callStatic($name, $arguments);
-    }
-
-    public static function __callStatic($name, array $arguments = [])
-    {
         $name = str_replace('_', '', ucwords($name, '_'));
         $name = '\\Jeely\\TL\Methods\\' . $name;
 
@@ -284,12 +279,12 @@ class Telegram
                 $arguments = array_merge(array_shift($arguments), $arguments);
             }
 
-            return self::invoke(new $name($arguments));
+            return $this(new $name($arguments));
         }
     }
 
-    public static function invoke(MethodDefinitionInterface $method)
+    public function __invoke(MethodDefinitionInterface $method)
     {
-        return $method();
+        return $method($this);
     }
 }

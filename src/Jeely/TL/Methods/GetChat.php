@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\Chat;
 
 /**
@@ -10,6 +11,7 @@ use Jeely\TL\Types\Chat;
  *
  * @property int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
  *
+ *
  * @see https://api.telegram.org/bots/api#getchat
  */
 class GetChat extends MethodDefinition implements MethodDefinitionInterface
@@ -17,7 +19,7 @@ class GetChat extends MethodDefinition implements MethodDefinitionInterface
     protected string $castsTo = 'Chat';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -27,8 +29,8 @@ class GetChat extends MethodDefinition implements MethodDefinitionInterface
     /**
      * @return Chat
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

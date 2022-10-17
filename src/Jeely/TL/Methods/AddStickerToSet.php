@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InputFile;
 use Jeely\TL\Types\MaskPosition;
 
@@ -17,6 +18,7 @@ use Jeely\TL\Types\MaskPosition;
  * @property string $emojis One or more emoji corresponding to the sticker
  * @property MaskPosition $mask_position A JSON-serialized object for position where the mask should be placed on faces
  *
+ *
  * @see https://api.telegram.org/bots/api#addstickertoset
  */
 class AddStickerToSet extends MethodDefinition implements MethodDefinitionInterface
@@ -24,7 +26,7 @@ class AddStickerToSet extends MethodDefinition implements MethodDefinitionInterf
     protected string $castsTo = 'bool';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -34,8 +36,8 @@ class AddStickerToSet extends MethodDefinition implements MethodDefinitionInterf
     /**
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

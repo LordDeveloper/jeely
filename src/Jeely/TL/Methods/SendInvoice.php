@@ -2,7 +2,9 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineKeyboardMarkup;
+use Jeely\TL\Types\LabeledPrice;
 use Jeely\TL\Types\Message;
 
 /**
@@ -37,6 +39,7 @@ use Jeely\TL\Types\Message;
  * @property bool $allow_sending_without_reply Pass True if the message should be sent even if the specified replied-to message is not found
  * @property InlineKeyboardMarkup $reply_markup A JSON-serialized object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button.
  *
+ *
  * @see https://api.telegram.org/bots/api#sendinvoice
  */
 class SendInvoice extends MethodDefinition implements MethodDefinitionInterface
@@ -44,7 +47,7 @@ class SendInvoice extends MethodDefinition implements MethodDefinitionInterface
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -54,8 +57,8 @@ class SendInvoice extends MethodDefinition implements MethodDefinitionInterface
     /**
      * @return Message
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

@@ -3,11 +3,14 @@
 namespace Jeely\TL\Methods;
 
 
+use Jeely\Telegram;
+
 /**
  * @class DeleteStickerFromSet
  * @description Use this method to delete a sticker from a set created by the bot. Returns True on success.
  *
  * @property string $sticker File identifier of the sticker
+ *
  *
  * @see https://api.telegram.org/bots/api#deletestickerfromset
  */
@@ -16,7 +19,7 @@ class DeleteStickerFromSet extends MethodDefinition implements MethodDefinitionI
     protected string $castsTo = 'bool';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -26,8 +29,8 @@ class DeleteStickerFromSet extends MethodDefinition implements MethodDefinitionI
     /**
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

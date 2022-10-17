@@ -4,9 +4,8 @@
   "minimum-stability": "stable",
   "require": {
     "symfony/var-dumper": "^6.1",
-    "lazyjsonmapper/lazyjsonmapper": "^2.0",
     "guzzlehttp/guzzle": "^7.5",
-    "php-di/php-di": "^v7.x-dev"
+    "jeely/lazyjsonmapper": "^2.0"
   },
   "autoload": {
     "psr-4": {

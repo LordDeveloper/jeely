@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineKeyboardMarkup;
 use Jeely\TL\Types\Message;
 
@@ -19,6 +20,7 @@ use Jeely\TL\Types\Message;
  * @property int $proximity_alert_radius The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
  * @property InlineKeyboardMarkup $reply_markup A JSON-serialized object for a new inline keyboard.
  *
+ *
  * @see https://api.telegram.org/bots/api#editmessagelivelocation
  */
 class EditMessageLiveLocation extends MethodDefinition implements MethodDefinitionInterface
@@ -26,7 +28,7 @@ class EditMessageLiveLocation extends MethodDefinition implements MethodDefiniti
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -36,8 +38,8 @@ class EditMessageLiveLocation extends MethodDefinition implements MethodDefiniti
     /**
      * @return Message|bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

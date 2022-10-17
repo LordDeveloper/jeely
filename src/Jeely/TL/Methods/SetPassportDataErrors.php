@@ -3,6 +3,9 @@
 namespace Jeely\TL\Methods;
 
 
+use Jeely\Telegram;
+use Jeely\TL\Types\PassportElementError;
+
 /**
  * @class SetPassportDataErrors
  * @description Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
@@ -11,6 +14,7 @@ namespace Jeely\TL\Methods;
  * @property int $user_id User identifier
  * @property PassportElementError[] $errors A JSON-serialized array describing the errors
  *
+ *
  * @see https://api.telegram.org/bots/api#setpassportdataerrors
  */
 class SetPassportDataErrors extends MethodDefinition implements MethodDefinitionInterface
@@ -18,7 +22,7 @@ class SetPassportDataErrors extends MethodDefinition implements MethodDefinition
     protected string $castsTo = 'bool';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -28,8 +32,8 @@ class SetPassportDataErrors extends MethodDefinition implements MethodDefinition
     /**
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

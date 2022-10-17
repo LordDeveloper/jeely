@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\Update;
 
 /**
@@ -13,6 +14,7 @@ use Jeely\TL\Types\Update;
  * @property int $timeout Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
  * @property string[] $allowed_updates A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
  *
+ *
  * @see https://api.telegram.org/bots/api#getupdates
  */
 class GetUpdates extends MethodDefinition implements MethodDefinitionInterface
@@ -20,7 +22,7 @@ class GetUpdates extends MethodDefinition implements MethodDefinitionInterface
     protected string $castsTo = 'Update[]';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -30,8 +32,8 @@ class GetUpdates extends MethodDefinition implements MethodDefinitionInterface
     /**
      * @return Update[]
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

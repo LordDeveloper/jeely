@@ -378,7 +378,7 @@ class Message extends LazyUpdates
 
     public function reply($text, ... $args): Error|Message
     {
-        return self::$api->sendMessage(... array_merge($args, [
+        return $this->telegram->sendMessage(... array_merge($args, [
             'chat_id' => $this->chat->id,
             'text' => $text,
             'reply_to_message_id' => $this->message_id,

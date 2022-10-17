@@ -2,8 +2,10 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineKeyboardMarkup;
 use Jeely\TL\Types\Message;
+use Jeely\TL\Types\MessageEntity;
 
 /**
  * @class EditMessageText
@@ -18,6 +20,7 @@ use Jeely\TL\Types\Message;
  * @property bool $disable_web_page_preview Disables link previews for links in this message
  * @property InlineKeyboardMarkup $reply_markup A JSON-serialized object for an inline keyboard.
  *
+ *
  * @see https://api.telegram.org/bots/api#editmessagetext
  */
 class EditMessageText extends MethodDefinition implements MethodDefinitionInterface
@@ -25,7 +28,7 @@ class EditMessageText extends MethodDefinition implements MethodDefinitionInterf
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -35,8 +38,8 @@ class EditMessageText extends MethodDefinition implements MethodDefinitionInterf
     /**
      * @return Message|bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

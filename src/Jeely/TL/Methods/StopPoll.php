@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineKeyboardMarkup;
 use Jeely\TL\Types\Poll;
 
@@ -13,6 +14,7 @@ use Jeely\TL\Types\Poll;
  * @property int $message_id Identifier of the original message with the poll
  * @property InlineKeyboardMarkup $reply_markup A JSON-serialized object for a new message inline keyboard.
  *
+ *
  * @see https://api.telegram.org/bots/api#stoppoll
  */
 class StopPoll extends MethodDefinition implements MethodDefinitionInterface
@@ -20,7 +22,7 @@ class StopPoll extends MethodDefinition implements MethodDefinitionInterface
     protected string $castsTo = 'Poll';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -30,8 +32,8 @@ class StopPoll extends MethodDefinition implements MethodDefinitionInterface
     /**
      * @return Poll
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

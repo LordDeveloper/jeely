@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\UserProfilePhotos;
 
 /**
@@ -12,6 +13,7 @@ use Jeely\TL\Types\UserProfilePhotos;
  * @property int $offset Sequential number of the first photo to be returned. By default, all photos are returned.
  * @property int $limit Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
  *
+ *
  * @see https://api.telegram.org/bots/api#getuserprofilephotos
  */
 class GetUserProfilePhotos extends MethodDefinition implements MethodDefinitionInterface
@@ -19,7 +21,7 @@ class GetUserProfilePhotos extends MethodDefinition implements MethodDefinitionI
     protected string $castsTo = 'UserProfilePhotos';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -29,8 +31,8 @@ class GetUserProfilePhotos extends MethodDefinition implements MethodDefinitionI
     /**
      * @return UserProfilePhotos
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

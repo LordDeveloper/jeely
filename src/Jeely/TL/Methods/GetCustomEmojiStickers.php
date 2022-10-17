@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\Sticker;
 
 /**
@@ -10,6 +11,7 @@ use Jeely\TL\Types\Sticker;
  *
  * @property string[] $custom_emoji_ids List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
  *
+ *
  * @see https://api.telegram.org/bots/api#getcustomemojistickers
  */
 class GetCustomEmojiStickers extends MethodDefinition implements MethodDefinitionInterface
@@ -17,7 +19,7 @@ class GetCustomEmojiStickers extends MethodDefinition implements MethodDefinitio
     protected string $castsTo = 'Sticker[]';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -27,8 +29,8 @@ class GetCustomEmojiStickers extends MethodDefinition implements MethodDefinitio
     /**
      * @return Sticker[]
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

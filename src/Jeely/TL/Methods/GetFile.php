@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\File;
 
 /**
@@ -10,6 +11,7 @@ use Jeely\TL\Types\File;
  *
  * @property string $file_id File identifier to get information about
  *
+ *
  * @see https://api.telegram.org/bots/api#getfile
  */
 class GetFile extends MethodDefinition implements MethodDefinitionInterface
@@ -17,7 +19,7 @@ class GetFile extends MethodDefinition implements MethodDefinitionInterface
     protected string $castsTo = 'File';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -27,8 +29,8 @@ class GetFile extends MethodDefinition implements MethodDefinitionInterface
     /**
      * @return File
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

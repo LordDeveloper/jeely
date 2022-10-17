@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\Message;
 
 /**
@@ -14,6 +15,7 @@ use Jeely\TL\Types\Message;
  * @property bool $protect_content Protects the contents of the forwarded message from forwarding and saving
  * @property int $message_id Message identifier in the chat specified in from_chat_id
  *
+ *
  * @see https://api.telegram.org/bots/api#forwardmessage
  */
 class ForwardMessage extends MethodDefinition implements MethodDefinitionInterface
@@ -21,7 +23,7 @@ class ForwardMessage extends MethodDefinition implements MethodDefinitionInterfa
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -31,8 +33,8 @@ class ForwardMessage extends MethodDefinition implements MethodDefinitionInterfa
     /**
      * @return Message
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

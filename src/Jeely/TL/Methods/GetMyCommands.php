@@ -2,7 +2,9 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\BotCommand;
+use Jeely\TL\Types\BotCommandScope;
 
 /**
  * @class GetMyCommands
@@ -11,6 +13,7 @@ use Jeely\TL\Types\BotCommand;
  * @property BotCommandScope $scope A JSON-serialized object, describing scope of users. Defaults to BotCommandScopeDefault.
  * @property string $language_code A two-letter ISO 639-1 language code or an empty string
  *
+ *
  * @see https://api.telegram.org/bots/api#getmycommands
  */
 class GetMyCommands extends MethodDefinition implements MethodDefinitionInterface
@@ -18,7 +21,7 @@ class GetMyCommands extends MethodDefinition implements MethodDefinitionInterfac
     protected string $castsTo = 'BotCommand[]';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -28,8 +31,8 @@ class GetMyCommands extends MethodDefinition implements MethodDefinitionInterfac
     /**
      * @return BotCommand[]
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\ChatPermissions;
 
 /**
@@ -13,6 +14,7 @@ use Jeely\TL\Types\ChatPermissions;
  * @property ChatPermissions $permissions A JSON-serialized object for new user permissions
  * @property int $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
  *
+ *
  * @see https://api.telegram.org/bots/api#restrictchatmember
  */
 class RestrictChatMember extends MethodDefinition implements MethodDefinitionInterface
@@ -20,7 +22,7 @@ class RestrictChatMember extends MethodDefinition implements MethodDefinitionInt
     protected string $castsTo = 'bool';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -30,8 +32,8 @@ class RestrictChatMember extends MethodDefinition implements MethodDefinitionInt
     /**
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

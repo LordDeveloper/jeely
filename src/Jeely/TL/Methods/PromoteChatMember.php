@@ -3,6 +3,8 @@
 namespace Jeely\TL\Methods;
 
 
+use Jeely\Telegram;
+
 /**
  * @class PromoteChatMember
  * @description Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean parameters to demote a user. Returns True on success.
@@ -21,6 +23,7 @@ namespace Jeely\TL\Methods;
  * @property bool $can_invite_users Pass True if the administrator can invite new users to the chat
  * @property bool $can_pin_messages Pass True if the administrator can pin messages, supergroups only
  *
+ *
  * @see https://api.telegram.org/bots/api#promotechatmember
  */
 class PromoteChatMember extends MethodDefinition implements MethodDefinitionInterface
@@ -28,7 +31,7 @@ class PromoteChatMember extends MethodDefinition implements MethodDefinitionInte
     protected string $castsTo = 'bool';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -38,8 +41,8 @@ class PromoteChatMember extends MethodDefinition implements MethodDefinitionInte
     /**
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

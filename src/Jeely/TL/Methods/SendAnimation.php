@@ -2,10 +2,12 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\ForceReply;
 use Jeely\TL\Types\InlineKeyboardMarkup;
 use Jeely\TL\Types\InputFile;
 use Jeely\TL\Types\Message;
+use Jeely\TL\Types\MessageEntity;
 use Jeely\TL\Types\ReplyKeyboardMarkup;
 use Jeely\TL\Types\ReplyKeyboardRemove;
 
@@ -28,6 +30,7 @@ use Jeely\TL\Types\ReplyKeyboardRemove;
  * @property bool $allow_sending_without_reply Pass True if the message should be sent even if the specified replied-to message is not found
  * @property InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
  *
+ *
  * @see https://api.telegram.org/bots/api#sendanimation
  */
 class SendAnimation extends MethodDefinition implements MethodDefinitionInterface
@@ -35,7 +38,7 @@ class SendAnimation extends MethodDefinition implements MethodDefinitionInterfac
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -45,8 +48,8 @@ class SendAnimation extends MethodDefinition implements MethodDefinitionInterfac
     /**
      * @return Message
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

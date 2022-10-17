@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineQueryResult;
 use Jeely\TL\Types\SentWebAppMessage;
 
@@ -12,6 +13,7 @@ use Jeely\TL\Types\SentWebAppMessage;
  * @property string $web_app_query_id Unique identifier for the query to be answered
  * @property InlineQueryResult $result A JSON-serialized object describing the message to be sent
  *
+ *
  * @see https://api.telegram.org/bots/api#answerwebappquery
  */
 class AnswerWebAppQuery extends MethodDefinition implements MethodDefinitionInterface
@@ -19,7 +21,7 @@ class AnswerWebAppQuery extends MethodDefinition implements MethodDefinitionInte
     protected string $castsTo = 'SentWebAppMessage';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -29,8 +31,8 @@ class AnswerWebAppQuery extends MethodDefinition implements MethodDefinitionInte
     /**
      * @return SentWebAppMessage
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

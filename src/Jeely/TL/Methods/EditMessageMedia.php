@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\InlineKeyboardMarkup;
 use Jeely\TL\Types\InputMedia;
 use Jeely\TL\Types\Message;
@@ -16,6 +17,7 @@ use Jeely\TL\Types\Message;
  * @property InputMedia $media A JSON-serialized object for a new media content of the message
  * @property InlineKeyboardMarkup $reply_markup A JSON-serialized object for a new inline keyboard.
  *
+ *
  * @see https://api.telegram.org/bots/api#editmessagemedia
  */
 class EditMessageMedia extends MethodDefinition implements MethodDefinitionInterface
@@ -23,7 +25,7 @@ class EditMessageMedia extends MethodDefinition implements MethodDefinitionInter
     protected string $castsTo = 'Message';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -33,8 +35,8 @@ class EditMessageMedia extends MethodDefinition implements MethodDefinitionInter
     /**
      * @return Message|bool
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

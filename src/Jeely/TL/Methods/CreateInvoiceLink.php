@@ -3,6 +3,9 @@
 namespace Jeely\TL\Methods;
 
 
+use Jeely\Telegram;
+use Jeely\TL\Types\LabeledPrice;
+
 /**
  * @class CreateInvoiceLink
  * @description Use this method to create a link for an invoice. Returns the created invoice link as String on success.
@@ -28,6 +31,7 @@ namespace Jeely\TL\Methods;
  * @property bool $send_email_to_provider Pass True if the user's email address should be sent to the provider
  * @property bool $is_flexible Pass True if the final price depends on the shipping method
  *
+ *
  * @see https://api.telegram.org/bots/api#createinvoicelink
  */
 class CreateInvoiceLink extends MethodDefinition implements MethodDefinitionInterface
@@ -35,7 +39,7 @@ class CreateInvoiceLink extends MethodDefinition implements MethodDefinitionInte
     protected string $castsTo = 'string';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -45,8 +49,8 @@ class CreateInvoiceLink extends MethodDefinition implements MethodDefinitionInte
     /**
      * @return string
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }

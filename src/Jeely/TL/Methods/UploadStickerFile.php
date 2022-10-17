@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Methods;
 
+use Jeely\Telegram;
 use Jeely\TL\Types\File;
 use Jeely\TL\Types\InputFile;
 
@@ -12,6 +13,7 @@ use Jeely\TL\Types\InputFile;
  * @property int $user_id User identifier of sticker file owner
  * @property InputFile $png_sticker PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More information on Sending Files »
  *
+ *
  * @see https://api.telegram.org/bots/api#uploadstickerfile
  */
 class UploadStickerFile extends MethodDefinition implements MethodDefinitionInterface
@@ -19,7 +21,7 @@ class UploadStickerFile extends MethodDefinition implements MethodDefinitionInte
     protected string $castsTo = 'File';
 
     /**
-     * @var array $params The value that are taken in the constructor method as method parameters.
+     * @var mixed $params The value that are taken in the constructor method as method parameters.
      */
     public function __construct(...$params)
     {
@@ -29,8 +31,8 @@ class UploadStickerFile extends MethodDefinition implements MethodDefinitionInte
     /**
      * @return File
      */
-    public function __invoke()
+    public function __invoke(Telegram $telegram)
     {
-        return $this->call();
+        return $this->call($telegram);
     }
 }
