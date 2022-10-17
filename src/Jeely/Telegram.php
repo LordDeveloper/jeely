@@ -143,6 +143,11 @@ class Telegram
         ])->withConfig($browserConfig);
     }
 
+    public static function factory(string $token, array $browserConfig = []): Telegram
+    {
+        return new self($token, $browserConfig);
+    }
+
     private function parseLogicContents(mixed $contents)
     {
         if (is_array($contents)) {
