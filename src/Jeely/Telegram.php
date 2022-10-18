@@ -26,6 +26,7 @@ use Jeely\TL\Types\User;
 use Jeely\TL\Types\UserProfilePhotos;
 use Jeely\TL\Types\WebhookInfo;
 use Jeely\TL\Update;
+use Jeely\Tools\Constant;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -134,9 +135,7 @@ class Telegram
 
     protected ?string $parseMode = null;
 
-    private array $couldBeUpload = [
-        'animation', 'audio', 'document', 'photo', 'sticker', 'video', 'video_note', 'voice',
-    ];
+    private array $couldBeUpload = Constant::MEDIA_TYPES;
 
     public function __construct(protected string $token, array $browserConfig = [])
     {
@@ -200,6 +199,9 @@ class Telegram
                 } if (! empty($value['selective'])) {
                     $isSelective = true;
                 }
+            }
+            if ($value instanceof LazyUpdates) {
+                $value->setTelegramRecursive($this);
             }
             if (
                 is_string($value) && is_file($value) &&

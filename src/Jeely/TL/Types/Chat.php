@@ -161,4 +161,11 @@ class Chat extends LazyUpdates
         'linked_chat_id' => 'int',
         'location' => 'ChatLocation',
     ];
+
+    public function _init()
+    {
+        $this->_setProperty('full_name', implode(' ', [
+            $this->_getProperty('first_name'), $this->_getProperty('last_name'),
+        ]));
+    }
 }

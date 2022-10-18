@@ -78,6 +78,7 @@ class User extends LazyUpdates
         'is_bot' => 'bool',
         'first_name' => 'string',
         'last_name' => 'string',
+        'full_name' => 'string',
         'username' => 'string',
         'language_code' => 'string',
         'is_premium' => 'bool',
@@ -86,4 +87,11 @@ class User extends LazyUpdates
         'can_read_all_group_messages' => 'bool',
         'supports_inline_queries' => 'bool',
     ];
+
+    public function _init()
+    {
+        $this->_setProperty('full_name', implode(' ', [
+            $this->_getProperty('first_name'), $this->_getProperty('last_name'),
+        ]));
+    }
 }

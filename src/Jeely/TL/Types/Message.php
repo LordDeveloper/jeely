@@ -3,6 +3,7 @@
 namespace Jeely\TL\Types;
 
 use Jeely\LazyUpdates;
+use Jeely\Tools\Constant;
 
 
 /**
@@ -374,7 +375,35 @@ class Message extends LazyUpdates
         'video_chat_participants_invited' => 'VideoChatParticipantsInvited',
         'web_app_data' => 'WebAppData',
         'reply_markup' => 'InlineKeyboardMarkup',
+        'is_media' => 'bool',
+        'media_type' => 'string',
+        'file_id' => 'string',
     ];
+
+    private function checkForMedia()
+    {
+        foreach (Constant::MEDIA_TYPES as $type) {
+            if (isset($this->{$type})) {
+                $media = $this->{$type};
+                $this->_setProperty('is_media', true);
+                $this->_setProperty('file_id', is_array($media) ? end($media)->file_id : $media->file_id);
+                $this->_setProperty('media_type', $type);
+
+                break;
+            }
+        }
+    }
+
+    public function _init()
+    {
+        try {
+            $this->checkForMedia();
+
+            parent::_init();
+        } catch (\Throwable $e) {
+            dd($e);
+        }
+    }
 
     public function reply($text, ... $args): Error|Message
     {
