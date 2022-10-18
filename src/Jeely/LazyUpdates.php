@@ -21,7 +21,7 @@ class LazyUpdates extends LazyJsonMapper implements \ArrayAccess
 
         foreach ($this as $item) {
             if ($item instanceof LazyUpdates) {
-                $item->setTelegramRecursive(clone $telegram);
+                $item->setTelegramRecursive($telegram);
             }
         }
 
