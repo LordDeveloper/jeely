@@ -136,7 +136,7 @@ class Telegram
         'animation', 'audio', 'document', 'photo', 'sticker', 'video', 'video_note', 'voice',
     ];
 
-    public function __construct(string $token, array $browserConfig = [])
+    public function __construct(protected string $token, array $browserConfig = [])
     {
         $this->browser = Browser::factory([
             'base_uri' => sprintf($this->baseUri, $token),
@@ -202,7 +202,12 @@ class Telegram
             }
         });
 
-        if (isset($fields['reply_markup'])) {
+        // A shortcut for reply_markup
+        if (isset($fields['buttons'])) {
+            $fields['reply_markup'] = $fields['buttons'];
+
+            unset($fields['buttons']);
+        } if (isset($fields['reply_markup'])) {
             if (! is_null($isInlineKeyboard)) {
                 $replyMarkup = $fields['reply_markup'];
                 $type = $isInlineKeyboard ? 'inline_keyboard' : 'keyboard';
