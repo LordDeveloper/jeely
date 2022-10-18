@@ -41,7 +41,10 @@ use Jeely\Tools\Constant;
  * @method Voice getVoice() Optional. Message is a voice message, information about the file
  * @method string getCaption() Optional. Caption for the animation, audio, document, photo, video or voice
  * @method MessageEntity[] getCaptionEntities() Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
- * @method Contact getContact() Optional. Message is a shared contact, information about the contact
+ * @method Contact getIsMedia() Optional. Determine a message contains a media
+ * @method Contact getFileId() Optional. Current message media file_id
+ * @method Contact getContact() Optional. Specifies the media type in the message
+ * @method Contact getMediaType() Optional. Message is a shared contact, information about the contact
  * @method Dice getDice() Optional. Message is a dice with random value
  * @method Game getGame() Optional. Message is a game, information about the game. More about games »
  * @method Poll getPoll() Optional. Message is a native poll, information about the poll
@@ -101,6 +104,9 @@ use Jeely\Tools\Constant;
  * @method bool isVoice()
  * @method bool isCaption()
  * @method bool isCaptionEntities()
+ * @method bool isIsMedia()
+ * @method bool isFileId()
+ * @method bool isMediaType()
  * @method bool isContact()
  * @method bool isDice()
  * @method bool isGame()
@@ -161,6 +167,9 @@ use Jeely\Tools\Constant;
  * @method $this setVoice()
  * @method $this setCaption()
  * @method $this setCaptionEntities()
+ * @method $this setIsMedia()
+ * @method $this setFileId()
+ * @method $this setMediaType()
  * @method $this setContact()
  * @method $this setDice()
  * @method $this setGame()
@@ -221,6 +230,9 @@ use Jeely\Tools\Constant;
  * @method $this unsetVoice()
  * @method $this unsetCaption()
  * @method $this unsetCaptionEntities()
+ * @method $this unsetIsMedia()
+ * @method $this unsetFileId()
+ * @method $this unsetMediaType()
  * @method $this unsetContact()
  * @method $this unsetDice()
  * @method $this unsetGame()
@@ -281,6 +293,9 @@ use Jeely\Tools\Constant;
  * @property Voice $voice Optional. Message is a voice message, information about the file
  * @property string $caption Optional. Caption for the animation, audio, document, photo, video or voice
  * @property MessageEntity[] $caption_entities Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+ * @property bool $is_media Optional. Determine a message contains a media
+ * @property string $file_id Optional. Current message media file_id
+ * @property string $media_type Optional. Specifies the media type in the message
  * @property Contact $contact Optional. Message is a shared contact, information about the contact
  * @property Dice $dice Optional. Message is a dice with random value
  * @property Game $game Optional. Message is a game, information about the game. More about games »

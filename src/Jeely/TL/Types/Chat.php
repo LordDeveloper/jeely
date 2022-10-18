@@ -15,6 +15,7 @@ use Jeely\LazyUpdates;
  * @method string getUsername() Optional. Username, for private chats, supergroups and channels if available
  * @method string getFirstName() Optional. First name of the other party in a private chat
  * @method string getLastName() Optional. Last name of the other party in a private chat
+ * @method string getFullName() Optional. Full name of the other party in a private chat
  * @method ChatPhoto getPhoto() Optional. Chat photo. Returned only in getChat.
  * @method string getBio() Optional. Bio of the other party in a private chat. Returned only in getChat.
  * @method bool getHasPrivateForwards() Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.
@@ -42,6 +43,7 @@ use Jeely\LazyUpdates;
  * @method bool isUsername()
  * @method bool isFirstName()
  * @method bool isLastName()
+ * @method bool isFullName()
  * @method bool isPhoto()
  * @method bool isBio()
  * @method bool isHasPrivateForwards()
@@ -66,6 +68,7 @@ use Jeely\LazyUpdates;
  * @method $this setUsername()
  * @method $this setFirstName()
  * @method $this setLastName()
+ * @method $this setFullName()
  * @method $this setPhoto()
  * @method $this setBio()
  * @method $this setHasPrivateForwards()
@@ -90,6 +93,7 @@ use Jeely\LazyUpdates;
  * @method $this unsetUsername()
  * @method $this unsetFirstName()
  * @method $this unsetLastName()
+ * @method $this unsetFullName()
  * @method $this unsetPhoto()
  * @method $this unsetBio()
  * @method $this unsetHasPrivateForwards()
@@ -114,6 +118,7 @@ use Jeely\LazyUpdates;
  * @property string $username Optional. Username, for private chats, supergroups and channels if available
  * @property string $first_name Optional. First name of the other party in a private chat
  * @property string $last_name Optional. Last name of the other party in a private chat
+ * @property string $full_name Optional. Full name of the other party in a private chat
  * @property ChatPhoto $photo Optional. Chat photo. Returned only in getChat.
  * @property string $bio Optional. Bio of the other party in a private chat. Returned only in getChat.
  * @property bool $has_private_forwards Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.

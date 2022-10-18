@@ -13,6 +13,7 @@ use Jeely\LazyUpdates;
  * @method bool getIsBot() True, if this user is a bot
  * @method string getFirstName() User's or bot's first name
  * @method string getLastName() Optional. User's or bot's last name
+ * @method string getFullName() Optional. User's or bot's full name
  * @method string getUsername() Optional. User's or bot's username
  * @method string getLanguageCode() Optional. IETF language tag of the user's language
  * @method bool getIsPremium() Optional. True, if this user is a Telegram Premium user
@@ -25,6 +26,7 @@ use Jeely\LazyUpdates;
  * @method bool isIsBot()
  * @method bool isFirstName()
  * @method bool isLastName()
+ * @method bool isFullName()
  * @method bool isUsername()
  * @method bool isLanguageCode()
  * @method bool isIsPremium()
@@ -37,6 +39,7 @@ use Jeely\LazyUpdates;
  * @method $this setIsBot()
  * @method $this setFirstName()
  * @method $this setLastName()
+ * @method $this setFullName()
  * @method $this setUsername()
  * @method $this setLanguageCode()
  * @method $this setIsPremium()
@@ -49,6 +52,7 @@ use Jeely\LazyUpdates;
  * @method $this unsetIsBot()
  * @method $this unsetFirstName()
  * @method $this unsetLastName()
+ * @method $this unsetFullName()
  * @method $this unsetUsername()
  * @method $this unsetLanguageCode()
  * @method $this unsetIsPremium()
@@ -61,6 +65,7 @@ use Jeely\LazyUpdates;
  * @property bool $is_bot True, if this user is a bot
  * @property string $first_name User's or bot's first name
  * @property string $last_name Optional. User's or bot's last name
+ * @property string $full_name Optional. User's or bot's full name
  * @property string $username Optional. User's or bot's username
  * @property string $language_code Optional. IETF language tag of the user's language
  * @property bool $is_premium Optional. True, if this user is a Telegram Premium user
