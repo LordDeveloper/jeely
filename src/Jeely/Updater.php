@@ -17,10 +17,13 @@ class Updater
         $this->telegram = new Telegram($token, $browserConfig);
     }
 
-    public function waitWebhook(callable $callback)
+    public function waitWebhook(Closure $callback)
     {
         if ($update = json_decode(file_get_contents('php://input'), true)) {
             $update = new Update($update);
+
+            // Callback must be an instance of Closure and binds to Telegram object
+            $callback->bindTo($this->telegram);
 
             $callback($update->setTelegramRecursive($this->telegram));
         }
@@ -28,7 +31,7 @@ class Updater
         gc_collect_cycles();
     }
 
-    public function waitPolling(callable $callback, array $options = [])
+    public function waitPolling(Closure $callback, array $options = [])
     {
         $telegram = $this->telegram;
         // Delete webhooks before hearing updates
@@ -38,10 +41,9 @@ class Updater
             $updates = $telegram->getUpdates($options);
 
             foreach ($updates as $update) {
-                if ($callback instanceof Closure) {
-                    $callback->bindTo($telegram);
-                }
+                $callback->bindTo($telegram);
 
+                // Callback must be an instance of Closure and binds to Telegram object
                 $callback($update);
 
                 $options['offset'] = $update->update_id + 1;
