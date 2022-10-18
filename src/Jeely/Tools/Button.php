@@ -86,6 +86,13 @@ class Button
         ]);
     }
 
+    public static function url($text, $url, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    {
+        return self::inlineText($text, [
+            'url' => $url,
+        ]);
+    }
+
     public static function loginUrl($text, $loginUrl, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
     {
         return self::inlineText($text, [
