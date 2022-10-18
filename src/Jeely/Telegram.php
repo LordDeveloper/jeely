@@ -132,7 +132,7 @@ class Telegram
 
     private string $baseUri = 'https://api.telegram.org/bot%s/';
 
-    protected string $parseMode;
+    protected ?string $parseMode = null;
 
     private array $couldBeUpload = [
         'animation', 'audio', 'document', 'photo', 'sticker', 'video', 'video_note', 'voice',
