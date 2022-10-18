@@ -132,6 +132,8 @@ class Telegram
 
     private string $baseUri = 'https://api.telegram.org/bot%s/';
 
+    protected string $parseMode;
+
     private array $couldBeUpload = [
         'animation', 'audio', 'document', 'photo', 'sticker', 'video', 'video_note', 'voice',
     ];
@@ -146,6 +148,13 @@ class Telegram
     public static function factory(string $token, array $browserConfig = []): Telegram
     {
         return new self($token, $browserConfig);
+    }
+
+    public function setParseMode($parseMode): Telegram
+    {
+        $this->parseMode = $parseMode;
+
+        return $this;
     }
 
     private function parseLogicContents(mixed $contents)
@@ -175,6 +184,8 @@ class Telegram
         $isResizedKeyboard = false;
         $isOnetimeKeyboard = false;
         $isSelective = false;
+
+        $fields['parse_mode'] = $this->parseMode;
 
         array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
             if ($value instanceof KeyboardButtonInterface) {
