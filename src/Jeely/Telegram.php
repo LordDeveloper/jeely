@@ -185,8 +185,6 @@ class Telegram
         $isOnetimeKeyboard = false;
         $isSelective = false;
 
-        $fields['parse_mode'] = $this->parseMode;
-
         array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
             if ($value instanceof KeyboardButtonInterface) {
                 if (is_null($isInlineKeyboard)) {
@@ -212,6 +210,10 @@ class Telegram
                 $value = 'attach://' . $name;
             }
         });
+
+        if (! isset($fields['parse_mode'])) {
+            $fields['parse_mode'] = $this->parseMode;
+        }
 
         // A shortcut for reply_markup
         if (isset($fields['buttons'])) {
