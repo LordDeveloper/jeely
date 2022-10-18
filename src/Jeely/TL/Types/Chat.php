@@ -148,6 +148,7 @@ class Chat extends LazyUpdates
         'username' => 'string',
         'first_name' => 'string',
         'last_name' => 'string',
+        'full_name' => 'string',
         'photo' => 'ChatPhoto',
         'bio' => 'string',
         'has_private_forwards' => 'bool',
