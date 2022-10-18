@@ -23,7 +23,7 @@ class Updater
             $update = new Update($update);
 
             // Callback must be an instance of Closure and binds to Telegram object
-            $callback->bindTo($this->telegram);
+            $callback = $callback->bindTo($this->telegram);
 
             $callback($update->setTelegramRecursive($this->telegram));
         }
@@ -41,7 +41,7 @@ class Updater
             $updates = $telegram->getUpdates($options);
 
             foreach ($updates as $update) {
-                $callback->bindTo($telegram);
+                $callback = $callback->bindTo($telegram);
 
                 // Callback must be an instance of Closure and binds to Telegram object
                 $callback($update);
