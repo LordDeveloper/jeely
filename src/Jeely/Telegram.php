@@ -213,6 +213,12 @@ class Telegram
             }
         });
 
+        foreach (['chat_id', 'user_id'] as $receptable) {
+            if (isset($fields[$receptable]) && strtolower($fields[$receptable]) === 'me') {
+                $fields[$receptable] = $this->getId();
+            }
+        }
+
         if (! isset($fields['parse_mode'])) {
             $fields['parse_mode'] = $this->parseMode;
         }
@@ -292,6 +298,11 @@ class Telegram
                 ]);
             }
         );
+    }
+
+    private function getId(): int
+    {
+        return (int) explode(':', $this->token, 2)[0];
     }
 
     public function __call($name, array $arguments = [])
