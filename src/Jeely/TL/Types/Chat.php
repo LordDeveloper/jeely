@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Types;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Jeely\LazyUpdates;
 
 
@@ -183,5 +184,12 @@ class Chat extends LazyUpdates
         if ($this->_getProperty('type') === 'channel') {
             $this->_setProperty('is_public', $this->_isProperty('username'));
         }
+    }
+
+    public function leave(): Error|PromiseInterface|bool
+    {
+        return $this->telegram->leaveChat([
+            'chat_id' => $this->id,
+        ]);
     }
 }
