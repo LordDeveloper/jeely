@@ -196,6 +196,7 @@ class Chat extends LazyUpdates
     public function getMember($memberId, ... $args): Error|PromiseInterface|ChatMember
     {
         return $this->telegram->getChatMember(... array_merge($args, [
+            'chat_id' => $this->id,
             'user_id' => $memberId,
         ]));
     }
