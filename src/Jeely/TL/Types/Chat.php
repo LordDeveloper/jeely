@@ -192,4 +192,11 @@ class Chat extends LazyUpdates
             'chat_id' => $this->id,
         ]);
     }
+
+    public function getMember($memberId, ... $args): Error|PromiseInterface|ChatMember
+    {
+        return $this->telegram->getChatMember(... array_merge($args, [
+            'user_id' => $memberId,
+        ]));
+    }
 }
