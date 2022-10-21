@@ -10,6 +10,9 @@
   "autoload": {
     "psr-4": {
       "Jeely\\": "src/Jeely/"
-    }
+    },
+    "files": [
+      "src/functions.php"
+    ]
   }
 }

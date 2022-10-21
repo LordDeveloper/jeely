@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Types;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Jeely\LazyUpdates;
 use Jeely\Tools\Constant;
 
@@ -416,7 +417,7 @@ class Message extends LazyUpdates
         parent::_init();
     }
 
-    public function reply($text, ... $args): Error|Message
+    public function reply($text, ... $args): Error|PromiseInterface|Message
     {
         return $this->telegram->sendMessage(... array_merge($args, [
             'chat_id' => $this->chat->id,

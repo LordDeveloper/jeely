@@ -22,7 +22,9 @@ class MethodDefinition
 
     protected function call(Telegram $telegram)
     {
-        return $telegram->fetchAsync($this->getName(), $this->toArray())->then(function ($response) use ($telegram) {
+        $params = $this->toArray();
+
+        $promise = $telegram->fetchAsync($this->getName(), $this->toArray())->then(function ($response) use ($telegram) {
             if ($response instanceof LazyUpdates) {
                 return $response;
             } elseif ($isList = str_ends_with($castsTo = $this->castsTo(), '[]')) {
@@ -41,7 +43,13 @@ class MethodDefinition
             };
 
             return $isList ? array_map($convert, $response) : $convert($response);
-        })->wait();
+        });
+
+        if (isset($params['async']) && $params['async'] === true) {
+            return $promise;
+        }
+
+        return $promise->wait();
     }
 
     private function getName(): string
