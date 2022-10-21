@@ -99,4 +99,27 @@ class User extends LazyUpdates
             $this->_getProperty('first_name'), $this->_getProperty('last_name'),
         ]));
     }
+
+    public function isMemberOf(array $chats = [])
+    {
+        $promises = [];
+
+        foreach ($chats as $chat) {
+            $promises[$chat] = $this->telegram->getChatMember([
+                'chat_id' => $chat,
+                'user_id' => $this->id,
+                'async' => true,
+            ])->then(function ($response) {
+                if ($response instanceof ChatMember) {
+                    if (! in_array($response->status, ['kicked', 'left'])) {
+                        return true;
+                    }
+                }
+
+                return false;
+            });
+        }
+
+        return wait(all($promises));
+    }
 }
