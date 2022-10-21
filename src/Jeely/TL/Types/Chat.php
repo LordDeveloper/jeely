@@ -18,6 +18,7 @@ use Jeely\LazyUpdates;
  * @method string getFullName() Optional. Full name of the other party in a private chat
  * @method ChatPhoto getPhoto() Optional. Chat photo. Returned only in getChat.
  * @method string getBio() Optional. Bio of the other party in a private chat. Returned only in getChat.
+ * @method bool getIsPublic() Optional. True, if the channel is public.
  * @method bool getHasPrivateForwards() Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.
  * @method bool getHasRestrictedVoiceAndVideoMessages() Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat. Returned only in getChat.
  * @method bool getJoinToSendMessages() Optional. True, if users need to join the supergroup before they can send messages. Returned only in getChat.
@@ -46,6 +47,7 @@ use Jeely\LazyUpdates;
  * @method bool isFullName()
  * @method bool isPhoto()
  * @method bool isBio()
+ * @method bool isIsPublic()
  * @method bool isHasPrivateForwards()
  * @method bool isHasRestrictedVoiceAndVideoMessages()
  * @method bool isJoinToSendMessages()
@@ -71,6 +73,7 @@ use Jeely\LazyUpdates;
  * @method $this setFullName()
  * @method $this setPhoto()
  * @method $this setBio()
+ * @method $this setIsPublic()
  * @method $this setHasPrivateForwards()
  * @method $this setHasRestrictedVoiceAndVideoMessages()
  * @method $this setJoinToSendMessages()
@@ -96,6 +99,7 @@ use Jeely\LazyUpdates;
  * @method $this unsetFullName()
  * @method $this unsetPhoto()
  * @method $this unsetBio()
+ * @method $this unsetIsPublic()
  * @method $this unsetHasPrivateForwards()
  * @method $this unsetHasRestrictedVoiceAndVideoMessages()
  * @method $this unsetJoinToSendMessages()
@@ -121,6 +125,7 @@ use Jeely\LazyUpdates;
  * @property string $full_name Optional. Full name of the other party in a private chat
  * @property ChatPhoto $photo Optional. Chat photo. Returned only in getChat.
  * @property string $bio Optional. Bio of the other party in a private chat. Returned only in getChat.
+ * @property bool $is_public Optional. True, if the channel is public.
  * @property bool $has_private_forwards Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.
  * @property bool $has_restricted_voice_and_video_messages Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat. Returned only in getChat.
  * @property bool $join_to_send_messages Optional. True, if users need to join the supergroup before they can send messages. Returned only in getChat.
@@ -151,6 +156,7 @@ class Chat extends LazyUpdates
         'full_name' => 'string',
         'photo' => 'ChatPhoto',
         'bio' => 'string',
+        'is_public' => 'bool',
         'has_private_forwards' => 'bool',
         'has_restricted_voice_and_video_messages' => 'bool',
         'join_to_send_messages' => 'bool',
@@ -173,5 +179,9 @@ class Chat extends LazyUpdates
         $this->_setProperty('full_name', implode(' ', [
             $this->_getProperty('first_name'), $this->_getProperty('last_name'),
         ]));
+
+        if ($this->_getProperty('type') === 'channel') {
+            $this->_setProperty('is_public', $this->_isProperty('username'));
+        }
     }
 }
