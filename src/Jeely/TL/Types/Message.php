@@ -411,13 +411,9 @@ class Message extends LazyUpdates
 
     public function _init()
     {
-        try {
-            $this->checkForMedia();
+        $this->checkForMedia();
 
-            parent::_init();
-        } catch (\Throwable $e) {
-            dd($e);
-        }
+        parent::_init();
     }
 
     public function reply($text, ... $args): Error|Message

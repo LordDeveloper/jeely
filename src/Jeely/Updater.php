@@ -3,6 +3,7 @@
 namespace Jeely;
 
 use Closure;
+use Jeely\TL\Types\Error;
 use Jeely\TL\Update;
 
 /**
@@ -39,6 +40,14 @@ class Updater
 
         while (true) {
             $updates = $telegram->getUpdates($options);
+
+            if (! is_array($updates) && $updates instanceof Error) {
+                if ($updates->getErrorCode() !== 409) {
+                    throw new \Exception($updates->getDescription());
+                }
+
+                continue;
+            }
 
             foreach ($updates as $update) {
                 $callback = $callback->bindTo($telegram);
