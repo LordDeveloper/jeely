@@ -433,4 +433,13 @@ class Message extends LazyUpdates
             'reply_to_message_id' => $this->message_id,
         ]));
     }
+
+    public function edit($text, ... $args): Error|PromiseInterface|Message|bool
+    {
+        return $this->telegram->editMessageText(... array_merge($args, [
+            'chat_id' => $this->chat->id,
+            'text' => $text,
+            'message_id' => $this->message_id,
+        ]));
+    }
 }
