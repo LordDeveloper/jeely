@@ -431,6 +431,7 @@ class Message extends LazyUpdates
             'chat_id' => $this->chat->id,
             'text' => $text,
             'reply_to_message_id' => $this->message_id,
+            'allow_sending_without_reply' => true,
         ]));
     }
 
