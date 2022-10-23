@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Types;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Jeely\LazyUpdates;
 
 
@@ -62,4 +63,13 @@ class CallbackQuery extends LazyUpdates
         'data' => 'string',
         'game_short_name' => 'string',
     ];
+
+    public function answer($text, $showAlert = false): Error|PromiseInterface|bool
+    {
+        return $this->telegram->answerCallbackQuery([
+            'callback_query_id' => $this->id,
+            'text' => $text,
+            'show_alert' => $showAlert,
+        ]);
+    }
 }
