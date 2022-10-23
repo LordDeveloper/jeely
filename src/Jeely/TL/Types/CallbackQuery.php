@@ -75,6 +75,22 @@ class CallbackQuery extends LazyUpdates
 
     public function edit(string $text = null, ... $args): PromiseInterface|Error|bool|Message
     {
-        return $this->message->edit($text, ... $args);
+        $fn = [
+            $this->telegram,
+            ! is_null($text)
+                ? 'editMessageText'
+                : (
+            isset($args['caption'])
+                ? 'editMessageCaption'
+                : 'editMessageReplyMarkup'
+            )
+        ];
+
+        return $fn(... array_merge($args, [
+            'chat_id' => $this->message?->chat->id,
+            'text' => $text,
+            'message_id' => $this->message?->message_id,
+            'inline_message_id' => $this->inline_message_id
+        ]));
     }
 }

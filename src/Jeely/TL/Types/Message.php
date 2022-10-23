@@ -399,8 +399,8 @@ class Message extends LazyUpdates
     private function checkForMedia()
     {
         foreach (Constant::MEDIA_TYPES as $type) {
-            if (isset($this->{$type})) {
-                $media = $this->{$type};
+            if (isset($this[$type])) {
+                $media = $this[$type];
                 $this->_setProperty('is_media', true);
                 $this->_setProperty('file_id', is_array($media) ? end($media)->file_id : $media->file_id);
                 $this->_setProperty('media_type', $type);
