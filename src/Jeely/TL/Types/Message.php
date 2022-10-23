@@ -435,9 +435,20 @@ class Message extends LazyUpdates
         ]));
     }
 
-    public function edit($text, ... $args): Error|PromiseInterface|Message|bool
+    public function edit(string $text = null, ... $args): Error|PromiseInterface|Message|bool
     {
-        return $this->telegram->editMessageText(... array_merge($args, [
+        $fn = [
+            $this->telegram,
+                ! is_null($text)
+                ? 'editMessageText'
+                : (
+                    isset($args['caption'])
+                        ? 'editMessageCaption'
+                        : 'editMessageReplyMarkup'
+                )
+        ];
+
+        return $fn(... array_merge($args, [
             'chat_id' => $this->chat->id,
             'text' => $text,
             'message_id' => $this->message_id,
