@@ -72,4 +72,9 @@ class CallbackQuery extends LazyUpdates
             'show_alert' => $showAlert,
         ]);
     }
+
+    public function edit(string $text = null, ... $args): PromiseInterface|Error|bool|Message
+    {
+        return $this->message->edit($text, ... $args);
+    }
 }

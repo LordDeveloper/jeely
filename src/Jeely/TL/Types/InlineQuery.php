@@ -2,6 +2,7 @@
 
 namespace Jeely\TL\Types;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Jeely\LazyUpdates;
 
 
@@ -56,4 +57,12 @@ class InlineQuery extends LazyUpdates
         'chat_type' => 'string',
         'location' => 'Location',
     ];
+
+    public function answer(array $results, ... $args): Error|PromiseInterface|bool
+    {
+        return $this->telegram->answerInlineQuery(... array_merge($args, [
+            'inline_query_id' => $this->id,
+            'results' => $results,
+        ]));
+    }
 }
