@@ -37,7 +37,11 @@ class MethodDefinition
                     return $casted->setTelegramRecursive($telegram);
                 }
 
-                settype($response, $castsTo);
+                if (in_array($castsTo, [
+                    'bool', 'boolean', 'int', 'integer', 'float', 'double', 'string', 'array', 'object', 'null'
+                ])) {
+                    settype($response, $castsTo);
+                }
 
                 return $response;
             };
