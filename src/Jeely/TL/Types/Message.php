@@ -417,6 +417,14 @@ class Message extends LazyUpdates
         parent::_init();
     }
 
+    public function delete(): Error|PromiseInterface|bool
+    {
+        return $this->telegram->deleteMessage([
+            'chat_id' => $this->chat->id,
+            'message_id' => $this->message_id,
+        ]);
+    }
+
     public function reply($text, ... $args): Error|PromiseInterface|Message
     {
         return $this->telegram->sendMessage(... array_merge($args, [
