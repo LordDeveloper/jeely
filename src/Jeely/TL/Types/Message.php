@@ -449,7 +449,7 @@ class Message extends LazyUpdates
         ];
 
         return $fn(... array_merge($args, [
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->chat?->id,
             'text' => $text,
             'message_id' => $this->message_id,
         ]));
