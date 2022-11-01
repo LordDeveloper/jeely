@@ -27,6 +27,10 @@ class Paginator implements PaginatorInterface
         if ($currentPage > $pageCount) {
             $this->currentPage = $pageCount;
         }
+
+        if($pageCount <= 0) {
+            $this->pageCount = 1;
+        }
     }
 
     public static function format($text, $data): InlineKeyboardButton
@@ -137,7 +141,7 @@ class Paginator implements PaginatorInterface
         $keyboards[] = $this->keyboard();
         $keyboards = [... $keyboards, ... $this->keyboardAfter];
 
-        $keyboards = array_filter($keyboards);
+        $keyboards = array_values(array_filter($keyboards));
 
         return $keyboards ?: false;
     }
