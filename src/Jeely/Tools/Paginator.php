@@ -33,12 +33,12 @@ class Paginator implements PaginatorInterface
         }
     }
 
-    public static function format($text, $data): InlineKeyboardButton
+    protected static function format($text, $data): InlineKeyboardButton
     {
         return Button::inline($text, $data);
     }
 
-    public function build(): array
+    private function build(): array
     {
         $row = [];
 
@@ -51,26 +51,26 @@ class Paginator implements PaginatorInterface
                 $row[$page] = $page;
             }
         } else {
-            $row = $this->buildForMultiPages();
+            $row = $this->buildRows();
         }
 
         $row[$this->currentPage] = sprintf($this->currentPageLabel, $this->currentPage);
         return $this->keyboard = $this->toButtonArray($row);
     }
 
-    public function buildForMultiPages(): array
+    private function buildRows(): array
     {
         if ($this->currentPage <= 3) {
-            return $this->buildStartRow();
+            return $this->buildStartColumn();
         }
         elseif ($this->currentPage > $this->pageCount - 3) {
-            return $this->buildFinishRow();
+            return $this->buildFinishColumn();
         } else {
-            return $this->buildMiddleRow();
+            return $this->buildMiddleColumn();
         }
     }
 
-    public function buildStartRow(): array
+    private function buildStartColumn(): array
     {
         $row = [];
 
@@ -84,21 +84,21 @@ class Paginator implements PaginatorInterface
         return $row;
     }
 
-    public function buildFinishRow(): array
+    private function buildFinishColumn(): array
     {
         $row = [];
 
         $row[1] = sprintf($this->firstPageLabel, 1);
         $row[$this->pageCount - 3] = sprintf($this->previousPageLabel, $this->pageCount - 3);
 
-        foreach (range($this->pageCount - 2, $this->pageCount + 1) as $page) {
+        foreach (range($this->pageCount - 2, $this->pageCount) as $page) {
             $row[$page] = $page;
         }
 
         return $row;
     }
 
-    public function buildMiddleRow(): array
+    private function buildMiddleColumn(): array
     {
         $row = [];
 
@@ -111,7 +111,7 @@ class Paginator implements PaginatorInterface
         return $row;
     }
 
-    public function toButtonArray($row): array
+    private function toButtonArray($row): array
     {
         $keyboard = [];
 
@@ -130,7 +130,7 @@ class Paginator implements PaginatorInterface
         return $keyboard;
     }
 
-    public function keyboard(): array
+    private function getKeyboard(): array
     {
         return $this->keyboard ?: $this->build();
     }
@@ -138,7 +138,7 @@ class Paginator implements PaginatorInterface
     public function markup(): bool|array
     {
         $keyboards = [... $this->keyboardBefore];
-        $keyboards[] = $this->keyboard();
+        $keyboards[] = $this->getKeyboard();
         $keyboards = [... $keyboards, ... $this->keyboardAfter];
 
         $keyboards = array_values(array_filter($keyboards));
