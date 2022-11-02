@@ -20,6 +20,7 @@ class Paginator implements PaginatorInterface
 
     public function __construct(protected int $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
     {
+
         if (empty($currentPage)) {
             $this->currentPage = 1;
         }
@@ -47,7 +48,7 @@ class Paginator implements PaginatorInterface
         }
 
         elseif ($this->pageCount <= 5) {
-            foreach (range(1, $this->pageCount + 1) as $page) {
+            foreach (range(1, $this->pageCount) as $page) {
                 $row[$page] = $page;
             }
         } else {
