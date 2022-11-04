@@ -454,4 +454,15 @@ class Message extends LazyUpdates
             'message_id' => $this->message_id,
         ]));
     }
+
+    public function copy($receptor = null, ... $args): Error|PromiseInterface|MessageId
+    {
+        $receptor ??= $this->chat->id;
+
+        return $this->telegram->copyMessage(array_merge($args, [
+            'from_chat_id' => $this->chat->id,
+            'chat_id' => $receptor,
+            'message_id' => $this->message_id,
+        ]));
+    }
 }
