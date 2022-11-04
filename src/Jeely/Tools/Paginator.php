@@ -18,7 +18,9 @@ class Paginator implements PaginatorInterface
     protected string $lastPageLabel = '%s »';
     protected string $currentPageLabel = '·%s·';
 
-    public function __construct(protected int $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
+    protected int $pageCount = 1;
+
+    public function __construct(int $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
     {
 
         if (empty($currentPage)) {
@@ -30,8 +32,10 @@ class Paginator implements PaginatorInterface
         }
 
         if($pageCount <= 0) {
-            $this->pageCount = 1;
+            $pageCount = 1;
         }
+
+        $this->pageCount = ceil($pageCount);
     }
 
     protected static function format($text, $data): InlineKeyboardButton
