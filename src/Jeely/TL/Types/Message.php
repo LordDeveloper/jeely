@@ -435,6 +435,16 @@ class Message extends LazyUpdates
         ]));
     }
 
+    public function replyDocument($document, ... $args): Error|PromiseInterface|Message
+    {
+        return $this->telegram->sendDocument(... array_merge($args, [
+            'chat_id' => $this->chat->id,
+            'document' => $document,
+            'reply_to_message_id' => $this->message_id,
+            'allow_sending_without_reply' => true,
+        ]));
+    }
+
     public function edit(string $text = null, ... $args): Error|PromiseInterface|Message|bool
     {
         $fn = [
