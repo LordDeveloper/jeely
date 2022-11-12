@@ -447,7 +447,7 @@ class Message extends LazyUpdates
 
     public function replyPhoto($photo, ... $args): Error|PromiseInterface|Message
     {
-        return $this->telegram->sendDocument(... array_merge($args, [
+        return $this->telegram->sendPhoto(... array_merge($args, [
             'chat_id' => $this->chat->id,
             'photo' => $photo,
             'reply_to_message_id' => $this->message_id,
