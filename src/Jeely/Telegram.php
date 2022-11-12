@@ -222,7 +222,7 @@ class Telegram
             }
         });
 
-        if (! empty($this->signature) && empty($fields['signature'])) {
+        if (! empty($this->signature) && ! isset($fields['signature'])) {
             foreach (['text', 'caption'] as $signable) {
                 if (isset($fields[$signable])) {
                     $fields[$signable] .= "\n{$this->signature}";
