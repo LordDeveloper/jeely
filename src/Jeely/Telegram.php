@@ -135,6 +135,8 @@ class Telegram
 
     protected ?string $parseMode = null;
 
+    protected ?string $signature = null;
+
     private array $couldBeUpload = Constant::MEDIA_TYPES;
 
     public function __construct(protected string $token, array $browserConfig = [])
@@ -152,6 +154,13 @@ class Telegram
     public function setParseMode($parseMode): Telegram
     {
         $this->parseMode = $parseMode;
+
+        return $this;
+    }
+
+    public function setSignature($signature): Telegram
+    {
+        $this->signature = $signature;
 
         return $this;
     }
@@ -212,6 +221,14 @@ class Telegram
                 $value = 'attach://' . $name;
             }
         });
+
+        if (! empty($this->signature)) {
+            foreach (['text', 'caption'] as $signable) {
+                if (isset($fields[$signable])) {
+                    $fields[$signable] .= "\n{$this->signature}";
+                }
+            }
+        }
 
         foreach (['chat_id', 'user_id'] as $receptable) {
             if (isset($fields[$receptable]) && strtolower($fields[$receptable]) === 'me') {
