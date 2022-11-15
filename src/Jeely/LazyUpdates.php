@@ -15,6 +15,11 @@ class LazyUpdates extends LazyJsonMapper implements \ArrayAccess
         return $this;
     }
 
+    protected function booted()
+    {
+        
+    }
+
     public function setTelegramRecursive(Telegram $telegram): LazyUpdates
     {
         $this->setTelegram($telegram);
@@ -22,8 +27,16 @@ class LazyUpdates extends LazyJsonMapper implements \ArrayAccess
         foreach ($this as $item) {
             if ($item instanceof LazyUpdates) {
                 $item->setTelegramRecursive($telegram);
+            } elseif (is_array($item)) {
+                foreach ($item as $_item) {
+                    if ($_item instanceof LazyUpdates) {
+                        $_item->setTelegramRecursive($telegram);
+                    }
+                }
             }
         }
+        
+        $this->booted();
 
         return $this;
     }
