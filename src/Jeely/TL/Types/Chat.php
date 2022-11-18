@@ -4,6 +4,7 @@ namespace Jeely\TL\Types;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Jeely\LazyUpdates;
+use Jeely\Traits\Notifiable;
 
 
 /**
@@ -147,6 +148,8 @@ use Jeely\LazyUpdates;
  */
 class Chat extends LazyUpdates
 {
+    use Notifiable;
+
     const JSON_PROPERTY_MAP = [
         'id' => 'int',
         'type' => 'string',

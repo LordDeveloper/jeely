@@ -3,6 +3,7 @@
 namespace Jeely\TL\Types;
 
 use Jeely\LazyUpdates;
+use Jeely\Traits\Notifiable;
 
 
 /**
@@ -78,6 +79,8 @@ use Jeely\LazyUpdates;
  */
 class User extends LazyUpdates
 {
+    use Notifiable;
+
     const JSON_PROPERTY_MAP = [
         'id' => 'int',
         'is_bot' => 'bool',
