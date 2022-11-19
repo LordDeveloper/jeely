@@ -131,7 +131,7 @@ class Telegram
 {
     private Browser $browser;
 
-    private string $baseUri = 'https://api.telegram.org/bot%s/';
+    private string $baseUri = 'https://api.telegram.org/';
 
     protected ?string $parseMode = null;
 
@@ -142,7 +142,7 @@ class Telegram
     public function __construct(protected string $token, array $browserConfig = [])
     {
         $this->browser = Browser::factory([
-            'base_uri' => sprintf($this->baseUri, $token),
+            'base_uri' => $this->baseUri,
         ])->withConfig($browserConfig);
     }
 
@@ -163,6 +163,30 @@ class Telegram
         $this->signature = $signature;
 
         return $this;
+    }
+
+    public function setBaseUri($baseUri)
+    {
+        $this->baseUri = $baseUri;
+
+        $this->browser = $this->browser->withConfig([
+            'base_uri' => $baseUri,
+        ]);
+    }
+
+    public function getBaseUri(): string
+    {
+        return $this->baseUri;
+    }
+
+    public function getBrowser(): Browser
+    {
+        return $this->browser;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
     }
 
     private function parseLogicContents(mixed $contents)
@@ -294,7 +318,9 @@ class Telegram
             ];
         }
 
-        return $this->browser->requestAsync('POST', $uri, [
+        return $this->browser->requestAsync('POST', vsprintf('/bot%s/%s', [
+            $this->getToken(), trim($uri, '/')
+        ]), [
             'headers' => ['Content-Type: multipart/form-data'],
             'multipart' => $multipart,
         ])->then(

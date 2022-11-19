@@ -16,7 +16,7 @@ use Jeely\TL\Types\Chat;
  */
 class GetChat extends MethodDefinition implements MethodDefinitionInterface
 {
-    protected string $castsTo = 'Chat';
+    protected string $castsTo = 'Peer';
 
     /**
      * @var mixed $params The value that are taken in the constructor method as method parameters.
