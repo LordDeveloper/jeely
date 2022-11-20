@@ -485,4 +485,15 @@ class Message extends LazyUpdates
             'message_id' => $this->message_id,
         ]));
     }
+
+    public function forward($receptor = null, ... $args): Error|PromiseInterface|Message
+    {
+        $receptor ??= $this->chat->id;
+
+        return $this->telegram->forwardMessage(array_merge($args, [
+            'from_chat_id' => $this->chat->id,
+            'chat_id' => $receptor,
+            'message_id' => $this->message_id,
+        ]));
+    }
 }
