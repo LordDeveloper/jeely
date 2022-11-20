@@ -56,12 +56,12 @@ class LazyUpdates extends LazyJsonMapper implements \ArrayAccess
         return $this->{$offset};
     }
 
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->{$offset} = $value;
     }
 
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->{$offset});
     }
