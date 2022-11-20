@@ -217,7 +217,7 @@ class Telegram
         $isOnetimeKeyboard = false;
         $isSelective = false;
 
-        array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
+        array_walk_recursive($fields, function (&$value, $attribute) use ($fields, &$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
             if ($value instanceof KeyboardButtonInterface) {
                 if (is_null($isInlineKeyboard)) {
                     if ($value instanceof InlineKeyboardButton) {
@@ -244,15 +244,13 @@ class Telegram
                 $files[$name] = $value;
                 $value = 'attach://' . $name;
             }
-        });
 
-        if (! empty($this->signature) && ! isset($fields['signature'])) {
-            foreach (['text', 'caption'] as $signable) {
-                if (isset($fields[$signable])) {
-                    $fields[$signable] .= "\n{$this->signature}";
+            if (! empty($this->signature) && ! isset($fields['sign'])) {
+                if (in_array($attribute, ['text', 'caption', 'message_text'])) {
+                    $value .= "\n{$this->signature}";
                 }
             }
-        }
+        });
 
         foreach (['chat_id', 'user_id'] as $receptable) {
             if (isset($fields[$receptable]) && strtolower($fields[$receptable]) === 'me') {
