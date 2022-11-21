@@ -98,9 +98,11 @@ class User extends LazyUpdates
 
     public function _init()
     {
-        $this->_setProperty('full_name', implode(' ', [
-            $this->_getProperty('first_name'), $this->_getProperty('last_name'),
-        ]));
+        if ($this->_isProperty('first_name')) {
+            $this->_setProperty('full_name', implode(' ', [
+                $this->_getProperty('first_name'), $this->_getProperty('last_name'),
+            ]));
+        }
     }
 
     public function isMemberOf(array $chats = [])

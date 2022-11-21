@@ -180,9 +180,11 @@ class Chat extends LazyUpdates
 
     public function _init()
     {
-        $this->_setProperty('full_name', implode(' ', [
-            $this->_getProperty('first_name'), $this->_getProperty('last_name'),
-        ]));
+        if ($this->_isProperty('first_name')) {
+            $this->_setProperty('full_name', implode(' ', [
+                $this->_getProperty('first_name'), $this->_getProperty('last_name'),
+            ]));
+        }
 
         if ($this->_getProperty('type') === 'channel') {
             $this->_setProperty('is_public', $this->_isProperty('username'));
