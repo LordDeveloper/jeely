@@ -445,6 +445,16 @@ class Message extends LazyUpdates
         ]));
     }
 
+    public function replyVideo($video, ... $args): Error|PromiseInterface|Message
+    {
+        return $this->telegram->sendVideo(... array_merge($args, [
+            'chat_id' => $this->chat->id,
+            'video' => $video,
+            'reply_to_message_id' => $this->message_id,
+            'allow_sending_without_reply' => true,
+        ]));
+    }
+
     public function replyPhoto($photo, ... $args): Error|PromiseInterface|Message
     {
         return $this->telegram->sendPhoto(... array_merge($args, [
