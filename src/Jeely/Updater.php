@@ -53,7 +53,11 @@ class Updater
                 $callback = $callback->bindTo($telegram);
 
                 // Callback must be an instance of Closure and binds to Telegram object
-                $callback($update);
+                try {
+                    $callback($update);
+                } catch (\Throwable $e) {
+                    trigger_error($e->getMessage());
+                }
 
                 $options['offset'] = $update->update_id + 1;
             }
