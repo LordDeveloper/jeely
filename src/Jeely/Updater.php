@@ -21,7 +21,7 @@ class Updater
 
     public function waitWebhook(Closure $callback)
     {
-        if ($update = \class_exists(Request::class) ? Request::getContent() : json_decode(file_get_contents('php://input'), true)) {
+        if ($update = \json_decode(\class_exists(Request::class) ? Request::getContent() : file_get_contents('php://input'), true)) {
             $update = new Update($update);
 
             // Callback must be an instance of Closure and binds to Telegram object
