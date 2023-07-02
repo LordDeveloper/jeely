@@ -3,6 +3,7 @@
 namespace Jeely;
 
 use Closure;
+use Illuminate\Support\Facades\Request;
 use Jeely\TL\Types\Error;
 use Jeely\TL\Update;
 
@@ -20,7 +21,7 @@ class Updater
 
     public function waitWebhook(Closure $callback)
     {
-        if ($update = json_decode(file_get_contents('php://input'), true)) {
+        if ($update = \class_exists(Request::class) ? Request::getContent() : json_decode(file_get_contents('php://input'), true)) {
             $update = new Update($update);
 
             // Callback must be an instance of Closure and binds to Telegram object
