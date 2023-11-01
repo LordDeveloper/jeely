@@ -209,13 +209,17 @@ class Telegram
     public function fetchAsync($uri, array $fields = []): PromiseInterface
     {
         // Make sure the multipart form data is not empty
-        $fields['timestamp'] = time();
+//        $fields['timestamp'] = time();
         $files = [];
         $multipart = [];
         $isInlineKeyboard = null;
         $isResizedKeyboard = false;
         $isOnetimeKeyboard = false;
         $isSelective = false;
+
+        if (! isset($fields['parse_mode'])) {
+            $fields['parse_mode'] = $this->parseMode;
+        }
 
         array_walk_recursive($fields, function (&$value, $attribute) use ($fields, &$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
             if ($value instanceof KeyboardButtonInterface) {
@@ -247,7 +251,13 @@ class Telegram
 
             if (! empty($this->signature) && ! isset($fields['sign'])) {
                 if (in_array($attribute, ['text', 'caption', 'message_text'])) {
-                    $value .= "\n{$this->signature}";
+                    $signature = match ($fields['parse_mode'] ?? '') {
+                        'markdown' => \escape_markdown($this->signature),
+                        'html' => \htmlspecialchars($this->signature),
+                        default => $this->signature,
+                    };
+
+                    $value .= "\n{$signature}";
                 }
             }
         });
@@ -256,10 +266,6 @@ class Telegram
             if (isset($fields[$receptable]) && strtolower($fields[$receptable]) === 'me') {
                 $fields[$receptable] = $this->getId();
             }
-        }
-
-        if (! isset($fields['parse_mode'])) {
-            $fields['parse_mode'] = $this->parseMode;
         }
 
         // A shortcut for reply_markup
@@ -319,7 +325,6 @@ class Telegram
         return $this->browser->requestAsync('POST', vsprintf('/bot%s/%s', [
             $this->getToken(), trim($uri, '/')
         ]), [
-            'headers' => ['Content-Type: multipart/form-data'],
             'multipart' => $multipart,
         ])->then(
             function (ResponseInterface $response) {
