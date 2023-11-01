@@ -204,3 +204,12 @@ if (! function_exists('wait')) {
         return $promise->wait($unwrap);
     }
 }
+
+if (!function_exists('escape_markdown')) {
+    function escape_markdown($text): string
+    {
+        $symbols = ['`', '[', '(', '_'];
+
+        return \str_replace($symbols, array_map(fn($symbol) => '\\' . $symbol, $symbols), $text);
+    }
+}
