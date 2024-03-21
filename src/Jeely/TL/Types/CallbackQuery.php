@@ -93,4 +93,14 @@ class CallbackQuery extends LazyUpdates
             'inline_message_id' => $this->inline_message_id
         ]));
     }
+
+    public function reply($text, ... $args): Error|PromiseInterface|Message
+    {
+        return $this->telegram->sendMessage(... array_merge($args, [
+            'chat_id' => $this->message?->chat->id,
+            'text' => $text,
+            'reply_to_message_id' => $this->message?->message_id,
+            'allow_sending_without_reply' => true,
+        ]));
+    }
 }
