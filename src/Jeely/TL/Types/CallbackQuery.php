@@ -64,13 +64,13 @@ class CallbackQuery extends LazyUpdates
         'game_short_name' => 'string',
     ];
 
-    public function answer($text, $showAlert = false): Error|PromiseInterface|bool
+    public function answer($text, $showAlert = false, ... $args): Error|PromiseInterface|bool
     {
-        return $this->telegram->answerCallbackQuery([
+        return $this->telegram->answerCallbackQuery(array_merge($args, [
             'callback_query_id' => $this->id,
             'text' => $text,
             'show_alert' => $showAlert,
-        ]);
+        ]));
     }
 
     public function edit(string $text = null, ... $args): PromiseInterface|Error|bool|Message
