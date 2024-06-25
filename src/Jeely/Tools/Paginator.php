@@ -22,7 +22,8 @@ class Paginator implements PaginatorInterface
 
     public function __construct(int $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
     {
-
+        $pageCount = ceil($pageCount);
+        
         if (empty($currentPage)) {
             $this->currentPage = 1;
         }
@@ -35,7 +36,7 @@ class Paginator implements PaginatorInterface
             $pageCount = 1;
         }
 
-        $this->pageCount = ceil($pageCount);
+        $this->pageCount = $pageCount;
     }
 
     protected static function format($text, $data): InlineKeyboardButton
