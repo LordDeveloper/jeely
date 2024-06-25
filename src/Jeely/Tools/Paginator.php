@@ -22,7 +22,7 @@ class Paginator implements PaginatorInterface
 
     public function __construct(int $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
     {
-        $pageCount = ceil($pageCount);
+        $pageCount = intval(ceil($pageCount));
         
         if (empty($currentPage)) {
             $this->currentPage = 1;
