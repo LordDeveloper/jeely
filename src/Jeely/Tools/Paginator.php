@@ -20,7 +20,7 @@ class Paginator implements PaginatorInterface
 
     protected int $pageCount = 1;
 
-    public function __construct(int $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
+    public function __construct(float $pageCount, protected int $currentPage = 1, protected string $pattern = '{page}')
     {
         $pageCount = intval(ceil($pageCount));
         
