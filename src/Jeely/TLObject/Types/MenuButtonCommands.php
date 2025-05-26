@@ -1,0 +1,26 @@
+<?php
+
+namespace Jeely\TLObject\Types;
+
+use Jeely\TLObject;
+
+
+/**
+* @class MenuButtonCommands
+* @description Represents a menu button, which opens the bot's list of commands.
+*
+* @property	string $type Type of the button, must be commands
+* @method	string getType() Type of the button, must be commands
+* @method	bool isType()
+* @method	$this setType()
+* @method	$this unsetType()
+
+*/
+
+class MenuButtonCommands extends TLObject
+{
+	const JSON_PROPERTY_MAP = [
+		'type'=> 'string',
+	];
+
+}

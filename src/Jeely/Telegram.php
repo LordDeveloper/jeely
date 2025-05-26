@@ -4,36 +4,38 @@ namespace Jeely;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Utils;
-use Jeely\TL\Methods\MethodDefinitionInterface;
-use Jeely\TL\Types\BotCommand;
-use Jeely\TL\Types\Chat;
-use Jeely\TL\Types\ChatAdministratorRights;
-use Jeely\TL\Types\ChatInviteLink;
-use Jeely\TL\Types\ChatMember;
-use Jeely\TL\Types\Error;
-use Jeely\TL\Types\File;
-use Jeely\TL\Types\GameHighScore;
-use Jeely\TL\Types\InlineKeyboardButton;
-use Jeely\TL\Types\KeyboardButtonInterface;
-use Jeely\TL\Types\MenuButton;
-use Jeely\TL\Types\Message;
-use Jeely\TL\Types\MessageId;
-use Jeely\TL\Types\Poll;
-use Jeely\TL\Types\SentWebAppMessage;
-use Jeely\TL\Types\Sticker;
-use Jeely\TL\Types\StickerSet;
-use Jeely\TL\Types\User;
-use Jeely\TL\Types\UserProfilePhotos;
-use Jeely\TL\Types\WebhookInfo;
-use Jeely\TL\Update;
+use Jeely\Logger\Logger;
+use Jeely\TLObject\Methods\MethodDefinitionInterface;
+use Jeely\TLObject\Types\BotCommand;
+use Jeely\TLObject\Types\Chat;
+use Jeely\TLObject\Types\ChatAdministratorRights;
+use Jeely\TLObject\Types\ChatInviteLink;
+use Jeely\TLObject\Types\ChatMember;
+use Jeely\TLObject\Types\Error;
+use Jeely\TLObject\Types\File;
+use Jeely\TLObject\Types\GameHighScore;
+use Jeely\TLObject\Types\InlineKeyboardButton;
+use Jeely\Contracts\KeyboardButtonInterface;
+use Jeely\TLObject\Types\MenuButton;
+use Jeely\TLObject\Types\Message;
+use Jeely\TLObject\Types\MessageId;
+use Jeely\TLObject\Types\Poll;
+use Jeely\TLObject\Types\SentWebAppMessage;
+use Jeely\TLObject\Types\Sticker;
+use Jeely\TLObject\Types\StickerSet;
+use Jeely\TLObject\Types\User;
+use Jeely\TLObject\Types\UserProfilePhotos;
+use Jeely\TLObject\Types\WebhookInfo;
+use Jeely\TLObject\Update;
 use Jeely\Tools\Constant;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LogLevel;
 use Throwable;
 
 /**
  * @class Telegram
  *
- * @method Update[] getUpdates(...$params) Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
+ * @method Collection|Update[] getUpdates(...$params) Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
  * @method bool setWebhook(...$params) Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success. If you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
  * @method bool deleteWebhook(...$params) Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success.
  * @method WebhookInfo getWebhookInfo(...$params) Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
@@ -131,19 +133,30 @@ class Telegram
 {
     private Browser $browser;
 
+    public Logger $logger;
+
     private string $baseUri = 'https://api.telegram.org/';
 
     protected ?string $parseMode = null;
 
-    protected ?string $signature = null;
+    protected ?string $footer = null;
 
-    private array $couldBeUpload = Constant::MEDIA_TYPES;
+    private static array $uploadableTypes = Constant::MEDIA_TYPES;
+    private static array $footerTypes = ['text', 'caption', 'message_text'];
 
-    public function __construct(protected string $token, array $browserConfig = [])
+    public function __construct(protected string $token, array $config = [])
     {
         $this->browser = Browser::factory([
-            'base_uri' => $this->baseUri,
-        ])->withConfig($browserConfig);
+                'base_uri' => $this->baseUri,
+            ])
+            ->withConfig($config['http'] ?? []);
+
+        $this->logger = new Logger(
+            logLevel: $config['level'] ?? LogLevel::DEBUG,
+            logFilePath: $config['file'] ?? null,
+            displayInConsole: $config['display'] ?? true,
+            colorEnabled: $config['colorized'] ?? true,
+        );  
     }
 
     public static function factory(string $token, array $browserConfig = []): Telegram
@@ -158,9 +171,9 @@ class Telegram
         return $this;
     }
 
-    public function setSignature($signature): Telegram
+    public function setFooter($footer): Telegram
     {
-        $this->signature = $signature;
+        $this->footer = $footer;
 
         return $this;
     }
@@ -189,7 +202,16 @@ class Telegram
         return $this->token;
     }
 
-    private function parseLogicContents(mixed $contents)
+    public function getFileUrl(string $filePath): string
+    {
+        return vsprintf('%s/file/bot%s/%s', [
+            rtrim($this->getBaseUri(), '/'),
+            $this->getToken(),
+            $filePath,
+        ]);
+    }
+    
+    private function preparer(mixed $contents)
     {
         if (is_array($contents)) {
             array_walk_recursive($contents, function (&$value) {
@@ -199,7 +221,9 @@ class Telegram
             });
 
             return json_encode($contents);
-        } elseif (Tools\Utils::isStringable($contents)) {
+        } 
+        
+        elseif (Tools\Utils::isStringable($contents)) {
             return (string) $contents;
         }
 
@@ -208,103 +232,105 @@ class Telegram
 
     public function fetchAsync($uri, array $fields = []): PromiseInterface
     {
-        // Make sure the multipart form data is not empty
-//        $fields['timestamp'] = time();
         $files = [];
         $multipart = [];
-        $isInlineKeyboard = null;
-        $isResizedKeyboard = false;
-        $isOnetimeKeyboard = false;
-        $isSelective = false;
+    
 
-        if (! isset($fields['parse_mode'])) {
-            $fields['parse_mode'] = $this->parseMode;
-        }
+        $buttons = [
+            'isInlineMarkup' => false,
+            'isResized' => false,
+            'isOnetime' => false,
+            'isSelective' => false,
+        ];
 
-        array_walk_recursive($fields, function (&$value, $attribute) use ($fields, &$files, &$isInlineKeyboard, &$isResizedKeyboard, &$isOnetimeKeyboard, &$isSelective) {
+        array_walk_recursive($fields, function (&$value, $attribute) use ($fields, &$files, &$buttons) {
+            $attribute = strtolower($attribute);
+
             if ($value instanceof KeyboardButtonInterface) {
-                if (is_null($isInlineKeyboard)) {
-                    if ($value instanceof InlineKeyboardButton) {
-                        $isInlineKeyboard = true;
-                    } else {
-                        $isInlineKeyboard = false;
-                    }
-                } if (! empty($value['resize'])) {
-                    $isResizedKeyboard = true;
-                } if (! empty($value['one_time'])) {
-                    $isOnetimeKeyboard = true;
-                } if (! empty($value['selective'])) {
-                    $isSelective = true;
+                if ($buttons['isInlineMarkup'] === false) {
+                    $buttons['isInlineMarkup'] = $value instanceof InlineKeyboardButton;
+                }
+
+                if ($buttons['isResized'] === false) {
+                    $buttons['isResized'] = ! empty($value['resize']);
+                }
+
+                if ($buttons['isOnetime'] === false) {
+                    $buttons['isOnetime'] = ! empty($value['one_time']);
+                }
+
+                if ($buttons['isSelective'] === false) {
+                    $buttons['isSelective'] = ! empty($value['selective']);
                 }
             }
-            if ($value instanceof LazyUpdates) {
-                $value->setTelegramRecursive($this);
-            }
+
             if (
                 is_string($value) && is_file($value) &&
-                filesize($value) > 0 && in_array(strtolower($attribute), $this->couldBeUpload)
+                filesize($value) > 0 && in_array($attribute, self::$uploadableTypes)
             ) {
-                $name = basename($value);
-                $files[$name] = $value;
+                $files[$name = basename($value)] = $value;
                 $value = 'attach://' . $name;
             }
 
-            if (! empty($this->signature) && ! isset($fields['sign'])) {
-                if (in_array($attribute, ['text', 'caption', 'message_text'])) {
-                    $signature = match ($fields['parse_mode'] ?? '') {
-                        'markdown' => \escape_markdown($this->signature),
-                        'html' => \htmlspecialchars($this->signature),
-                        default => $this->signature,
+            if (! empty($this->footer) && ! isset($fields['footer'])) {
+                if (in_array($attribute, self::$footerTypes)) {
+                    $footer = match ($fields['parse_mode'] ?? '') {
+                        'markdown' => escape_markdown($this->footer),
+                        'html' => htmlspecialchars($this->footer),
+                        default => $this->footer,
                     };
 
-                    $value .= "\n{$signature}";
+                    $value .= "\n{$footer}";
                 }
             }
-        });
 
-        foreach (['chat_id', 'user_id'] as $receptable) {
-            if (isset($fields[$receptable]) && strtolower($fields[$receptable]) === 'me') {
-                $fields[$receptable] = $this->getId();
+            if (in_array($attribute, ['chat_id', 'user_id']) && in_array($value, ['me', '@me'])) {
+                $value = $this->getId();
             }
-        }
+
+            if (! isset($fields['parse_mode']) && in_array($attribute, ['buttons', 'reply_markup'])) {
+                $fields['parse_mode'] = $this->parseMode;
+            }
+        });
 
         // A shortcut for reply_markup
         if (isset($fields['buttons'])) {
             $fields['reply_markup'] = $fields['buttons'];
 
             unset($fields['buttons']);
-        } if (isset($fields['reply_markup'])) {
-            if (! is_null($isInlineKeyboard)) {
-                $replyMarkup = $fields['reply_markup'];
-                $type = $isInlineKeyboard ? 'inline_keyboard' : 'keyboard';
+        } 
+        
+        if (isset($fields['reply_markup'])) {
+            $rows = $fields['reply_markup'];
+            $type = $buttons['isInlineMarkup'] ? 'inline_keyboard' : 'keyboard';
 
-                if (isset($replyMarkup[$type])) {
-                    $replyMarkup = $replyMarkup[$type];
-                }
 
-                if ($replyMarkup instanceof KeyboardButtonInterface) {
-                    $fields['reply_markup'] = [
-                        $type => [
-                            [$replyMarkup]
-                        ]
-                    ];
-                } elseif (
-                    isset($replyMarkup[0]) &&
-                    $replyMarkup[0] instanceof KeyboardButtonInterface
-                ) {
-                    $fields['reply_markup'][$type] = [
-                        $replyMarkup
-                    ];
-                } elseif (is_array($replyMarkup) && (
-                        ! isset($replyMarkup['keyboard']) || ! isset($replyMarkup['inline_keyboard'])
-                    )) {
-                    $fields['reply_markup'][$type] = $replyMarkup;
-                }
-
-                $fields['reply_markup']['resize_keyboard'] = $isResizedKeyboard;
-                $fields['reply_markup']['one_time_keyboard'] = $isOnetimeKeyboard;
-                $fields['reply_markup']['is_selective'] = $isSelective;
+            if (isset($rows[$type])) {
+                $rows = $rows[$type];
             }
+
+
+            if ($rows instanceof KeyboardButtonInterface) {
+                $fields['reply_markup'] = [
+                    $type => [
+                        [$rows]
+                    ]
+                ];
+            } 
+            
+            elseif (isset($rows[0]) && $rows[0] instanceof KeyboardButtonInterface) {
+                $fields['reply_markup'][$type] = [
+                    $rows
+                ];
+            } 
+            
+            elseif (is_array($rows) && (! isset($rows['keyboard']) || ! isset($rows['inline_keyboard']))) {
+                $fields['reply_markup'][$type] = $rows;
+            }
+
+            $fields['reply_markup']['resize_keyboard'] = $buttons['isResized']  ;
+            $fields['reply_markup']['one_time_keyboard'] = $buttons['isOnetime'];
+            $fields['reply_markup']['is_selective'] = $buttons['isSelective'];
         }
 
         foreach ($files as $fileName => $path) {
@@ -312,24 +338,23 @@ class Telegram
                 'name' => $fileName,
                 'contents' => Utils::tryFopen($path, 'r'),
                 'filename' => $fileName,
-            ];
+            ]; 
         }
 
         foreach ($fields as $fieldName => $content) {
             $multipart[] = [
                 'name' => $fieldName,
-                'contents' => $this->parseLogicContents($content),
+                'contents' => $this->preparer($content),
             ];
         }
 
         return $this->browser->requestAsync('POST', vsprintf('/bot%s/%s', [
             $this->getToken(), trim($uri, '/')
         ]), [
-            'multipart' => $multipart,
+            ... empty($multipart) ? [] : ['multipart' => $multipart],
         ])->then(
-            function (ResponseInterface $response) {
+            function (ResponseInterface $response) use ($uri) {
                 $response = json_decode($response->getBody()->getContents(), true);
-
                 if ($response['ok']) {
                     return $response['result'];
                 }
@@ -354,19 +379,16 @@ class Telegram
     public function __call($name, array $arguments = [])
     {
         $name = str_replace('_', '', ucwords($name, '_'));
-        $name = '\\Jeely\\TL\Methods\\' . $name;
+        $name = '\\Jeely\\TLObject\Methods\\' . $name;
 
-        if (class_exists($name)) {
-            if (isset($arguments[0])) {
-                $arguments = array_merge(array_shift($arguments), $arguments);
-            }
-
-            return $this(new $name($arguments));
+        if (class_exists($name)) {            
+            $method = new $name($arguments);
+            return $method->perform($this);
         }
     }
 
-    public function __invoke(MethodDefinitionInterface $method)
+    public function __invoke($method)
     {
-        return $method($this);
+        return $method->perform($this);
     }
 }

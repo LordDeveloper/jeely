@@ -2,10 +2,10 @@
 
 namespace Jeely\Tools;
 
-use Jeely\TL\Types\ForceReply;
-use Jeely\TL\Types\InlineKeyboardButton;
-use Jeely\TL\Types\KeyboardButton;
-use Jeely\TL\Types\ReplyKeyboardRemove;
+use Jeely\TLObject\Types\ForceReply;
+use Jeely\TLObject\Types\InlineKeyboardButton;
+use Jeely\TLObject\Types\KeyboardButton;
+use Jeely\TLObject\Types\ReplyKeyboardRemove;
 
 class Button
 {

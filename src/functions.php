@@ -213,3 +213,10 @@ if (!function_exists('escape_markdown')) {
         return \str_replace($symbols, array_map(fn($symbol) => '\\' . $symbol, $symbols), $text);
     }
 }
+if (! function_exists('class_basename')) {
+    function class_basename($class)
+    {
+        return basename(str_replace('\\', '/', $class));
+    }
+}
+
