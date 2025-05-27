@@ -70,7 +70,6 @@ class Button
     {
         return clone self::inlineText($text, [
             'callback_data' => $data,
-            'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
         ]);
@@ -153,6 +152,13 @@ class Button
             'force_reply' => true,
             'selective' => $selective,
             'input_field_placeholder' => $placeHolder,
+        ]);
+    }
+
+    public static function copyText($text, $copyText, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    {
+        return self::inlineText($text, [
+            'copy_text' => $copyText,
         ]);
     }
 }

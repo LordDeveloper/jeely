@@ -77,7 +77,7 @@ use Jeely\TLObject;
 
 */
 
-class InlineKeyboardButton extends TLObject
+class InlineKeyboardButton extends TLObject implements \Jeely\Contracts\KeyboardButtonInterface
 {
 	const JSON_PROPERTY_MAP = [
 		'text'=> 'string',
