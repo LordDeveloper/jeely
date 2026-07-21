@@ -26,84 +26,92 @@ class Button
         ));
     }
 
-    public static function contact($text, bool $resize = true, bool $oneTime = false, bool $selective = false): KeyboardButton
+    public static function contact($text, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): KeyboardButton
     {
         return clone self::text($text, [
             'request_contact' => true,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function location($text, bool $resize = true, bool $oneTime = false, bool $selective = false): KeyboardButton
+    public static function location($text, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): KeyboardButton
     {
         return clone self::text($text, [
             'request_location' => true,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function poll($text, $poll, bool $resize = true, bool $oneTime = false, bool $selective = false): KeyboardButton
+    public static function poll($text, $poll, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): KeyboardButton
     {
         return clone self::text($text, [
             'request_poll' => $poll,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function web($text, $webApp, bool $resize = true, bool $oneTime = false, bool $selective = false): KeyboardButton
+    public static function web($text, $webApp, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): KeyboardButton
     {
         return clone self::text($text, [
             'web_app' => $webApp,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function inline($text, $data, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function inline($text, $data, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): InlineKeyboardButton
     {
         return clone self::inlineText($text, [
             'callback_data' => $data,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function inlineWeb($text, $webApp, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function inlineWeb($text, $webApp, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): InlineKeyboardButton
     {
         return self::inlineText($text, [
             'web_app' => $webApp,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function url($text, $url, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function url($text, $url, ... $args): InlineKeyboardButton
     {
         return self::inlineText($text, [
             'url' => $url,
+            ... $args
         ]);
     }
 
-    public static function loginUrl($text, $loginUrl, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function loginUrl($text, $loginUrl, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): InlineKeyboardButton
     {
         return self::inlineText($text, [
             'login_url' => $loginUrl,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function switch($text, $query, $current = false, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function switch($text, $query, $current = false, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): InlineKeyboardButton
     {
         $switchType = 'switch_inline_query';
 
@@ -116,26 +124,29 @@ class Button
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function game($text, $game, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function game($text, $game, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): InlineKeyboardButton
     {
         return self::inlineText($text, [
             'callback_game' => $game,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
-    public static function pay($text, bool $resize = true, bool $oneTime = false, bool $selective = false): InlineKeyboardButton
+    public static function pay($text, bool $resize = true, bool $oneTime = false, bool $selective = false, ... $args): InlineKeyboardButton
     {
         return self::inlineText($text, [
             'pay' => true,
             'resize' => $resize,
             'one_time' => $oneTime,
             'selective' => $selective,
+            ... $args
         ]);
     }
 
