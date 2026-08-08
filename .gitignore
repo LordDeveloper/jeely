@@ -1,0 +1,10 @@
+/.idea
+/vendor/
+schema.json
+/stubs
+generator
+composer.lock
+test.php
+*.log
+.env
+.env.*

@@ -4,7 +4,7 @@ namespace Jeely\Tools;
 
 
 use Jeely\Contracts\PaginatorInterface;
-use Jeely\TL\Types\InlineKeyboardButton;
+use Jeely\Api\Types\InlineKeyboardButton;
 
 class Paginator implements PaginatorInterface
 {

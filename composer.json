@@ -4,7 +4,7 @@
   "minimum-stability": "stable",
   "require": {
     "guzzlehttp/guzzle": "^7.5",
-    "jeely/lazyjsonmapper": "^2.0"
+    "corneltek/getoptionkit": "^2.7"
   },
   "require-dev": {
     "symfony/var-dumper": "^v7.0"
