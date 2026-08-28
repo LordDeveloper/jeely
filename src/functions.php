@@ -187,21 +187,29 @@ if (! function_exists('wait')) {
     /**
      * Waits until the promise completes if possible.
      *
-     * Pass $unwrap as true to unwrap the result of the promise, either
-     * returning the resolved value or throwing the rejected exception.
-     *
-     * If the promise cannot be waited on, then the promise will be rejected.
+     * Uses Jeely's Revolt-backed loop when available so timers/HTTP keep moving.
      *
      * @param bool $unwrap
      *
      * @return mixed
-     *
-     * @throws \LogicException if the promise has no wait function or if the
-     *                         promise does not settle after waiting.
      */
     function wait(PromiseInterface $promise, bool $unwrap = true)
     {
+        if ($unwrap && class_exists(\Jeely\Async\Loop::class)) {
+            return \Jeely\Async\Loop::await($promise);
+        }
+
         return $promise->wait($unwrap);
+    }
+}
+
+if (! function_exists('delay')) {
+    /**
+     * Non-blocking delay (seconds). Prefer this over sleep()/usleep() inside update handlers.
+     */
+    function delay(float $seconds): PromiseInterface
+    {
+        return \Jeely\Async\Timer::delay($seconds);
     }
 }
 

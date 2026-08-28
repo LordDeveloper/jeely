@@ -224,9 +224,9 @@ class Telegram
 
     public function __construct(protected string $token, array $browserConfig = [])
     {
-        $this->browser = Browser::factory([
+        $this->browser = Browser::factory(array_merge([
             'base_uri' => $this->baseUri,
-        ])->withConfig($browserConfig);
+        ], $browserConfig));
     }
 
     public static function factory(string $token, array $browserConfig = []): self

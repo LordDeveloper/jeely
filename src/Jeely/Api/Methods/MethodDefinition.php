@@ -54,7 +54,13 @@ class MethodDefinition
             return $convert($response);
         });
 
-        return $async ? $promise : $promise->wait();
+        if ($async) {
+            return $promise;
+        }
+
+        // Sync calls must use Guzzle's native wait() so curl_multi is driven
+        // even before Loop::enable() (e.g. getMe() before waitPolling()).
+        return $promise->wait();
     }
 
     private function castResponse(mixed $response, string $castsTo, Telegram $telegram): mixed

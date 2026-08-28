@@ -4,6 +4,8 @@ namespace Jeely;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Cookie\CookieJarInterface;
+use GuzzleHttp\Handler\CurlMultiHandler;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\RequestOptions;
 
@@ -11,9 +13,18 @@ class Browser extends HttpClient
 {
     private array $config = [];
 
+    private CurlMultiHandler $curlMulti;
+
     public function __construct(array $options = [])
     {
         $options[RequestOptions::HTTP_ERRORS] = false;
+
+        if (! isset($options['handler'])) {
+            $this->curlMulti = new CurlMultiHandler();
+            $options['handler'] = HandlerStack::create($this->curlMulti);
+        } else {
+            $this->curlMulti = $this->extractCurlMulti($options['handler']) ?? new CurlMultiHandler();
+        }
 
         parent::__construct($options);
     }
@@ -21,6 +32,11 @@ class Browser extends HttpClient
     public static function factory(array $options = []): Browser
     {
         return new self($options);
+    }
+
+    public function curlMulti(): CurlMultiHandler
+    {
+        return $this->curlMulti;
     }
 
     public function requestAsync(string $method, $uri = '', array $options = []): PromiseInterface
@@ -91,5 +107,27 @@ class Browser extends HttpClient
         return clone $this->withConfig([
             RequestOptions::DEBUG => $debug,
         ]);
+    }
+
+    private function extractCurlMulti(mixed $handler): ?CurlMultiHandler
+    {
+        if ($handler instanceof CurlMultiHandler) {
+            return $handler;
+        }
+
+        if ($handler instanceof HandlerStack) {
+            $ref = new \ReflectionObject($handler);
+            while ($ref) {
+                if ($ref->hasProperty('handler')) {
+                    $prop = $ref->getProperty('handler');
+                    $prop->setAccessible(true);
+
+                    return $this->extractCurlMulti($prop->getValue($handler));
+                }
+                $ref = $ref->getParentClass() ?: null;
+            }
+        }
+
+        return null;
     }
 }

@@ -53,7 +53,9 @@ trait InteractsWithMessage
 
     public function reply($text, ...$args): Error|PromiseInterface|Message
     {
-        return $this->telegram->sendMessage(...array_merge($args, [
+        $extras = (isset($args[0]) && is_array($args[0])) ? $args[0] : $args;
+
+        return $this->telegram->sendMessage(array_merge($extras, [
             'chat_id' => $this->chat->id,
             'text' => $text,
             'reply_parameters' => [

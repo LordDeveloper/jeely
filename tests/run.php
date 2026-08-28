@@ -14,6 +14,10 @@ $testFiles = [
     __DIR__ . '/Mixins/MixinsTest.php',
     __DIR__ . '/Tools/ButtonTelegramTest.php',
     __DIR__ . '/Updater/UpdaterPollingPromiseAwareTest.php',
+    __DIR__ . '/Support/LoggerServerTest.php',
+    __DIR__ . '/Database/OrmTest.php',
+    __DIR__ . '/Cache/CacheTest.php',
+    __DIR__ . '/Steps/StepManagerTest.php',
 ];
 
 $allTests = [];

@@ -194,4 +194,81 @@ return [
         $user = $result->wait();
         assertEquals('Bot', $user->first_name);
     },
+
+    'polling_delay_does_not_block_other_handlers' => function (): void {
+        $fakeTelegram = new class ([
+            [
+                ['update_id' => 1],
+                ['update_id' => 2],
+            ],
+        ]) extends Telegram {
+            private array $sequence;
+
+            public function __construct(array $sequence)
+            {
+                parent::__construct('123:ABC');
+                $this->sequence = $sequence;
+            }
+
+            public function deleteWebhook($params = [])
+            {
+                return true;
+            }
+
+            public function getUpdates($options = [])
+            {
+                $batch = array_shift($this->sequence);
+
+                return $batch === null
+                    ? []
+                    : array_map(fn ($payload) => new TypesUpdate($payload), $batch);
+            }
+        };
+
+        $updater = new class ($fakeTelegram, 2) extends Updater {
+            private int $max;
+
+            public function __construct(Telegram $telegram, int $max)
+            {
+                parent::__construct('123:ABC');
+                $this->max = $max;
+
+                $ref = new ReflectionClass(Updater::class);
+                $prop = $ref->getProperty('telegram');
+                $prop->setAccessible(true);
+                $prop->setValue($this, $telegram);
+
+                $disp = $ref->getProperty('dispatcher');
+                $disp->setAccessible(true);
+                $disp->setValue($this, new \Jeely\Update\UpdateDispatcher($telegram, 8));
+            }
+
+            protected function shouldStopAfterProcessed(int $processedUpdates): bool
+            {
+                return $processedUpdates >= $this->max;
+            }
+        };
+
+        $order = [];
+        $started = microtime(true);
+
+        $updater->concurrency(2)->waitPolling(function ($update) use (&$order) {
+            if ((int) $update->update_id === 1) {
+                return delay(0.2)->then(function () use (&$order, $update) {
+                    $order[] = (int) $update->update_id;
+
+                    return null;
+                });
+            }
+
+            $order[] = (int) $update->update_id;
+
+            return new FulfilledPromise(null);
+        });
+
+        $elapsed = microtime(true) - $started;
+
+        assertEquals([2, 1], $order, 'fast handler should finish during sibling delay');
+        assertTrue($elapsed < 1.0, 'cooperative delay should stay well under a blocking sleep budget');
+    },
 ];
