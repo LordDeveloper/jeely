@@ -13,7 +13,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Jeely\\": "src/Jeely/"
+      "Jeely\\": "src/Jeely/",
+      "Examples\\": "examples/"
     },
     "files": [
       "src/functions.php"

@@ -8,26 +8,112 @@ use Jeely\Api\Types\Message;
 
 trait InteractsWithCallbackQuery
 {
-    public function answer($text, $showAlert = false): Error|PromiseInterface|bool
+    use ResolvesTelegramParams;
+
+    /**
+     * @return array{chat_id:int|string|null,message_id:int|null,inline_message_id:?string}
+     */
+    protected function callbackMessageTarget(): array
     {
-        return $this->telegram->answerCallbackQuery([
+        $chatId = null;
+        $messageId = null;
+        $message = $this->message ?? null;
+
+        if ($message !== null) {
+            $messageId = $message->message_id ?? null;
+            $chat = $message->chat ?? null;
+
+            if ($chat instanceof \Jeely\Api\Types\Chat) {
+                $chatId = $chat->id;
+            } elseif (is_array($chat)) {
+                $chatId = $chat['id'] ?? null;
+            }
+        }
+
+        return [
+            'chat_id' => $chatId,
+            'message_id' => $messageId,
+            'inline_message_id' => $this->inline_message_id ?? null,
+        ];
+    }
+
+    public function answer(?string $text = null, bool $showAlert = false, ...$args): Error|PromiseInterface|bool
+    {
+        return $this->callTelegram('answerCallbackQuery', $this->telegramOptions([
             'callback_query_id' => $this->id,
             'text' => $text,
             'show_alert' => $showAlert,
-        ]);
+        ], $this->extras($args)));
+    }
+
+    public function alert(string $text, ...$args): Error|PromiseInterface|bool
+    {
+        return $this->answer($text, true, ...$args);
     }
 
     public function edit(?string $text = null, ...$args): PromiseInterface|Error|bool|Message
     {
-        $method = ! is_null($text)
-            ? 'editMessageText'
-            : (isset($args['caption']) ? 'editMessageCaption' : 'editMessageReplyMarkup');
+        $options = $this->extras($args);
 
-        return $this->telegram->{$method}(...array_merge($args, [
-            'chat_id' => $this->message?->chat->id,
+        if (array_key_exists('rich_message', $options)) {
+            return $this->editRich($options['rich_message'], $options);
+        }
+
+        if ($text !== null) {
+            return $this->editText($text, $options);
+        }
+
+        if (array_key_exists('caption', $options)) {
+            return $this->editCaption((string) $options['caption'], $options);
+        }
+
+        return $this->editMarkup($options);
+    }
+
+    public function editText(string $text, ...$args): PromiseInterface|Error|bool|Message
+    {
+        return $this->callTelegram('editMessageText', $this->telegramOptions([
+            ...$this->callbackMessageTarget(),
             'text' => $text,
-            'message_id' => $this->message?->message_id,
-            'inline_message_id' => $this->inline_message_id,
-        ]));
+        ], $this->extras($args)));
+    }
+
+    public function editRich(array|string $markdown, ...$args): PromiseInterface|Error|bool|Message
+    {
+        $options = $this->extras($args);
+        $rich = is_array($markdown)
+            ? $markdown
+            : ['markdown' => $markdown, 'is_rtl' => $options['is_rtl'] ?? true];
+
+        unset($options['is_rtl']);
+
+        return $this->callTelegram('editMessageText', $this->telegramOptions([
+            ...$this->callbackMessageTarget(),
+            'rich_message' => $rich,
+        ], $options));
+    }
+
+    public function editCaption(?string $caption = null, ...$args): PromiseInterface|Error|bool|Message
+    {
+        return $this->callTelegram('editMessageCaption', $this->telegramOptions([
+            ...$this->callbackMessageTarget(),
+            'caption' => $caption,
+        ], $this->extras($args)));
+    }
+
+    public function editMarkup(...$args): PromiseInterface|Error|bool|Message
+    {
+        return $this->callTelegram('editMessageReplyMarkup', $this->telegramOptions([
+            ...$this->callbackMessageTarget(),
+        ], $this->extras($args)));
+    }
+
+    public function delete(...$args): Error|PromiseInterface|bool
+    {
+        if ($this->message === null) {
+            return false;
+        }
+
+        return $this->message->delete(...$args);
     }
 }

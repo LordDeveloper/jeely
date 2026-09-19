@@ -7,11 +7,10 @@ use Jeely\Api\Types\ChatMember;
 use Jeely\Api\Types\Error;
 use Jeely\Api\Types\Message;
 
-use function all;
-use function wait;
-
 trait InteractsWithUser
 {
+    use ResolvesTelegramParams;
+
     protected function booted(): void
     {
         if (isset($this['first_name'])) {
@@ -22,32 +21,57 @@ trait InteractsWithUser
         }
     }
 
-    public function notify($text, ...$args): Error|PromiseInterface|Message
+    public function notify(string $text, ...$args): Error|PromiseInterface|Message
     {
-        return $this->telegram->sendMessage(...array_merge($args, [
-            'chat_id' => $this->id,
-            'text' => $text,
-        ]));
+        return $this->send($text, ...$args);
     }
 
-    public function isMemberOf(array $chats = [])
+    public function send(string $text, ...$args): Error|PromiseInterface|Message
     {
-        $promises = [];
+        return $this->callTelegram('sendMessage', $this->telegramOptions([
+            'chat_id' => $this->id,
+            'text' => $text,
+        ], $this->extras($args)));
+    }
+
+    public function sendRich(array|string $markdown, ...$args): Error|PromiseInterface|Message
+    {
+        $options = $this->extras($args);
+        $rich = is_array($markdown)
+            ? $markdown
+            : ['markdown' => $markdown, 'is_rtl' => $options['is_rtl'] ?? true];
+
+        unset($options['is_rtl']);
+
+        return $this->callTelegram('sendRichMessage', $this->telegramOptions([
+            'chat_id' => $this->id,
+            'rich_message' => $rich,
+        ], $options));
+    }
+
+    /**
+     * @param  array<int, int|string>  $chats
+     * @return array<int|string, bool>
+     */
+    public function isMemberOf(array $chats = []): array
+    {
+        $results = [];
 
         foreach ($chats as $chat) {
-            $promises[$chat] = $this->telegram->getChatMember([
+            $response = $this->telegram->getChatMember([
                 'chat_id' => $chat,
                 'user_id' => $this->id,
-                'async' => true,
-            ])->then(function ($response) {
-                if ($response instanceof ChatMember) {
-                    return ! in_array($response->status, ['kicked', 'left'], true);
-                }
+                'async' => false,
+            ]);
 
-                return false;
-            });
+            if ($response instanceof ChatMember) {
+                $results[$chat] = ! in_array($response->status, ['kicked', 'left'], true);
+                continue;
+            }
+
+            $results[$chat] = false;
         }
 
-        return wait(all($promises));
+        return $results;
     }
 }

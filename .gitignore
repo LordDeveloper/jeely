@@ -8,10 +8,10 @@ composer.lock
 .env
 .env.*
 
-# local / scratch
-bot.php
-emoji_pack.php
-test.php
+# local / scratch (root only — do not match src/Jeely/Bot.php on Windows)
+/bot.php
+/emoji_pack.php
+/test.php
 bin/smoke_*.php
 bin/schema_inspect*.php
 bin/rebuild_telegram.php

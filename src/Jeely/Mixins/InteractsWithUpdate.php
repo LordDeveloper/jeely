@@ -2,10 +2,14 @@
 
 namespace Jeely\Mixins;
 
-use Jeely\Nectar;
+use GuzzleHttp\Promise\PromiseInterface;
+use Jeely\Api\Types\CallbackQuery;
 use Jeely\Api\Types\Chat;
+use Jeely\Api\Types\Error;
+use Jeely\Api\Types\InlineQuery;
 use Jeely\Api\Types\Message;
 use Jeely\Api\Types\User;
+use Jeely\Nectar;
 
 /**
  * Ergonomic helpers for resolving the active payload on an Update.
@@ -77,10 +81,30 @@ trait InteractsWithUpdate
                 return null;
             }
 
-            return new Message($data);
+            $message = new Message($data);
+
+            if ($this->telegram !== null) {
+                $message->withTelegram($this->telegram);
+            }
+
+            return $message;
         }
 
         return null;
+    }
+
+    public function callbackQuery(): ?CallbackQuery
+    {
+        $query = $this->callback_query ?? null;
+
+        return $query instanceof CallbackQuery ? $query : null;
+    }
+
+    public function inlineQuery(): ?InlineQuery
+    {
+        $query = $this->inline_query ?? null;
+
+        return $query instanceof InlineQuery ? $query : null;
     }
 
     public function from(): ?User
@@ -140,6 +164,49 @@ trait InteractsWithUpdate
         $current = $this->type();
 
         return $current !== null && in_array($current, $types, true);
+    }
+
+    public function reply(string $text, ...$args): Error|PromiseInterface|Message|null
+    {
+        $chat = $this->chat();
+        if ($chat === null) {
+            return null;
+        }
+
+        return $chat->send($text, ...$args);
+    }
+
+    public function replyRich(array|string $markdown, ...$args): Error|PromiseInterface|Message|null
+    {
+        $chat = $this->chat();
+        if ($chat === null) {
+            return null;
+        }
+
+        return $chat->sendRich($markdown, ...$args);
+    }
+
+    public function edit(?string $text = null, ...$args): Error|PromiseInterface|Message|bool|null
+    {
+        if ($this->is('callback_query')) {
+            return $this->callbackQuery()?->edit($text, ...$args);
+        }
+
+        return $this->message()?->edit($text, ...$args);
+    }
+
+    public function answer(?string $text = null, bool $showAlert = false, ...$args): Error|PromiseInterface|bool|null
+    {
+        if ($this->is('callback_query')) {
+            return $this->callbackQuery()?->answer($text, $showAlert, ...$args);
+        }
+
+        return null;
+    }
+
+    public function typing(...$args): Error|PromiseInterface|bool|null
+    {
+        return $this->chat()?->typing(...$args);
     }
 
     /**

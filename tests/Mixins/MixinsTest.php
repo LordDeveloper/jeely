@@ -30,6 +30,9 @@ return [
         assertEquals(3, $update->message()->message_id);
         assertTrue(method_exists($update->payload(), 'answer'));
         assertTrue(method_exists($update->payload(), 'edit'));
+        assertTrue(method_exists($update, 'reply'));
+        assertTrue(method_exists($update, 'answer'));
+        assertTrue(method_exists($update, 'callbackQuery'));
     },
 
     'chat_join_and_payment_mixins_exist' => function (): void {
@@ -40,7 +43,13 @@ return [
         assertTrue(method_exists(\Jeely\Api\Types\ShippingQuery::class, 'reject'));
         assertTrue(method_exists(\Jeely\Api\Types\PreCheckoutQuery::class, 'answer'));
         assertTrue(method_exists(\Jeely\Api\Types\Chat::class, 'notify'));
+        assertTrue(method_exists(\Jeely\Api\Types\Chat::class, 'send'));
+        assertTrue(method_exists(\Jeely\Api\Types\Chat::class, 'sendRich'));
         assertTrue(method_exists(\Jeely\Api\Types\Message::class, 'react'));
+        assertTrue(method_exists(\Jeely\Api\Types\Message::class, 'editText'));
+        assertTrue(method_exists(\Jeely\Api\Types\Message::class, 'editRich'));
+        assertTrue(method_exists(\Jeely\Api\Types\Message::class, 'editMarkup'));
+        assertTrue(method_exists(\Jeely\Api\Types\Message::class, 'replyRich'));
         assertTrue(method_exists(\Jeely\Api\Types\ChatMemberUpdated::class, 'joined'));
     },
 

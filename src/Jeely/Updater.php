@@ -13,6 +13,7 @@ use Jeely\Api\Update;
 use Jeely\Log\LoggerInterface;
 use Jeely\Log\NullLogger;
 use Jeely\Server\HttpServer;
+use Jeely\Update\RunOptions;
 use Jeely\Update\UpdateDispatcher;
 use Throwable;
 
@@ -97,10 +98,9 @@ class Updater
     /**
      * Blocking webhook handler (waits for async callback completion).
      */
-    public function waitWebhook(Closure $callback): void
+    public function waitWebhook(Closure $callback, array $options = []): void
     {
-        Loop::enable($this->telegram->getBrowser());
-        $this->telegram->async(true);
+        $this->prepareRuntime($options);
 
         Loop::await($this->handleWebhookAsync($callback));
     }
@@ -111,7 +111,6 @@ class Updater
     public function handleWebhookAsync(Closure $callback, ?string $body = null): PromiseInterface
     {
         Loop::enable($this->telegram->getBrowser());
-        $this->telegram->async(true);
 
         $body ??= $this->readWebhookBody();
         $payload = json_decode($body ?: '', true);
@@ -142,8 +141,7 @@ class Updater
      */
     public function waitServer(Closure $callback, array $options = []): void
     {
-        Loop::enable($this->telegram->getBrowser());
-        $this->telegram->async(true);
+        $this->prepareRuntime($options);
         $this->running = true;
 
         $options = array_merge([
@@ -213,9 +211,6 @@ class Updater
      */
     public function waitPolling(Closure $callback, array $options = []): void
     {
-        Loop::enable($this->telegram->getBrowser());
-        $this->telegram->async(true);
-
         $this->logger->info('Starting long polling');
         Loop::await($this->runPollingAsync($callback, $options));
         $this->logger->info('Long polling stopped');
@@ -227,8 +222,7 @@ class Updater
      */
     public function runPollingAsync(Closure $callback, array $options = []): PromiseInterface
     {
-        Loop::enable($this->telegram->getBrowser());
-        $this->telegram->async(true);
+        $this->prepareRuntime($options);
 
         $this->running = true;
         $this->processed = 0;
@@ -379,6 +373,12 @@ class Updater
         }
 
         throw new \RuntimeException((string) $error->getDescription(), $code);
+    }
+
+    private function prepareRuntime(array &$options = []): void
+    {
+        Loop::enable($this->telegram->getBrowser());
+        RunOptions::applyAsync($this->telegram, $options);
     }
 
     private function callTelegramAsync(string $method, array $params): PromiseInterface

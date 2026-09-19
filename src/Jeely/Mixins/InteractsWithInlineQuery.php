@@ -7,11 +7,13 @@ use Jeely\Api\Types\Error;
 
 trait InteractsWithInlineQuery
 {
+    use ResolvesTelegramParams;
+
     public function answer(array $results, ...$args): Error|PromiseInterface|bool
     {
-        return $this->telegram->answerInlineQuery(...array_merge($args, [
+        return $this->callTelegram('answerInlineQuery', $this->telegramOptions([
             'inline_query_id' => $this->id,
             'results' => $results,
-        ]));
+        ], $this->extras($args)));
     }
 }

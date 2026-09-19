@@ -4,6 +4,8 @@ A PHP library for building Telegram bots with typed Bot API methods, async polli
 
 **Requirements:** PHP 8.1+, Guzzle, Revolt Event Loop
 
+📖 **[Full documentation](https://lorddeveloper.github.io/jeely/)** — installation, guides, examples, and GitHub Pages setup.
+
 ## Installation
 
 ```bash
@@ -291,10 +293,18 @@ php tests/run.php
 
 ## Local examples
 
-The repository ignores local scratch scripts (`bot.php`, `emoji_pack.php`) — copy and adapt them in your project for:
+Runnable demos live in `examples/` with root entry scripts:
 
-- Multi-step shop wizard with inline keyboard and cart
-- Custom emoji pack listing via `getStickerSet`
+| Script | Demo |
+|--------|------|
+| `php bot.php` | Shop wizard (inline keyboard, cart) |
+| `php progress.php` | Async progress bars & parallel jobs |
+| `php emoji_pack.php` | Custom emoji pack listing |
+| `php console.php` | CLI commands + Telegram bot |
+| `php request.php` | Async HTTP requests |
+| `php schedule.php` | Cron / scheduled tasks |
+
+See [examples documentation](docs/examples/index.md) or the [online docs](https://lorddeveloper.github.io/jeely/examples/).
 
 ---
 

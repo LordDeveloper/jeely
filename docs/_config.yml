@@ -1,0 +1,28 @@
+title: Jeely
+description: Async PHP library for Telegram bots
+baseurl: /jeely
+url: https://lorddeveloper.github.io
+
+remote_theme: just-the-docs/just-the-docs
+
+color_scheme: light
+search_enabled: true
+heading_anchors: true
+
+aux_links:
+  GitHub: https://github.com/LordDeveloper/jeely
+
+footer_content: "Jeely — PHP Telegram Bot Library"
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-github-metadata
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
