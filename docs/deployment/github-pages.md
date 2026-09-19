@@ -8,12 +8,56 @@ nav_order: 1
 
 This repository includes a Jekyll site in the `docs/` folder, ready for GitHub Pages.
 
-## Prerequisites
+**Live URL (after setup):** [https://lorddeveloper.github.io/jeely/](https://lorddeveloper.github.io/jeely/)
 
-- GitHub repository with push access
-- `docs/` folder at repository root (already included)
+## Choose a deployment method
 
-## Step 1 — Push the docs folder
+| Method | Pros | One-time setup |
+|--------|------|----------------|
+| **GitHub Actions** (recommended) | Auto-build on every push to `docs/` | Enable Pages → GitHub Actions |
+| **Deploy from branch** | No workflow needed | Enable Pages → branch `master` → `/docs` |
+
+---
+
+## Method A — GitHub Actions (recommended)
+
+The repo includes `.github/workflows/pages.yml`. It builds Jekyll on every push.
+
+### Step 1 — Enable GitHub Pages
+
+1. Open [github.com/LordDeveloper/jeely/settings/pages](https://github.com/LordDeveloper/jeely/settings/pages)
+2. Under **Build and deployment** → **Source**, select **GitHub Actions**
+3. Save
+
+### Step 2 — Run the workflow
+
+Push to `master` (already done) or manually re-run:
+
+1. Go to [Actions → Deploy documentation to GitHub Pages](https://github.com/LordDeveloper/jeely/actions/workflows/pages.yml)
+2. Click **Run workflow**
+
+First successful deploy takes 1–3 minutes. Site URL:
+
+```
+https://lorddeveloper.github.io/jeely/
+```
+
+---
+
+## Method B — Deploy from branch (`/docs`)
+
+If you prefer Jekyll build on GitHub without Actions:
+
+1. Open [Settings → Pages](https://github.com/LordDeveloper/jeely/settings/pages)
+2. **Source:** Deploy from a branch
+3. **Branch:** `master` — **Folder:** `/docs`
+4. Save
+
+GitHub builds Jekyll automatically from the `docs/` folder.
+
+---
+
+## Push the docs folder (already done)
 
 Make sure these files exist in your repo:
 
@@ -36,18 +80,7 @@ git commit -m "Add documentation site"
 git push origin main
 ```
 
-## Step 2 — Enable GitHub Pages
-
-1. Open your repository on GitHub.
-2. Go to **Settings** → **Pages**.
-3. Under **Build and deployment** → **Source**, select **Deploy from a branch**.
-4. Choose branch: `main` (or `master`).
-5. Choose folder: **`/docs`**.
-6. Click **Save**.
-
-GitHub builds the site with Jekyll (may take 1–3 minutes).
-
-## Step 3 — Open your site
+## Open your site
 
 Default URL format:
 
