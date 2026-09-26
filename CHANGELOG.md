@@ -15,6 +15,7 @@ All notable changes to this project are documented here.
 - **Telegram::detectInlineKeyboard** treats plain arrays with `callback_data` / `url` / … as inline (not reply keyboards).
 - **File** restores Jeely 1.x convenience `file_url` after `withTelegram()` (`{baseUri}file/bot{token}/{file_path}`), so avatar/download streams no longer call `file_get_contents('')`.
 - **Telegram::prepareFields** captures `$appendSignature` in the recursive walk closure (no undefined-variable warning when appending signature), restores `sign` semantics (`true`/absent appends signature, `false` skips), and **unsets `sign` before the API request** (Telegram rejects unknown fields — this was breaking `answerCallbackQuery` / edits that pass `sign => false`).
+- **Telegram::prepareFields signature** is applied only to top-level `text` / `caption` / `message_text` (and once as a rich_message footer). Nested `text` keys inside `rich_message` table cells or keyboard buttons are no longer overwritten with the bot signature.
 - **UpdateDispatcher** default error path writes the full exception (file/line/stack) to STDERR instead of `trigger_error()` that pointed stacks at UpdateDispatcher itself.
 - **CallbackQuery::answer** accepts legacy `answer('msg', ['sign' => false])` (options array as 2nd arg) without TypeError.
 - **InlineQuery::answer** unwraps legacy `answer(['results' => …, 'is_personal' => …])` payloads.

@@ -439,7 +439,7 @@ class Telegram
         $appendSignature = ! empty($this->signature) && ($fields['sign'] ?? true) !== false;
         unset($fields['sign']);
 
-        array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$keyboardMeta, $fields, $appendSignature) {
+        array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$keyboardMeta) {
             if ($value instanceof KeyboardButtonInterface) {
                 $this->collectKeyboardMeta($value, $keyboardMeta);
             }
@@ -458,11 +458,26 @@ class Telegram
                 $files[$name] = $value;
                 $value = 'attach://' . $name;
             }
-
-            if ($appendSignature && in_array((string) $attribute, ['text', 'caption', 'message_text'], true)) {
-                $value .= "\n" . $this->formatSignature((string) ($fields['parse_mode'] ?? ''));
-            }
         });
+
+        // Signature must only touch top-level message body fields. Nested `text`
+        // keys (rich_message table cells, keyboard buttons, …) must stay untouched.
+        if ($appendSignature) {
+            $parseMode = (string) ($fields['parse_mode'] ?? '');
+
+            foreach (['text', 'caption', 'message_text'] as $field) {
+                if (isset($fields[$field]) && is_string($fields[$field])) {
+                    $fields[$field] .= "\n" . $this->formatSignature($parseMode);
+                }
+            }
+
+            if (array_key_exists('rich_message', $fields)) {
+                $fields['rich_message'] = $this->appendSignatureToRichMessage(
+                    $fields['rich_message'],
+                    $parseMode,
+                );
+            }
+        }
 
         foreach (['chat_id', 'user_id'] as $recipient) {
             if (isset($fields[$recipient]) && is_string($fields[$recipient]) && strtolower($fields[$recipient]) === 'me') {
@@ -657,6 +672,48 @@ class Telegram
         }
 
         return false;
+    }
+
+    /**
+     * Append the bot signature once to a rich message payload (not to every nested text cell).
+     */
+    private function appendSignatureToRichMessage(mixed $richMessage, string $parseMode): mixed
+    {
+        if ($richMessage instanceof Nectar) {
+            $richMessage = $richMessage->toArray();
+        }
+
+        if (! is_array($richMessage)) {
+            return $richMessage;
+        }
+
+        if (isset($richMessage['markdown']) && is_string($richMessage['markdown'])) {
+            $richMessage['markdown'] .= "\n\n" . $this->formatSignature(
+                $parseMode !== '' ? $parseMode : 'markdown'
+            );
+
+            return $richMessage;
+        }
+
+        if (isset($richMessage['html']) && is_string($richMessage['html'])) {
+            $richMessage['html'] .= "\n\n" . $this->formatSignature(
+                $parseMode !== '' ? $parseMode : 'html'
+            );
+
+            return $richMessage;
+        }
+
+        if (isset($richMessage['blocks']) && is_array($richMessage['blocks'])) {
+            $richMessage['blocks'][] = ['type' => 'divider'];
+            $richMessage['blocks'][] = [
+                'type' => 'paragraph',
+                'text' => (string) $this->signature,
+            ];
+
+            return $richMessage;
+        }
+
+        return $richMessage;
     }
 
     private function formatSignature(string $parseMode): string

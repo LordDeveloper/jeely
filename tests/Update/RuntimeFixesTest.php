@@ -295,6 +295,41 @@ namespace {
             assertFalse(array_key_exists('sign', $fieldsSignTrue));
         },
 
+        'prepare_fields_signature_skips_nested_rich_message_and_button_text' => function (): void {
+            $telegram = new Telegram('0:TEST');
+            $telegram->setSignature('— bot');
+
+            $ref = new ReflectionClass($telegram);
+            $method = $ref->getMethod('prepareFields');
+            $method->setAccessible(true);
+
+            $fields = $method->invoke($telegram, [
+                'chat_id' => 1,
+                'rich_message' => [
+                    'is_rtl' => true,
+                    'blocks' => [
+                        [
+                            'type' => 'table',
+                            'cells' => [
+                                [
+                                    ['text' => 'قیمت', 'align' => 'center'],
+                                    ['text' => '50,000', 'align' => 'center'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'buttons' => [[['text' => 'خرید', 'callback_data' => 'buy']]],
+            ]);
+
+            assertSame('قیمت', $fields['rich_message']['blocks'][0]['cells'][0][0]['text']);
+            assertSame('50,000', $fields['rich_message']['blocks'][0]['cells'][0][1]['text']);
+            assertSame('divider', $fields['rich_message']['blocks'][1]['type']);
+            assertSame('paragraph', $fields['rich_message']['blocks'][2]['type']);
+            assertSame('— bot', $fields['rich_message']['blocks'][2]['text']);
+            assertSame('خرید', $fields['reply_markup']['inline_keyboard'][0][0]['text']);
+        },
+
         'file_builds_file_url_after_with_telegram' => function (): void {
             $telegram = new Telegram('123:ABC');
             $file = (new File([
