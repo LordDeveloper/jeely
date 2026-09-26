@@ -261,6 +261,15 @@ namespace {
                 'sign' => false,
             ]);
             assertSame('hello', $fieldsNoSign['text']);
+            assertFalse(array_key_exists('sign', $fieldsNoSign));
+
+            $fieldsSignTrue = $method->invoke($telegram, [
+                'chat_id' => 1,
+                'text' => 'hello',
+                'sign' => true,
+            ]);
+            assertTrue(str_contains((string) $fieldsSignTrue['text'], '— bot'));
+            assertFalse(array_key_exists('sign', $fieldsSignTrue));
         },
 
         'nectar_hydrator_empty_child_map_inherits_parent' => function (): void {

@@ -366,7 +366,9 @@ class Telegram
             'is_persistent' => false,
         ];
 
-        $appendSignature = ! empty($this->signature) && ! isset($fields['sign']);
+        // `sign` is a Jeely-only flag; Telegram rejects it as an unknown field.
+        $appendSignature = ! empty($this->signature) && ($fields['sign'] ?? true) !== false;
+        unset($fields['sign']);
 
         array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$keyboardMeta, $fields, $appendSignature) {
             if ($value instanceof KeyboardButtonInterface) {
