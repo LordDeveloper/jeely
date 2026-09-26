@@ -97,13 +97,26 @@ Point Telegram webhook to `https://your-domain:8080/webhook`.
 
 Environment: `JEELY_MODE=server`
 
-### External webhook
+### External webhook (nginx / Apache / PHP-FPM)
 
 ```php
-$bot->run(UpdateHandlerMode::Webhook, ['async' => true])
-    ->withHandler(MyHandler::class)
-    ->start();
+// Default for waitWebhook is async=false (FPM-safe sync).
+$updater->waitWebhook(function (Update $update) {
+    // answer / edit / send complete before the worker returns
+});
+
+// Opt into async only if you keep the process alive (long-running worker):
+$updater->waitWebhook($handler, ['async' => true]);
 ```
+
+`waitWebhook()` for normal/FPM mode:
+
+- defaults to **`async => false`** so Bot API calls block until finished
+- does **not** enable the Revolt Loop bridge (avoids deadlocks with other HTTP clients)
+- flushes pending Telegram HTTP before return
+- resets Loop state so reused FPM workers stay clean
+
+Polling and built-in server stay async-first (`async => true` by default).
 
 Your web server forwards POST body to the updater. See [Jeely HTTP server](../guide/steps-cache-database#http-server) for a minimal built-in alternative.
 

@@ -96,17 +96,73 @@ class Updater
     }
 
     /**
-     * Blocking webhook handler (waits for async callback completion).
+     * Blocking webhook handler for normal mode (nginx/Apache/PHP-FPM).
+     *
+     * Defaults to async=false so Bot API calls complete before the worker exits.
+     * Polling / built-in server keep async-first defaults via {@see prepareRuntime()}.
+     *
+     * Even when async=true, all tracked Telegram HTTP promises are flushed before return
+     * so fire-and-forget answerCallbackQuery / editMessage cannot die with the FPM request.
+     *
+     * Sync webhook does NOT enable the Revolt Loop bridge — enabling it makes wait() on
+     * non-Telegram promises (e.g. NodeApi) deadlock the FPM worker.
      */
     public function waitWebhook(Closure $callback, array $options = []): void
     {
-        $this->prepareRuntime($options);
+        $this->prepareRuntime($options, asyncDefault: false);
 
+        if (! $this->telegram->isAsync()) {
+            // FPM workers reuse the process; a prior async request may have left
+            // Loop::$curlMulti set. That makes global wait() bridge to Revolt and
+            // deadlocks NodeApi / any non-Telegram curl_multi (buttons appear dead).
+            Loop::reset();
+
+            try {
+                $this->runWebhookBlocking($callback);
+                $this->telegram->flushPendingRequests();
+            } finally {
+                Loop::reset();
+                $this->telegram->async(false);
+            }
+
+            return;
+        }
+
+        Loop::enable($this->telegram->getBrowser());
         Loop::await($this->handleWebhookAsync($callback));
+        $this->telegram->flushPendingRequests();
+    }
+
+    /**
+     * Run a single webhook update without the Revolt event-loop bridge (FPM-safe).
+     */
+    private function runWebhookBlocking(Closure $callback): void
+    {
+        $body = $this->readWebhookBody();
+        $payload = json_decode($body ?: '', true);
+
+        if (! is_array($payload)) {
+            $this->logger->warning('Webhook body is not valid JSON');
+
+            return;
+        }
+
+        $update = (new Update($payload))->withTelegram($this->telegram);
+        $this->logger->debug('Webhook update {id}', ['id' => $update->update_id ?? null]);
+
+        $this->dispatcher
+            ->concurrency($this->concurrency)
+            ->dispatchOne($callback->bindTo($this->telegram) ?? $callback, $update)
+            ->wait();
+
+        gc_collect_cycles();
     }
 
     /**
      * Async webhook handler. Returns a promise that settles when the callback finishes.
+     *
+     * Note: this does not wait for fire-and-forget Bot API promises; callers that must
+     * finish HTTP before process exit (waitWebhook) call {@see Telegram::flushPendingRequests()}.
      */
     public function handleWebhookAsync(Closure $callback, ?string $body = null): PromiseInterface
     {
@@ -375,10 +431,15 @@ class Updater
         throw new \RuntimeException((string) $error->getDescription(), $code);
     }
 
-    private function prepareRuntime(array &$options = []): void
+    private function prepareRuntime(array &$options = [], bool $asyncDefault = true): void
     {
-        Loop::enable($this->telegram->getBrowser());
-        RunOptions::applyAsync($this->telegram, $options);
+        RunOptions::applyAsync($this->telegram, $options, $asyncDefault);
+
+        // Bridge Revolt ↔ curl_multi only when async mode needs the event loop.
+        // Sync webhook/FPM must not enable it: wait() on foreign HTTP then deadlocks.
+        if ($this->telegram->isAsync()) {
+            Loop::enable($this->telegram->getBrowser());
+        }
     }
 
     private function callTelegramAsync(string $method, array $params): PromiseInterface

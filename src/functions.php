@@ -195,7 +195,14 @@ if (! function_exists('wait')) {
      */
     function wait(PromiseInterface $promise, bool $unwrap = true)
     {
-        if ($unwrap && class_exists(\Jeely\Async\Loop::class)) {
+        // Only use the Revolt bridge when it was explicitly enabled (polling/server/async webhook).
+        // class_exists alone is wrong: Loop always exists, and await() with curlMulti set only
+        // ticks Telegram's handler — foreign promises (NodeApi, etc.) would deadlock under FPM.
+        if (
+            $unwrap
+            && class_exists(\Jeely\Async\Loop::class)
+            && \Jeely\Async\Loop::isEnabled()
+        ) {
             return \Jeely\Async\Loop::await($promise);
         }
 

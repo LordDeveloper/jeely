@@ -2,8 +2,11 @@
 
 namespace Jeely;
 
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils as PromiseUtils;
 use GuzzleHttp\Psr7\Utils;
+use Jeely\Async\Loop;
 use Jeely\Api\Methods\MethodDefinitionInterface;
 use Jeely\Api\Types\Error;
 use Jeely\Api\Types\ForceReply;
@@ -222,6 +225,14 @@ class Telegram
 
     private bool $async = false;
 
+    /**
+     * In-flight Bot API HTTP promises (async mode / fire-and-forget).
+     * Webhook/FPM must flush these before the worker returns or answerCallbackQuery dies.
+     *
+     * @var array<int, PromiseInterface>
+     */
+    private array $pendingRequests = [];
+
     public function __construct(protected string $token, array $browserConfig = [])
     {
         $this->browser = Browser::factory(array_merge([
@@ -294,7 +305,7 @@ class Telegram
         $fields = $this->prepareFields($fields);
         $multipart = $this->buildMultipart($fields);
 
-        return $this->browser->requestAsync(
+        $promise = $this->browser->requestAsync(
             'POST',
             sprintf('/bot%s/%s', $this->getToken(), ltrim($uri, '/')),
             ['multipart' => $multipart]
@@ -324,6 +335,64 @@ class Telegram
                 ]);
             }
         );
+
+        return $this->trackPending($promise);
+    }
+
+    /**
+     * Whether any Bot API HTTP requests are still in flight.
+     */
+    public function hasPendingRequests(): bool
+    {
+        return $this->pendingRequests !== [];
+    }
+
+    /**
+     * Block until every tracked Bot API promise has settled.
+     *
+     * Required for webhook/FPM when handlers fire-and-forget async calls
+     * (or return only one of several promises). Safe no-op when empty.
+     */
+    public function flushPendingRequests(): void
+    {
+        $guard = 0;
+
+        while ($this->pendingRequests !== [] && $guard < 32) {
+            $guard++;
+            $batch = array_values($this->pendingRequests);
+            $settled = PromiseUtils::settle($batch);
+
+            if (Loop::isEnabled()) {
+                Loop::await($settled);
+            } else {
+                $settled->wait();
+            }
+
+            foreach ($batch as $promise) {
+                unset($this->pendingRequests[spl_object_id($promise)]);
+            }
+        }
+    }
+
+    private function trackPending(PromiseInterface $promise): PromiseInterface
+    {
+        $id = spl_object_id($promise);
+        $this->pendingRequests[$id] = $promise;
+
+        $promise->then(
+            function (mixed $value) use ($id): mixed {
+                unset($this->pendingRequests[$id]);
+
+                return $value;
+            },
+            function (mixed $reason) use ($id): PromiseInterface {
+                unset($this->pendingRequests[$id]);
+
+                return Create::rejectionFor($reason);
+            }
+        );
+
+        return $promise;
     }
 
     public function __call(string $name, array $arguments = []): mixed

@@ -32,6 +32,20 @@ final class Loop
     }
 
     /**
+     * Drop the Revolt↔curl_multi bridge (tests / sync webhook teardown).
+     */
+    public static function reset(): void
+    {
+        if (self::$guzzleWatcher !== null) {
+            EventLoop::cancel(self::$guzzleWatcher);
+            self::$guzzleWatcher = null;
+        }
+
+        self::$curlMulti = null;
+        self::$awaitDepth = 0;
+    }
+
+    /**
      * Block until a Guzzle promise settles while keeping the event loop alive.
      *
      * If the Revolt bridge is not enabled yet, falls back to Guzzle's native wait().
@@ -39,7 +53,11 @@ final class Loop
     public static function await(PromiseInterface $promise): mixed
     {
         if ($promise->getState() !== PromiseInterface::PENDING) {
-            return $promise->wait();
+            $result = $promise->wait();
+            // enable() may have registered a watcher without entering suspend().
+            self::maybeCancelGuzzleWatcher();
+
+            return $result;
         }
 
         // Before waitPolling/enable(), native wait drives curl_multi correctly.

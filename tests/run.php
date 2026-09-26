@@ -16,6 +16,7 @@ $testFiles = [
     __DIR__ . '/Tools/ButtonTelegramTest.php',
     __DIR__ . '/Tools/TextFormattersTest.php',
     __DIR__ . '/Updater/UpdaterPollingPromiseAwareTest.php',
+    __DIR__ . '/Updater/WebhookFpmSyncTest.php',
     __DIR__ . '/Container/ContainerTest.php',
     __DIR__ . '/Handlers/EventHandlerTest.php',
     __DIR__ . '/Bot/BotRunTest.php',

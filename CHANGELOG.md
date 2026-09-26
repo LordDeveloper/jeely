@@ -6,6 +6,7 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- **waitWebhook (normal / PHP-FPM mode)** defaults to `async=false`, runs without enabling the Revolt Loop bridge, resets leftover Loop state on reused FPM workers, and flushes pending Bot API HTTP before return. This stops stuck inline buttons (`answerCallbackQuery` / `editMessage` dying with the worker) and deadlocks when handlers `wait()` on non-Telegram promises (e.g. another Guzzle client).
 - **MaybeInaccessibleMessage** now extends `Message` so nested `chat` / `from` / … hydrate correctly on callback updates (no more `Attempt to read property "id" on array`).
 - **NectarHydrator** merges `JSON_PROPERTY_MAP` from parent classes → child; an empty child map no longer wipes parent mappings.
 - **InteractsWithMessage** uses safe `messageChatId()` for object|array `chat`, and `detectMedia()` tolerates array `PhotoSize` rows.
