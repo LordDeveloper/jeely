@@ -570,6 +570,20 @@ class Telegram
                 if ($button instanceof KeyboardButton) {
                     return false;
                 }
+                if (is_array($button) && (
+                    array_key_exists('callback_data', $button)
+                    || array_key_exists('url', $button)
+                    || array_key_exists('web_app', $button)
+                    || array_key_exists('login_url', $button)
+                    || array_key_exists('switch_inline_query', $button)
+                    || array_key_exists('switch_inline_query_current_chat', $button)
+                    || array_key_exists('switch_inline_query_chosen_chat', $button)
+                    || array_key_exists('callback_game', $button)
+                    || array_key_exists('pay', $button)
+                    || array_key_exists('copy_text', $button)
+                )) {
+                    return true;
+                }
             }
         }
 

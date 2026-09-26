@@ -287,6 +287,24 @@ namespace {
             );
         },
 
+        'prepare_fields_plain_callback_arrays_become_inline_keyboard' => function (): void {
+            $telegram = new Telegram('0:TEST');
+            $ref = new ReflectionClass($telegram);
+            $method = $ref->getMethod('prepareFields');
+            $method->setAccessible(true);
+
+            $fields = $method->invoke($telegram, [
+                'chat_id' => 1,
+                'text' => 'hi',
+                'buttons' => [[['text' => 'Go', 'callback_data' => 'go']]],
+                'sign' => false,
+            ]);
+
+            assertTrue(isset($fields['reply_markup']['inline_keyboard']));
+            assertFalse(isset($fields['reply_markup']['keyboard']));
+            assertSame('go', $fields['reply_markup']['inline_keyboard'][0][0]['callback_data']);
+        },
+
         'nectar_hydrator_empty_child_map_inherits_parent' => function (): void {
             $child = new EmptyMapChildMessage([
                 'message_id' => 11,
