@@ -27,6 +27,7 @@ namespace {
     use Jeely\Api\Types\User;
     use Jeely\Api\Update;
     use Jeely\Telegram;
+    use Jeely\Tools\Button;
     use Jeely\Update\UpdateDispatcher;
 
     final class RuntimeFixFakeTelegram extends Telegram
@@ -217,6 +218,27 @@ namespace {
             $cq->answer('boom', true);
 
             assertTrue($telegram->calls[0]['params']['show_alert']);
+        },
+
+        'user_notify_accepts_named_option_args' => function (): void {
+            $telegram = new RuntimeFixFakeTelegram();
+            $user = (new User([
+                'id' => 42,
+                'is_bot' => false,
+                'first_name' => 'A',
+            ]))->withTelegram($telegram);
+
+            $user->notify(
+                text: 'left channel',
+                buttons: Button::url('join', 'https://t.me/example'),
+                sign: false,
+            );
+
+            assertSame('sendMessage', $telegram->calls[0]['method']);
+            assertSame(42, $telegram->calls[0]['params']['chat_id']);
+            assertSame('left channel', $telegram->calls[0]['params']['text']);
+            assertFalse($telegram->calls[0]['params']['sign']);
+            assertTrue(isset($telegram->calls[0]['params']['buttons']));
         },
 
         'inline_answer_unwraps_assoc_results_payload' => function (): void {

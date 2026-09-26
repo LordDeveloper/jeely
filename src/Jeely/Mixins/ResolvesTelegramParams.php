@@ -8,7 +8,7 @@ namespace Jeely\Mixins;
 trait ResolvesTelegramParams
 {
     /**
-     * @param  array<int, mixed>  $args
+     * @param  array<int|string, mixed>  $args
      * @return array<string, mixed>
      */
     protected function extras(array $args): array
@@ -17,8 +17,18 @@ trait ResolvesTelegramParams
             return [];
         }
 
-        if (count($args) === 1 && is_array($args[0])) {
-            return $args[0];
+        // Named leftovers: notify(text: '...', buttons: $x, sign: false)
+        // → ...$args is ['buttons' => $x, 'sign' => false] (string keys, not a list).
+        if (! array_is_list($args)) {
+            /** @var array<string, mixed> $args */
+            return $args;
+        }
+
+        if (count($args) === 1 && is_array($args[0] ?? null)) {
+            /** @var array<string, mixed> $options */
+            $options = $args[0];
+
+            return $options;
         }
 
         throw new \InvalidArgumentException('Pass Telegram API options as a single associative array.');

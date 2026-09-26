@@ -9,6 +9,7 @@ All notable changes to this project are documented here.
 - **MaybeInaccessibleMessage** now extends `Message` so nested `chat` / `from` / … hydrate correctly on callback updates (no more `Attempt to read property "id" on array`).
 - **NectarHydrator** merges `JSON_PROPERTY_MAP` from parent classes → child; an empty child map no longer wipes parent mappings.
 - **InteractsWithMessage** uses safe `messageChatId()` for object|array `chat`, and `detectMedia()` tolerates array `PhotoSize` rows.
+- **ResolvesTelegramParams::extras** accepts named option leftovers (`notify(text: '…', buttons: $x)` → `['buttons' => $x]`) instead of reading undefined `$args[0]`.
 - **Telegram::detectInlineKeyboard** treats plain arrays with `callback_data` / `url` / … as inline (not reply keyboards).
 - **File** restores Jeely 1.x convenience `file_url` after `withTelegram()` (`{baseUri}file/bot{token}/{file_path}`), so avatar/download streams no longer call `file_get_contents('')`.
 - **Telegram::prepareFields** captures `$appendSignature` in the recursive walk closure (no undefined-variable warning when appending signature), restores `sign` semantics (`true`/absent appends signature, `false` skips), and **unsets `sign` before the API request** (Telegram rejects unknown fields — this was breaking `answerCallbackQuery` / edits that pass `sign => false`).
