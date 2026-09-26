@@ -66,8 +66,29 @@ trait InteractsWithCallbackQuery
         return $this->answer($text, true, ...$args);
     }
 
-    public function edit(?string $text = null, ...$args): PromiseInterface|Error|bool|Message
+    public function edit(mixed $text = null, ...$args): PromiseInterface|Error|bool|Message
     {
+        // Legacy BC: edit(['caption' => '...', 'sign' => false, 'buttons' => ...])
+        if (is_array($text)) {
+            $options = array_replace($text, $this->extras($args));
+            $body = $options['text'] ?? null;
+            unset($options['text']);
+
+            if ($body !== null && $body !== '') {
+                return $this->editText((string) $body, $options);
+            }
+
+            if (array_key_exists('rich_message', $options)) {
+                return $this->editRich($options['rich_message'], $options);
+            }
+
+            if (array_key_exists('caption', $options)) {
+                return $this->editCaption((string) $options['caption'], $options);
+            }
+
+            return $this->editMarkup($options);
+        }
+
         $options = $this->extras($args);
 
         if (array_key_exists('rich_message', $options)) {
