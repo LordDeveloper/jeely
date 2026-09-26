@@ -20,6 +20,7 @@ namespace {
     use Jeely\Api\Types\ChatMemberLeft;
     use Jeely\Api\Types\ChatMemberMember;
     use Jeely\Api\Types\EmptyMapChildMessage;
+    use Jeely\Api\Types\File;
     use Jeely\Api\Types\InlineQuery;
     use Jeely\Api\Types\MaybeInaccessibleMessage;
     use Jeely\Api\Types\Message;
@@ -270,6 +271,20 @@ namespace {
             ]);
             assertTrue(str_contains((string) $fieldsSignTrue['text'], '— bot'));
             assertFalse(array_key_exists('sign', $fieldsSignTrue));
+        },
+
+        'file_builds_file_url_after_with_telegram' => function (): void {
+            $telegram = new Telegram('123:ABC');
+            $file = (new File([
+                'file_id' => 'fid',
+                'file_unique_id' => 'uniq',
+                'file_path' => 'photos/file_1.jpg',
+            ]))->withTelegram($telegram);
+
+            assertSame(
+                'https://api.telegram.org/file/bot123:ABC/photos/file_1.jpg',
+                $file->file_url
+            );
         },
 
         'nectar_hydrator_empty_child_map_inherits_parent' => function (): void {
