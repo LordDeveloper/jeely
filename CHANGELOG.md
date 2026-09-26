@@ -2,6 +2,23 @@
 
 All notable changes to this project are documented here.
 
+## Unreleased
+
+### Fixed
+
+- **MaybeInaccessibleMessage** now extends `Message` so nested `chat` / `from` / … hydrate correctly on callback updates (no more `Attempt to read property "id" on array`).
+- **NectarHydrator** merges `JSON_PROPERTY_MAP` from parent classes → child; an empty child map no longer wipes parent mappings.
+- **InteractsWithMessage** uses safe `messageChatId()` for object|array `chat`, and `detectMedia()` tolerates array `PhotoSize` rows.
+- **Telegram::prepareFields** captures `$appendSignature` in the recursive walk closure (no undefined-variable warning when appending signature).
+- **UpdateDispatcher** default error path writes the full exception (file/line/stack) to STDERR instead of `trigger_error()` that pointed stacks at UpdateDispatcher itself.
+- **CallbackQuery::answer** accepts legacy `answer('msg', ['sign' => false])` (options array as 2nd arg) without TypeError.
+- **InlineQuery::answer** unwraps legacy `answer(['results' => …, 'is_personal' => …])` payloads.
+
+### Changed
+
+- Canonical inline answer form remains `answer(array $results, array $options = [])`; assoc payloads with a `results` key stay supported for BC.
+- `User::$full_name` continues to be set in `InteractsWithUser::booted()` from `first_name` + `last_name` (shared context).
+
 ## 2.1.0 — 2026-08-28
 
 ### Added

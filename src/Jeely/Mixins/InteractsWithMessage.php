@@ -28,6 +28,24 @@ trait InteractsWithMessage
         ], static fn ($value) => $value !== null));
     }
 
+    /**
+     * Resolve chat id whether `chat` hydrated as Chat object or left as raw array.
+     */
+    public function messageChatId(): int|string|null
+    {
+        $chat = $this->chat ?? null;
+
+        if (is_object($chat) && isset($chat->id)) {
+            return $chat->id;
+        }
+
+        if (is_array($chat) && isset($chat['id'])) {
+            return $chat['id'];
+        }
+
+        return null;
+    }
+
     private function detectMedia(): void
     {
         foreach (Constant::MEDIA_TYPES as $type) {
@@ -38,18 +56,37 @@ trait InteractsWithMessage
             $media = $this[$type];
             $this['is_media'] = true;
             $this['media_type'] = $type;
-            $this['file_id'] = is_array($media)
-                ? (end($media)->file_id ?? null)
-                : ($media->file_id ?? null);
+            $this['file_id'] = $this->mediaFileId($media);
 
             break;
         }
     }
 
+    private function mediaFileId(mixed $media): ?string
+    {
+        if (is_array($media)) {
+            $last = end($media);
+            if (is_object($last) && isset($last->file_id)) {
+                return (string) $last->file_id;
+            }
+            if (is_array($last) && isset($last['file_id'])) {
+                return (string) $last['file_id'];
+            }
+
+            return null;
+        }
+
+        if (is_object($media) && isset($media->file_id)) {
+            return (string) $media->file_id;
+        }
+
+        return null;
+    }
+
     public function delete(...$args): Error|PromiseInterface|bool
     {
         return $this->callTelegram('deleteMessage', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
         ], $this->extras($args)));
     }
@@ -57,7 +94,7 @@ trait InteractsWithMessage
     public function reply(string $text, ...$args): Error|PromiseInterface|Message
     {
         return $this->callTelegram('sendMessage', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'text' => $text,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -76,7 +113,7 @@ trait InteractsWithMessage
         unset($options['is_rtl']);
 
         return $this->callTelegram('sendRichMessage', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'rich_message' => $rich,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -88,7 +125,7 @@ trait InteractsWithMessage
     public function replyPhoto(mixed $photo, ...$args): Error|PromiseInterface|Message
     {
         return $this->callTelegram('sendPhoto', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'photo' => $photo,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -100,7 +137,7 @@ trait InteractsWithMessage
     public function replyVideo(mixed $video, ...$args): Error|PromiseInterface|Message
     {
         return $this->callTelegram('sendVideo', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'video' => $video,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -112,7 +149,7 @@ trait InteractsWithMessage
     public function replyDocument(mixed $document, ...$args): Error|PromiseInterface|Message
     {
         return $this->callTelegram('sendDocument', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'document' => $document,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -124,7 +161,7 @@ trait InteractsWithMessage
     public function replyAudio(mixed $audio, ...$args): Error|PromiseInterface|Message
     {
         return $this->callTelegram('sendAudio', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'audio' => $audio,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -136,7 +173,7 @@ trait InteractsWithMessage
     public function replyVoice(mixed $voice, ...$args): Error|PromiseInterface|Message
     {
         return $this->callTelegram('sendVoice', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'voice' => $voice,
             'reply_parameters' => [
                 'message_id' => $this->message_id,
@@ -170,7 +207,7 @@ trait InteractsWithMessage
     public function editText(string $text, ...$args): Error|PromiseInterface|Message|bool
     {
         return $this->callTelegram('editMessageText', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
             'text' => $text,
         ], $this->extras($args)));
@@ -186,7 +223,7 @@ trait InteractsWithMessage
         unset($options['is_rtl']);
 
         return $this->callTelegram('editMessageText', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
             'rich_message' => $rich,
         ], $options));
@@ -197,7 +234,7 @@ trait InteractsWithMessage
         $options = $this->extras($args);
 
         return $this->callTelegram('editMessageCaption', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
             'caption' => $caption,
         ], $options));
@@ -206,17 +243,18 @@ trait InteractsWithMessage
     public function editMarkup(...$args): Error|PromiseInterface|Message|bool
     {
         return $this->callTelegram('editMessageReplyMarkup', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
         ], $this->extras($args)));
     }
 
     public function copy(int|string|null $receptor = null, ...$args): Error|PromiseInterface|MessageId
     {
-        $receptor ??= $this->chat->id;
+        $chatId = $this->messageChatId();
+        $receptor ??= $chatId;
 
         return $this->callTelegram('copyMessage', $this->telegramOptions([
-            'from_chat_id' => $this->chat->id,
+            'from_chat_id' => $chatId,
             'chat_id' => $receptor,
             'message_id' => $this->message_id,
         ], $this->extras($args)));
@@ -224,10 +262,11 @@ trait InteractsWithMessage
 
     public function forward(int|string|null $receptor = null, ...$args): Error|PromiseInterface|Message
     {
-        $receptor ??= $this->chat->id;
+        $chatId = $this->messageChatId();
+        $receptor ??= $chatId;
 
         return $this->callTelegram('forwardMessage', $this->telegramOptions([
-            'from_chat_id' => $this->chat->id,
+            'from_chat_id' => $chatId,
             'chat_id' => $receptor,
             'message_id' => $this->message_id,
         ], $this->extras($args)));
@@ -239,7 +278,7 @@ trait InteractsWithMessage
     public function react(array $reaction, ...$args): Error|PromiseInterface|bool
     {
         return $this->callTelegram('setMessageReaction', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
             'reaction' => $reaction,
         ], $this->extras($args)));
@@ -248,7 +287,7 @@ trait InteractsWithMessage
     public function pin(...$args): Error|PromiseInterface|bool
     {
         return $this->callTelegram('pinChatMessage', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
         ], $this->extras($args)));
     }
@@ -256,7 +295,7 @@ trait InteractsWithMessage
     public function unpin(...$args): Error|PromiseInterface|bool
     {
         return $this->callTelegram('unpinChatMessage', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'message_id' => $this->message_id,
         ], $this->extras($args)));
     }
@@ -264,7 +303,7 @@ trait InteractsWithMessage
     public function typing(...$args): Error|PromiseInterface|bool
     {
         return $this->callTelegram('sendChatAction', $this->telegramOptions([
-            'chat_id' => $this->chat->id,
+            'chat_id' => $this->messageChatId(),
             'action' => 'typing',
         ], $this->extras($args)));
     }

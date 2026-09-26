@@ -366,7 +366,9 @@ class Telegram
             'is_persistent' => false,
         ];
 
-        array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$keyboardMeta, $fields) {
+        $appendSignature = ! empty($this->signature) && ! isset($fields['sign']);
+
+        array_walk_recursive($fields, function (&$value, $attribute) use (&$files, &$keyboardMeta, $fields, $appendSignature) {
             if ($value instanceof KeyboardButtonInterface) {
                 $this->collectKeyboardMeta($value, $keyboardMeta);
             }
@@ -386,10 +388,8 @@ class Telegram
                 $value = 'attach://' . $name;
             }
 
-            if (! empty($this->signature) && ! isset($fields['sign'])) {
-                if (in_array((string) $attribute, ['text', 'caption', 'message_text'], true)) {
-                    $value .= "\n" . $this->formatSignature((string) ($fields['parse_mode'] ?? ''));
-                }
+            if ($appendSignature && in_array((string) $attribute, ['text', 'caption', 'message_text'], true)) {
+                $value .= "\n" . $this->formatSignature((string) ($fields['parse_mode'] ?? ''));
             }
         });
 

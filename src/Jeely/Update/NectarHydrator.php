@@ -50,6 +50,9 @@ class NectarHydrator implements IteratorAggregate
     }
 
     /**
+     * Merge JSON_PROPERTY_MAP from parent classes → child (child keys override).
+     * An empty child map therefore inherits the parent mappings instead of wiping them.
+     *
      * @return array<string, string>
      */
     private function propertyMap(): array
@@ -61,11 +64,27 @@ class NectarHydrator implements IteratorAggregate
         }
 
         $map = [];
-        $fqConst = $class . '::JSON_PROPERTY_MAP';
+        $chain = class_parents($class);
+        if ($chain === false) {
+            $chain = [];
+        }
+        $chain = array_reverse($chain);
+        $chain[] = $class;
 
-        if (defined($fqConst)) {
-            /** @var array<string, string> $map */
-            $map = constant($fqConst);
+        foreach ($chain as $ancestor) {
+            $fqConst = $ancestor . '::JSON_PROPERTY_MAP';
+            if (! defined($fqConst)) {
+                continue;
+            }
+
+            /** @var mixed $declared */
+            $declared = constant($fqConst);
+            if (! is_array($declared)) {
+                continue;
+            }
+
+            /** @var array<string, string> $declared */
+            $map = array_replace($map, $declared);
         }
 
         return self::$propertyMapCache[$class] = $map;

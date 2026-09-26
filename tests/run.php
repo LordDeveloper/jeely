@@ -20,6 +20,7 @@ $testFiles = [
     __DIR__ . '/Handlers/EventHandlerTest.php',
     __DIR__ . '/Bot/BotRunTest.php',
     __DIR__ . '/Update/RunOptionsTest.php',
+    __DIR__ . '/Update/RuntimeFixesTest.php',
     __DIR__ . '/Console/ConsoleTest.php',
     __DIR__ . '/Schedule/ScheduleTest.php',
     __DIR__ . '/Http/RequestTest.php',

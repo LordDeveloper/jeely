@@ -79,9 +79,23 @@ final class UpdateDispatcher
     {
         if ($this->errorHandler) {
             ($this->errorHandler)($e, $update);
+
             return;
         }
 
-        trigger_error($e->getMessage());
+        // Preserve the real exception location instead of wrapping into an
+        // ErrorException that points at this file (Laravel-friendly stacks).
+        $context = $update !== null
+            ? sprintf(' [update_id=%s]', (string) ($update->update_id ?? '?'))
+            : '';
+
+        fwrite(STDERR, sprintf(
+            "Jeely update handler error%s: %s in %s:%d\n%s\n",
+            $context,
+            $e->getMessage(),
+            $e->getFile(),
+            $e->getLine(),
+            $e->__toString(),
+        ));
     }
 }

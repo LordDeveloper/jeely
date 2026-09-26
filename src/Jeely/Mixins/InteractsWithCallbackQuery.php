@@ -37,13 +37,28 @@ trait InteractsWithCallbackQuery
         ];
     }
 
-    public function answer(?string $text = null, bool $showAlert = false, ...$args): Error|PromiseInterface|bool
+    /**
+     * Answer the callback query.
+     *
+     * Canonical: `answer(?string $text = null, bool $showAlert = false, ...$options)`
+     * Legacy BC: `answer('msg', ['sign' => false])` — second arg as options array.
+     */
+    public function answer(?string $text = null, mixed $showAlert = false, ...$args): Error|PromiseInterface|bool
     {
+        $extra = [];
+
+        if (is_array($showAlert)) {
+            $extra = $showAlert;
+            $showAlert = false;
+        } else {
+            $showAlert = (bool) $showAlert;
+        }
+
         return $this->callTelegram('answerCallbackQuery', $this->telegramOptions([
             'callback_query_id' => $this->id,
             'text' => $text,
             'show_alert' => $showAlert,
-        ], $this->extras($args)));
+        ], array_replace($extra, $this->extras($args))));
     }
 
     public function alert(string $text, ...$args): Error|PromiseInterface|bool

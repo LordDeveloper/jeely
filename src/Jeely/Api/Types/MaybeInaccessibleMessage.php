@@ -8,8 +8,11 @@ namespace Jeely\Api\Types;
  *
  *
  * @see https://core.telegram.org/bots/api#maybeinaccessiblemessage
+ *
+ * Extends {@see Message} so nested fields (`chat`, `from`, …) hydrate correctly when the
+ * payload is a normal message. Inaccessible messages (`date === 0`) still share `chat` /
+ * `message_id` / `date` from the Message map.
  */
-class MaybeInaccessibleMessage extends \Jeely\Nectar
+class MaybeInaccessibleMessage extends Message
 {
-    public const JSON_PROPERTY_MAP = [];
 }
