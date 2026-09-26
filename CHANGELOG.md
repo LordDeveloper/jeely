@@ -13,6 +13,7 @@ All notable changes to this project are documented here.
 - **UpdateDispatcher** default error path writes the full exception (file/line/stack) to STDERR instead of `trigger_error()` that pointed stacks at UpdateDispatcher itself.
 - **CallbackQuery::answer** accepts legacy `answer('msg', ['sign' => false])` (options array as 2nd arg) without TypeError.
 - **InlineQuery::answer** unwraps legacy `answer(['results' => …, 'is_personal' => …])` payloads.
+- **ChatMember** is a real discriminated union (`status` → Owner/Administrator/Member/Restricted/Left/Banned) via `UNION_MAP` in NectarHydrator, so `new_chat_member.user` hydrates as `User` (fixes `Attempt to read property "id" on array` on chat_member updates). Concrete subtypes now extend `ChatMember`.
 
 ### Changed
 

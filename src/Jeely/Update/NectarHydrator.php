@@ -253,10 +253,69 @@ class NectarHydrator implements IteratorAggregate
         }
 
         if ($value instanceof self) {
-            return new $targetClass($value->toArray());
+            $value = $value->toArray();
+        }
+
+        if (is_array($value)) {
+            $targetClass = $this->resolveUnionTarget($targetClass, $value);
         }
 
         return new $targetClass($value);
+    }
+
+    /**
+     * Resolve discriminated unions declared via UNION_MAP / UNION_BY on the target class.
+     *
+     * Only constants declared on the exact target class are used (not inherited), so concrete
+     * subtypes that extend a union base are not re-resolved.
+     *
+     * @param  class-string  $targetClass
+     * @param  array<string, mixed>  $value
+     * @return class-string
+     */
+    private function resolveUnionTarget(string $targetClass, array $value): string
+    {
+        try {
+            $ref = new \ReflectionClass($targetClass);
+        } catch (\ReflectionException) {
+            return $targetClass;
+        }
+
+        if (! $ref->hasConstant('UNION_MAP')) {
+            return $targetClass;
+        }
+
+        $unionConstant = $ref->getReflectionConstant('UNION_MAP');
+        if ($unionConstant === false || $unionConstant->getDeclaringClass()->getName() !== $targetClass) {
+            return $targetClass;
+        }
+
+        /** @var mixed $map */
+        $map = $unionConstant->getValue();
+        if (! is_array($map)) {
+            return $targetClass;
+        }
+
+        $by = 'status';
+        if ($ref->hasConstant('UNION_BY')) {
+            $byConstant = $ref->getReflectionConstant('UNION_BY');
+            if ($byConstant !== false && $byConstant->getDeclaringClass()->getName() === $targetClass) {
+                $declaredBy = $byConstant->getValue();
+                if (is_string($declaredBy) && $declaredBy !== '') {
+                    $by = $declaredBy;
+                }
+            }
+        }
+
+        $key = $value[$by] ?? null;
+        if (! is_string($key) || ! isset($map[$key]) || ! is_string($map[$key])) {
+            return $targetClass;
+        }
+
+        /** @var class-string $resolved */
+        $resolved = $map[$key];
+
+        return class_exists($resolved) ? $resolved : $targetClass;
     }
 
     private function castPrimitive(mixed $value, string $type): mixed

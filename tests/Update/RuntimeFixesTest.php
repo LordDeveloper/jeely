@@ -17,10 +17,13 @@ namespace {
 
     use Jeely\Api\Types\CallbackQuery;
     use Jeely\Api\Types\Chat;
+    use Jeely\Api\Types\ChatMemberLeft;
+    use Jeely\Api\Types\ChatMemberMember;
     use Jeely\Api\Types\EmptyMapChildMessage;
     use Jeely\Api\Types\InlineQuery;
     use Jeely\Api\Types\MaybeInaccessibleMessage;
     use Jeely\Api\Types\Message;
+    use Jeely\Api\Types\User;
     use Jeely\Api\Update;
     use Jeely\Telegram;
     use Jeely\Update\UpdateDispatcher;
@@ -81,6 +84,33 @@ namespace {
             assertInstanceOf(Chat::class, $cq->message->chat);
             assertSame(42, $cq->message->chat->id);
             assertFalse(is_array($cq->message->chat));
+        },
+
+        'chat_member_union_hydrates_user_as_user_object' => function (): void {
+            $update = new Update([
+                'update_id' => 3,
+                'chat_member' => [
+                    'chat' => ['id' => -1001, 'type' => 'channel', 'title' => 'Support'],
+                    'from' => ['id' => 42, 'is_bot' => false, 'first_name' => 'Ada'],
+                    'date' => 1700000000,
+                    'old_chat_member' => [
+                        'status' => 'left',
+                        'user' => ['id' => 42, 'is_bot' => false, 'first_name' => 'Ada'],
+                    ],
+                    'new_chat_member' => [
+                        'status' => 'member',
+                        'user' => ['id' => 42, 'is_bot' => false, 'first_name' => 'Ada'],
+                    ],
+                ],
+            ]);
+
+            $event = $update->chat_member;
+            assertInstanceOf(ChatMemberMember::class, $event->new_chat_member);
+            assertInstanceOf(ChatMemberLeft::class, $event->old_chat_member);
+            assertInstanceOf(User::class, $event->new_chat_member->user);
+            assertSame(42, $event->new_chat_member->user->id);
+            assertFalse(is_array($event->new_chat_member->user));
+            assertSame('member', $event->new_chat_member->status);
         },
 
         'maybe_inaccessible_message_nested_chat_not_raw_array' => function (): void {

@@ -28,7 +28,7 @@ namespace Jeely\Api\Types;
  *
  * @see https://core.telegram.org/bots/api#chatmemberbanned
  */
-class ChatMemberBanned extends \Jeely\Nectar
+class ChatMemberBanned extends ChatMember
 {
     public const JSON_PROPERTY_MAP = [
         'status' => 'string',

@@ -33,7 +33,7 @@ namespace Jeely\Api\Types;
  *
  * @see https://core.telegram.org/bots/api#chatmembermember
  */
-class ChatMemberMember extends \Jeely\Nectar
+class ChatMemberMember extends ChatMember
 {
     public const JSON_PROPERTY_MAP = [
         'status' => 'string',
